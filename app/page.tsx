@@ -11,6 +11,29 @@ import {
   getNftsByCollection,
   getCollectionsByChain
 } from './opensea';
+
+import Image from 'next/image';
+
+const nftCard = (nft: Nft) => {
+  return (
+    <div>
+      {Object.keys(nft).map((key) => {
+        if (key !== 'image_url') {
+          return <h3>{nft[key as keyof Nft] as string}</h3>;
+        } else {
+          if (nft.image_url) {
+            return (
+              <Image src={nft.image_url} width="100" height="100" alt=":(" />
+            );
+          } else {
+            return <h3>No image</h3>;
+          }
+        }
+      })}
+    </div>
+  );
+};
+
 export default async function IndexPage({
   searchParams
 }: {
@@ -21,7 +44,7 @@ export default async function IndexPage({
   const usersResults = results as Users[];
   const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
   const collection2 = await getCollection('cryptokitties');
-  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
+  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '100');
   const collections: Collection[] = await getCollectionsByChain(
     'ethereum',
     '10'
@@ -32,13 +55,8 @@ export default async function IndexPage({
       <Title>Users</Title>
       <Text>A list of users retrieved from a Postgres database.</Text>
       <Search />
-      {usersResults.map(async (user) => {
-        return (
-          <Card className="mt-6" key={user.id}>
-            <h1>{JSON.stringify(user)}</h1>
-            <h1>{JSON.stringify(collections[0])}</h1>
-          </Card>
-        );
+      {nfts.map((nft) => {
+        return nftCard(nft);
       })}
     </main>
   );
