@@ -36,6 +36,11 @@ export type Collection = {
   created_date: Date;
 };
 
+export type Collections = {
+  collections: Collection[];
+  next: string;
+};
+
 export interface Contract {
   address: string;
 }

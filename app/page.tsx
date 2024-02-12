@@ -8,7 +8,8 @@ import { UserUpdate, Users, NewUser, Collection, Nft, Nfts } from './types';
 import {
   getCollectionOpenSeaSDK,
   getCollection,
-  getNftsByCollection
+  getNftsByCollection,
+  getCollectionsByChain
 } from './opensea';
 export default async function IndexPage({
   searchParams
@@ -20,7 +21,11 @@ export default async function IndexPage({
   const usersResults = results as Users[];
   const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
   const collection2 = await getCollection('cryptokitties');
-  let nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
+  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
+  const collections: Collection[] = await getCollectionsByChain(
+    'ethereum',
+    '10'
+  );
   //console.log(collection2);
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
@@ -31,7 +36,7 @@ export default async function IndexPage({
         return (
           <Card className="mt-6" key={user.id}>
             <h1>{JSON.stringify(user)}</h1>
-            <h1>{JSON.stringify(nfts[0].image_url)}</h1>
+            <h1>{JSON.stringify(collections[0])}</h1>
           </Card>
         );
       })}
