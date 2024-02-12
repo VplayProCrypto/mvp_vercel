@@ -14,25 +14,7 @@ import {
 
 import Image from 'next/image';
 
-const nftCard = (nft: Nft) => {
-  return (
-    <div>
-      {Object.keys(nft).map((key) => {
-        if (key !== 'image_url') {
-          return <h3>{nft[key as keyof Nft] as string}</h3>;
-        } else {
-          if (nft.image_url) {
-            return (
-              <Image src={nft.image_url} width="100" height="100" alt=":(" />
-            );
-          } else {
-            return <h3>No image</h3>;
-          }
-        }
-      })}
-    </div>
-  );
-};
+import { NftCard } from './components/nftcard';
 
 export default async function IndexPage({
   searchParams
@@ -56,7 +38,7 @@ export default async function IndexPage({
       <Text>A list of users retrieved from a Postgres database.</Text>
       <Search />
       {nfts.map((nft) => {
-        return nftCard(nft);
+        return <NftCard nft={nft} />;
       })}
     </main>
   );
