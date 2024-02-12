@@ -4,8 +4,12 @@ import Search from './search';
 import UsersTable from './table';
 import { db } from './database';
 import 'dotenv/config';
-import { UserUpdate, Users, NewUser, Collection } from './types';
-import { getCollectionOpenSeaSDK, getCollection } from './opensea';
+import { UserUpdate, Users, NewUser, Collection, Nft, Nfts } from './types';
+import {
+  getCollectionOpenSeaSDK,
+  getCollection,
+  getNftsByCollection
+} from './opensea';
 export default async function IndexPage({
   searchParams
 }: {
@@ -16,7 +20,8 @@ export default async function IndexPage({
   const usersResults = results as Users[];
   const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
   const collection2 = await getCollection('cryptokitties');
-  console.log(collection2);
+  let nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
+  //console.log(collection2);
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>Users</Title>
@@ -26,7 +31,7 @@ export default async function IndexPage({
         return (
           <Card className="mt-6" key={user.id}>
             <h1>{JSON.stringify(user)}</h1>
-            <h1>{JSON.stringify(collection2)}</h1>
+            <h1>{JSON.stringify(nfts[0].image_url)}</h1>
           </Card>
         );
       })}

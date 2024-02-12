@@ -1,6 +1,6 @@
 require('dotenv').config();
 import { Http2ServerRequest, Http2ServerResponse } from 'http2';
-import { Collection, Nfts } from './types';
+import { Collection, Nft, Nfts } from './types';
 // This example provider won't let you make transactions, only read-only calls:
 
 export const getCollectionOpenSeaSDK = async (collectionName: string) => {
@@ -40,7 +40,7 @@ export const getCollection = async (collectionName: string) => {
 export const getNftsByCollection = async (
   collectionName: string,
   limit: string
-) => {
+): Promise<Nft[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
@@ -59,12 +59,8 @@ export const getNftsByCollection = async (
     headers: headers
   });
 
-  let nfts: Nfts | string = 'loading data';
-  await fetch(request)
-    .then((res) => res.json())
-    .then((res) => {
-      nfts = res as Nfts;
-    });
-
-  return nfts;
+  let response = await fetch(request);
+  let responseJson = await response.json();
+  let nfts = responseJson as Nfts;
+  return nfts.nfts;
 };
