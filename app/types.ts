@@ -66,6 +66,30 @@ export interface Rarity {
 
 export interface SafelistStatus {}
 
+export enum TokenStandard {
+  Erc721 = 'erc721'
+}
+
+export interface Nfts {
+  nfts: Nft[];
+  next: string;
+}
+
+export interface Nft {
+  identifier: string;
+  collection: string;
+  contract: Contract;
+  token_standard: TokenStandard;
+  name: null | string;
+  description: null | string;
+  image_url: null | string;
+  metadata_url: null | string;
+  opensea_url: string;
+  updated_at: Date;
+  is_disabled: boolean;
+  is_nsfw: boolean;
+}
+
 export interface Database {
   users: UserTable;
 }
