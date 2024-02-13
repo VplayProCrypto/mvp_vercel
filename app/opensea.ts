@@ -1,4 +1,4 @@
-import { Collections, Collection, Nft, Nfts, Listing, Listings } from './types';
+import { Collections, Collection, Nft, Nfts, Listing, Listings, NftExtended, NftResponse } from './types';
 // This example provider won't let you make transactions, only read-only calls:
 
 export const getCollectionOpenSeaSDK = async (collectionName: string) => {
@@ -60,6 +60,29 @@ export const getNftsByCollection = async (
   return nfts.nfts;
 };
 
+export const getNft = async (
+  address: string, 
+  id: string, 
+  chain: string = "ethereum"
+): Promise<NftExtended> => {
+  const headers: Headers = new Headers();
+  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
+  headers.set('accept', 'application/json');
+  headers.set('x-api-key', key);
+  let url = `https://api.opensea.io/api/v2/chain/${chain}/contract/${address}/nfts/${id}`;
+
+  console.log(url);
+  const request: RequestInfo = new Request(url, {
+    method: 'GET',
+    headers: headers
+  });
+
+  let response = await fetch(request);
+  let responseJson = await response.json();
+  let nft = responseJson as NftResponse;
+  return nft.nft;
+};
+
 export const getCollectionsByChain = async (
   chain: string,
   limit: string
@@ -109,4 +132,30 @@ export const getListingsByCollections = async (
   let listings = responseJson as Listings;
   return listings.listings;
   return responseJson
+};
+
+export const getListingsByCollectionsMetadata = async (
+  collection_slug: string,
+  limit: string, 
+  next_page: string
+): Promise<NftExtended[]> => {
+  const headers: Headers = new Headers();
+  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
+  headers.set('accept', 'application/json');
+  headers.set('x-api-key', key);
+  let listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`
+
+  console.log(listingsUrl);
+  const request: RequestInfo = new Request(listingsUrl, {
+    method: 'GET',
+    headers: headers
+  });
+
+  let response = await fetch(request);
+  let responseJson = await response.json();
+  let l = responseJson as Listings;
+  let listings = l.listings;
+  let nfts = listings.map((l) => getNft(l.protocol_data.parameters.offer[0].token, 
+    l.protocol_data.parameters.offer[0].identifierOrCriteria)) as unknown as NftExtended[]
+  return nfts
 };

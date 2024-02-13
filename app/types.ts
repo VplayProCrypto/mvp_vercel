@@ -95,9 +95,29 @@ export interface Nft {
   is_nsfw: boolean;
 }
 
+export interface Trait {
+  trait_type: string,
+  display_type: null | string,
+  max_value: null | string,
+  value: string
+}
+
+export interface NftExtended extends Nft {
+  current_price: CurrentListingPrice | null;
+  owner: string | null
+  animation_url: null | string,
+  is_suspicious: boolean,
+  creator: string,
+  traits: Trait[]
+}
+
+export interface NftResponse {
+  nft: NftExtended
+}
+
 export interface CurrentListingPrice {
   currency: string,
-  decimals: 0,
+  decimals: number,
   value: string
 }
 
@@ -106,7 +126,7 @@ export interface ListingPrice {
 }
 
 export interface Offer {
-  itemType: 0,
+  itemType: number,
   token: string,                         // contract_address
   identifierOrCriteria: string           // token_id
   startAmount: string,
@@ -114,7 +134,7 @@ export interface Offer {
 }
 
 export interface ConsiderationItem {
-  itemType: 0,
+  itemType: number,
   token: string,
   identifierOrCriteria: string,
   startAmount: string,
