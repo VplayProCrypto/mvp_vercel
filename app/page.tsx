@@ -26,7 +26,7 @@ export default async function IndexPage({
   const usersResults = results as Users[];
   const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
   const collection2 = await getCollection('cryptokitties');
-  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '100');
+  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
   const collections: Collection[] = await getCollectionsByChain(
     'ethereum',
     '10'
