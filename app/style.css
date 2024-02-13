@@ -1,0 +1,43 @@
+/* Main content area styling */
+.main-content {
+    padding: 1rem; /* 16px */
+    margin: auto;
+    max-width: 1140px; /* Adjust based on your design */
+    background-color: #f0f2f5; /* Light grey background, optional */
+}
+
+/* Grid container styling */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Creates a responsive grid */
+    gap: 1rem; /* Space between grid items */
+    padding: 1rem; /* Padding around the grid */
+}
+
+/* NftCard component styling (assuming you want to add some basic styles) */
+.nft-card {
+    background-color: #ffffff; /* White background for the cards */
+    border: 1px solid #e0e0e0; /* Light grey border */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures content doesn't spill out */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+}
+
+.nft-card img {
+    width: 100%; /* Make image fill the card width */
+    height: auto; /* Maintain aspect ratio */
+    border-bottom: 1px solid #e0e0e0; /* Separator between image and text */
+}
+
+.nft-card .content {
+    padding: 1rem; /* Padding inside the card */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust grid for smaller screens */
+    }
+}
