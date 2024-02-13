@@ -1,4 +1,4 @@
-import { Collections, Collection, Nft, Nfts } from './types';
+import { Collections, Collection, Nft, Nfts, Listing, Listings } from './types';
 // This example provider won't let you make transactions, only read-only calls:
 
 export const getCollectionOpenSeaSDK = async (collectionName: string) => {
@@ -91,7 +91,7 @@ export const getListingsByCollections = async (
   collection_slug: string,
   limit: string, 
   next_page: string
-): Promise<Collection[]> => {
+): Promise<Listing[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
@@ -106,7 +106,7 @@ export const getListingsByCollections = async (
 
   let response = await fetch(request);
   let responseJson = await response.json();
-  // let collections = responseJson as Collections;
-  // return collections.collections;
+  let listings = responseJson as Listings;
+  return listings.listings;
   return responseJson
 };

@@ -95,6 +95,66 @@ export interface Nft {
   is_nsfw: boolean;
 }
 
+export interface CurrentListingPrice {
+  currency: string,
+  decimals: 0,
+  value: string
+}
+
+export interface ListingPrice {
+  current: CurrentListingPrice
+}
+
+export interface Offer {
+  itemType: 0,
+  token: string,                         // contract_address
+  identifierOrCriteria: string           // token_id
+  startAmount: string,
+  endAmount: string
+}
+
+export interface ConsiderationItem {
+  itemType: 0,
+  token: string,
+  identifierOrCriteria: string,
+  startAmount: string,
+  endAmount: string,
+  recipient: string
+}
+
+export interface ProtocolParameters {
+  offerer: string,
+  offer: Offer[],
+  consideration: ConsiderationItem[],
+  startTime: string,
+  endTime: string,
+  orderType: 0,
+  zone: string,
+  zoneHash: string,
+  salt: string,
+  conduitKey: string,
+  totalOriginalConsiderationItems: 0,
+  counter: 0
+}
+
+export interface ProtocolData {
+  parameters: ProtocolParameters, 
+  signature: string
+}
+
+export interface Listing {
+  order_hash: string,
+  type: string,
+  price: ListingPrice, 
+  protocol_data: ProtocolData, 
+  protocol_address: string
+}
+
+export interface Listings {
+  listings: Listing[], 
+  next: string
+}
+
 export interface Database {
   users: UserTable;
 }
@@ -105,6 +165,7 @@ export interface UserTable {
   name: string | null;
   username: string | null;
 }
+
 
 export type Users = Selectable<UserTable>;
 export type NewUser = Insertable<UserTable>;
