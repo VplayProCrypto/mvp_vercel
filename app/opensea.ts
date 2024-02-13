@@ -89,14 +89,14 @@ export const getCollectionsByChain = async (
 
 export const getListingsByCollections = async (
   collection_slug: string,
-  limit: string, 
-  next_page: string
+  limit: string
+  //next_page: string
 ): Promise<Collection[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
-  let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`
+  let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/all?limit=${limit}`;
 
   console.log(url);
   const request: RequestInfo = new Request(url, {
@@ -106,7 +106,7 @@ export const getListingsByCollections = async (
 
   let response = await fetch(request);
   let responseJson = await response.json();
-  // let collections = responseJson as Collections;
-  // return collections.collections;
-  return responseJson
+  let collections = responseJson as Collections;
+  return collections.collections;
+  //return responseJson
 };
