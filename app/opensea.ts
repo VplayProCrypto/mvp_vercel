@@ -1,6 +1,13 @@
-require('dotenv').config();
-import { Http2ServerRequest, Http2ServerResponse } from 'http2'
-import { Collections, Collection, Nft, Nfts, Listing, Listings, NftExtended, NftResponse } from './types';
+import {
+  Collections,
+  Collection,
+  Nft,
+  Nfts,
+  Listing,
+  Listings,
+  NftExtended,
+  NftResponse
+} from './types';
 // This example provider won't let you make transactions, only read-only calls:
 
 export const getCollectionOpenSeaSDK = async (collectionName: string) => {
@@ -63,9 +70,9 @@ export const getNftsByCollection = async (
 };
 
 export const getNft = async (
-  address: string, 
-  id: string, 
-  chain: string = "ethereum"
+  address: string,
+  id: string,
+  chain: string = 'ethereum'
 ): Promise<NftExtended> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
@@ -114,14 +121,14 @@ export const getCollectionsByChain = async (
 
 export const getListingsByCollections = async (
   collection_slug: string,
-  limit: string, 
-  next_page: string
-): Promise<Listing[]> => {
+  limit: string
+  //next_page: string
+): Promise<Collection[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
-  let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`
+  let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/all?limit=${limit}`;
 
   console.log(url);
   const request: RequestInfo = new Request(url, {
@@ -131,21 +138,21 @@ export const getListingsByCollections = async (
 
   let response = await fetch(request);
   let responseJson = await response.json();
-  let listings = responseJson as Listings;
-  return listings.listings;
-  return responseJson
+  let collections = responseJson as Collections;
+  return collections.collections;
+  //return responseJson
 };
 
 export const getListingsByCollectionsMetadata = async (
   collection_slug: string,
-  limit: string, 
+  limit: string,
   next_page: string
 ): Promise<NftExtended[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
-  let listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`
+  let listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`;
 
   console.log(listingsUrl);
   const request: RequestInfo = new Request(listingsUrl, {
@@ -157,7 +164,11 @@ export const getListingsByCollectionsMetadata = async (
   let responseJson = await response.json();
   let l = responseJson as Listings;
   let listings = l.listings;
-  let nfts = listings.map((l) => getNft(l.protocol_data.parameters.offer[0].token, 
-    l.protocol_data.parameters.offer[0].identifierOrCriteria)) as unknown as NftExtended[]
-  return nfts
+  let nfts = listings.map((l) =>
+    getNft(
+      l.protocol_data.parameters.offer[0].token,
+      l.protocol_data.parameters.offer[0].identifierOrCriteria
+    )
+  ) as unknown as NftExtended[];
+  return nfts;
 };
