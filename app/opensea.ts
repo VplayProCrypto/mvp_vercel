@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { Http2ServerRequest, Http2ServerResponse } from 'http2';
+import { Http2ServerRequest, Http2ServerResponse } from 'http2'
 import { Collections, Collection, Nft, Nfts } from './types';
 // This example provider won't let you make transactions, only read-only calls:
 

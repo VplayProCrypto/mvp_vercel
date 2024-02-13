@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import React, { useState, useEffect } from 'react';
 import { Card, Title, Text } from '@tremor/react';
 import Search from './search';
 import UsersTable from './table';
@@ -15,22 +15,23 @@ import {
 import Image from 'next/image';
 
 import { NftCard } from './components/nftcard';
+import { GameCard } from './components/gamecard';
 
 export default async function IndexPage({
   searchParams
 }: {
   searchParams: { q: string };
 }) {
-  const results = await db.selectFrom('users').selectAll().execute();
+  //const results = await db.selectFrom('users').selectAll().execute();
 
-  const usersResults = results as Users[];
-  const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
-  const collection2 = await getCollection('cryptokitties');
-  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '100');
-  const collections: Collection[] = await getCollectionsByChain(
-    'ethereum',
-    '10'
-  );
+  //const usersResults = results as Users[];
+  // const collection: Collection = await getCollectionOpenSeaSDK('cryptokitties');
+  const collection = await getCollection('cryptokitties');
+  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '2');
+  // const collections: Collection[] = await getCollectionsByChain(
+  //   'ethereum',
+  //   '10'
+  // );
   //console.log(collection2);
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
@@ -43,3 +44,6 @@ export default async function IndexPage({
     </main>
   );
 }
+// import { NftCard } from './components/nftcard';
+// import { GameCard } from './components/gamecard';
+
