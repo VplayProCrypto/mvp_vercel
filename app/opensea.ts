@@ -6,20 +6,11 @@ import {
   Listing,
   Listings,
   NftExtended,
-  NftResponse
+  NftResponse,
+  Offers,
+  Offer,
+  Trait
 } from './types';
-// This example provider won't let you make transactions, only read-only calls:
-
-export const getCollectionOpenSeaSDK = async (collectionName: string) => {
-  const sdk = require('api')('@opensea/v2.0#hbu2zlsaz6n88');
-
-  sdk.auth(process.env.OPENSEA);
-  sdk.server('https://api.opensea.io');
-  const response = await sdk
-    .get_collection({ collection_slug: collectionName })
-    .catch((err: any) => console.error(err));
-  return response.data;
-};
 
 export const getCollection = async (
   collectionName: string
@@ -123,7 +114,7 @@ export const getListingsByCollections = async (
   collection_slug: string,
   limit: string
   //next_page: string
-): Promise<Collection[]> => {
+): Promise<Listing[]> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
@@ -138,37 +129,84 @@ export const getListingsByCollections = async (
 
   let response = await fetch(request);
   let responseJson = await response.json();
-  let collections = responseJson as Collections;
-  return collections.collections;
+  let listings = responseJson as Listings;
+  return listings.listings;
   //return responseJson
 };
 
-export const getListingsByCollectionsMetadata = async (
-  collection_slug: string,
-  limit: string,
-  next_page: string
-): Promise<NftExtended[]> => {
+export const getBestOfferForNft = async (
+  id: string,
+  collectionSlug: string
+): Promise<Offer> => {
   const headers: Headers = new Headers();
   const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
-  let listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}&next=${next_page}`;
-
-  console.log(listingsUrl);
-  const request: RequestInfo = new Request(listingsUrl, {
+  const url = `https://api.opensea.io/api/v2/offers/collection/${collectionSlug}/nfts/${id}/best`;
+  console.log(url);
+  const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
   });
 
   let response = await fetch(request);
   let responseJson = await response.json();
-  let l = responseJson as Listings;
-  let listings = l.listings;
-  let nfts = listings.map((l) =>
-    getNft(
-      l.protocol_data.parameters.offer[0].token,
-      l.protocol_data.parameters.offer[0].identifierOrCriteria
-    )
-  ) as unknown as NftExtended[];
-  return nfts;
+  let offers = responseJson as Offers;
+  return offers.offers[0];
+};
+
+export const getListingsByCollectionsMetadata = async (
+  collection_slug: string,
+  limit: string
+): Promise<NftExtended[]> => {
+  const key: string = process.env.OPENSEA || 'no_api_key';
+  const headers = {
+    accept: 'application/json',
+    'x-api-key': key
+  };
+  const listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}`;
+
+  const response = await fetch(listingsUrl, {
+    method: 'GET',
+    headers: headers
+  });
+  const responseJson = await response.json();
+  const listings: Listing[] = responseJson.listings;
+
+  if (listings) {
+    const nftsPromises = listings.map(async (listing) => {
+      console.log(listing.protocol_data.parameters.offer[0]);
+      console.log('Token:', listing.protocol_data.parameters.offer[0].token);
+      console.log(
+        'Identifier/Criteria:',
+        listing.protocol_data.parameters.offer[0].identifierOrCriteria
+      );
+
+      const current_price = listing.price.current.value || null;
+      const owner = listing.protocol_data.parameters.offerer;
+      const animation_url = '';
+      const is_suspicious = false;
+      const creator = '';
+      const traits: Trait[] = [];
+
+      const nft = await getNft(
+        listing.protocol_data.parameters.offer[0].token,
+        listing.protocol_data.parameters.offer[0].identifierOrCriteria
+      );
+
+      return {
+        ...nft,
+        current_price,
+        owner,
+        animation_url,
+        is_suspicious,
+        creator,
+        traits
+      };
+    });
+
+    const nfts = (await Promise.all(nftsPromises)) as NftExtended[];
+    return nfts;
+  }
+  return [];
 };

@@ -1,14 +1,20 @@
-import { getCollection, getNftsByCollection } from '../../app/opensea';
+import {
+  getListingsByCollections,
+  getCollection,
+  getNftsByCollection,
+  getListingsByCollectionsMetadata
+} from '../../app/opensea';
 
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import { Collection, Nft } from '../../app/types';
+import { Collection, Nft, NftExtended } from '../../app/types';
 
-export const getServerSideProps = (async ({ query: { name } }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query: { name }
+}) => {
   const collection = await getCollection(name as string);
-  const nfts = await getNftsByCollection(name as string, '100');
-  console.log(nfts);
-  return { props: { collection, nfts } };
-}) satisfies GetServerSideProps<{ collection: Collection; nfts: Nft[] }>;
+  const listings = await getListingsByCollectionsMetadata(name as string, '10');
+  return { props: { collection, listings } };
+};
 
 import Image from 'next/image';
 import { NftCard } from '../../app/components/nftcard';
@@ -38,18 +44,28 @@ const Game: React.FC<{ game: Collection }> = ({ game }) => {
 
 export default function Page({
   collection,
-  nfts
+  listings
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main className="h-full bg-gray-50">
       <Game game={collection} />
       <p className="text-2xl font-bold mb-2 mt-4">NFTS</p>
       <div className="grid grid-cols-6 gap-4 mt-4">
-        {nfts.map((nft) => (
-          <div key={nft.identifier}>
-            <NftCard nft={nft} />
-          </div>
-        ))}
+        {listings ? (
+          listings.map((nftextended: NftExtended) => (
+            <div key={nftextended.identifier}>
+              <NftCard nft={nftextended} />
+              <h2>
+                {nftextended.current_price
+                  ? (nftextended.current_price as unknown as string)
+                  : 'No price'}
+              </h2>
+              <h3>ETH</h3>
+            </div>
+          ))
+        ) : (
+          <h1>No NFTs</h1>
+        )}
       </div>
     </main>
   );

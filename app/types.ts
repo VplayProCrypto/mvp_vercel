@@ -96,83 +96,83 @@ export interface Nft {
 }
 
 export interface Trait {
-  trait_type: string,
-  display_type: null | string,
-  max_value: null | string,
-  value: string
+  trait_type: string;
+  display_type: null | string;
+  max_value: null | string;
+  value: string;
 }
 
 export interface NftExtended extends Nft {
   current_price: CurrentListingPrice | null;
-  owner: string | null
-  animation_url: null | string,
-  is_suspicious: boolean,
-  creator: string,
-  traits: Trait[]
+  owner: string | null;
+  animation_url: null | string;
+  is_suspicious: boolean;
+  creator: string;
+  traits: Trait[];
 }
 
 export interface NftResponse {
-  nft: NftExtended
+  nft: NftExtended;
 }
 
 export interface CurrentListingPrice {
-  currency: string,
-  decimals: number,
-  value: string
+  currency: string;
+  decimals: number;
+  value: string;
 }
 
 export interface ListingPrice {
-  current: CurrentListingPrice
+  current: CurrentListingPrice;
 }
 
 export interface Offer {
-  itemType: number,
-  token: string,                         // contract_address
-  identifierOrCriteria: string           // token_id
-  startAmount: string,
-  endAmount: string
+  itemType: number;
+  token: string; // contract_address
+  identifierOrCriteria: string; // token_id
+  startAmount: string;
+  endAmount: string;
 }
 
 export interface ConsiderationItem {
-  itemType: number,
-  token: string,
-  identifierOrCriteria: string,
-  startAmount: string,
-  endAmount: string,
-  recipient: string
+  itemType: number;
+  token: string;
+  identifierOrCriteria: string;
+  startAmount: string;
+  endAmount: string;
+  recipient: string;
 }
 
 export interface ProtocolParameters {
-  offerer: string,
-  offer: Offer[],
-  consideration: ConsiderationItem[],
-  startTime: string,
-  endTime: string,
-  orderType: 0,
-  zone: string,
-  zoneHash: string,
-  salt: string,
-  conduitKey: string,
-  totalOriginalConsiderationItems: 0,
-  counter: 0
+  offerer: string;
+  offer: Offer[];
+  consideration: ConsiderationItem[];
+  startTime: string;
+  endTime: string;
+  orderType: 0;
+  zone: string;
+  zoneHash: string;
+  salt: string;
+  conduitKey: string;
+  totalOriginalConsiderationItems: 0;
+  counter: 0;
 }
 
 export interface ProtocolData {
-  parameters: ProtocolParameters, 
-  signature: string
+  parameters: ProtocolParameters;
+  signature: string;
 }
 
 export interface Listing {
-  order_hash: string,
-  type: string,
-  price: ListingPrice, 
-  protocol_data: ProtocolData, 
-  protocol_address: string
+  order_hash: string;
+  type: string;
+  price: ListingPrice;
+  protocol_data: ProtocolData;
+  protocol_address: string;
 }
 
 export interface Listings {
-  listings: Listing[], 
-  next: string
+  listings: Listing[];
+  next: string;
 }
 
 export interface Database {
@@ -186,7 +186,68 @@ export interface UserTable {
   username: string | null;
 }
 
-
 export type Users = Selectable<UserTable>;
 export type NewUser = Insertable<UserTable>;
 export type UserUpdate = Updateable<UserTable>;
+
+export interface Offers {
+  offers: Offer[];
+  next: string;
+}
+
+export interface Offer {
+  order_hash: string;
+  chain: Chain;
+  price: Price;
+  criteria: Criteria;
+  protocol_data: ProtocolData;
+  protocol_address: string;
+}
+
+export interface Chain {}
+
+export interface Criteria {
+  collection: Collection;
+  contract: Contract;
+  trait: Trait;
+  encoded_token_ids: string;
+}
+
+export interface Contract {
+  address: string;
+}
+
+export interface Trait {
+  type: string;
+  value: string;
+}
+
+export interface Price {
+  currency: string;
+  decimals: number;
+  value: string;
+}
+
+export interface Parameters {
+  offerer: string;
+  offer: Consideration[];
+  consideration: Consideration[];
+  startTime: string;
+  endTime: string;
+  orderType: number;
+  zone: string;
+  zoneHash: string;
+  salt: string;
+  conduitKey: string;
+  totalOriginalConsiderationItems: number;
+  counter: number;
+}
+
+export interface Consideration {
+  itemType: number;
+  token: string;
+  identifierOrCriteria: string;
+  startAmount: string;
+  endAmount: string;
+  recipient?: string;
+}
