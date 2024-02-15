@@ -6,7 +6,12 @@ import {
 } from '../../app/opensea';
 
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import { Collection, Nft, NftExtended } from '../../app/types';
+import {
+  Collection,
+  CurrentListingPrice,
+  Nft,
+  NftExtended
+} from '../../app/types';
 
 export const getServerSideProps: GetServerSideProps = async ({
   query: { name }
@@ -18,6 +23,38 @@ export const getServerSideProps: GetServerSideProps = async ({
 
 import Image from 'next/image';
 import { NftCard } from '../../app/components/nftcard';
+
+function convertWeiToEth(
+  currency: string,
+  decimals: number,
+  value: string
+): string {
+  if (currency !== 'ETH' || decimals !== 18) {
+    throw new Error('Unsupported currency or decimals');
+  }
+
+  const valueWei = BigInt(value);
+  const divisor = BigInt(`1${'0'.repeat(decimals)}`);
+
+  const quotient = (valueWei / divisor).toString();
+  const remainder = (valueWei % divisor).toString().padStart(decimals, '0');
+
+  // Combine quotient and remainder, then remove trailing zeros
+  const result = `${quotient}.${remainder}`.replace(/\.?0+$/, '');
+
+  return result;
+}
+
+// Testing the function
+
+const parsePrice = (currentPrice: CurrentListingPrice) => {
+  console.log(currentPrice);
+  return currentPrice.currency === 'ETH'
+    ? convertWeiToEth('ETH', 18, currentPrice.value) +
+        ' ' +
+        currentPrice.currency
+    : currentPrice.value + ' ' + currentPrice.currency;
+};
 
 const Game: React.FC<{ game: Collection }> = ({ game }) => {
   return (
@@ -54,13 +91,14 @@ export default function Page({
         {listings ? (
           listings.map((nftextended: NftExtended) => (
             <div key={nftextended.identifier}>
-              <NftCard nft={nftextended} />
-              <h2>
-                {nftextended.current_price
-                  ? (nftextended.current_price as unknown as string)
-                  : 'No price'}
-              </h2>
-              <h3>ETH</h3>
+              <NftCard
+                nft={nftextended}
+                price={
+                  nftextended.current_price
+                    ? parsePrice(nftextended.current_price)
+                    : 'No price'
+                }
+              />
             </div>
           ))
         ) : (

@@ -182,7 +182,7 @@ export const getListingsByCollectionsMetadata = async (
         listing.protocol_data.parameters.offer[0].identifierOrCriteria
       );
 
-      const current_price = listing.price.current.value || null;
+      const current_price = listing.price.current || null;
       const owner = listing.protocol_data.parameters.offerer;
       const animation_url = '';
       const is_suspicious = false;
