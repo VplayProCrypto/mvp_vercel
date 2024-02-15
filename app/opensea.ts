@@ -9,7 +9,8 @@ import {
   NftResponse,
   Offers,
   Offer,
-  Trait
+  Trait,
+  CollectionStats
 } from './types';
 
 export const getCollection = async (
@@ -209,4 +210,25 @@ export const getListingsByCollectionsMetadata = async (
     return nfts;
   }
   return [];
+};
+
+export const getCollectionStats = async (
+  collectionSlug: string
+): Promise<CollectionStats> => {
+  const key: string = process.env.OPENSEA || 'no_api_key';
+  const headers = {
+    accept: 'application/json',
+    'x-api-key': key
+  };
+
+  const listingsUrl = `https://api.opensea.io/api/v2/collections/${collectionSlug}/stats`;
+
+  const response = await fetch(listingsUrl, {
+    method: 'GET',
+    headers: headers
+  });
+
+  const responseJson = await response.json();
+  const stats = responseJson as CollectionStats;
+  return stats;
 };
