@@ -1,4 +1,4 @@
-use client;
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { Title, Text } from '@tremor/react';
@@ -15,7 +15,7 @@ const SalesChartPage = () => {
     const fetchSalesData = async () => {
       const options = { method: 'GET', headers: { accept: 'application/json' } };
       try {
-        const response = await fetch('https://eth-mainnet.g.alchemy.com/nft/v3/A2_NdhaMRvpVwyotoG4wueAjfgUMGHL1/getNFTSales?fromBlock=0&toBlock=latest&order=asc&marketplace=seaport&contractAddress=0x06012c8cf97BEaD5deAe237070F9587f8E7A266d&tokenId=44&limit=50', options);
+        const response = await fetch('https://eth-mainnet.g.alchemy.com/nft/v3//getNFTSales?fromBlock=0&toBlock=latest&order=asc&marketplace=seaport&contractAddress=0x06012c8cf97BEaD5deAe237070F9587f8E7A266d&tokenId=44&limit=50', options);
         const data = await response.json();
         // Process the data to extract block number and ETH amount
         const processedData = data.nftSales.map(sale => ({
