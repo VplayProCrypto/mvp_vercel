@@ -10,7 +10,9 @@ import {
   Offers,
   Offer,
   Trait,
-  CollectionStats
+  CollectionStats,
+  AssetEvent,
+  Events
 } from './types';
 
 export const getCollection = async (
@@ -22,7 +24,6 @@ export const getCollection = async (
   headers.set('x-api-key', key);
   let url = 'https://api.opensea.io/api/v2/collections' + '/' + collectionName;
 
-  console.log(url);
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -49,7 +50,6 @@ export const getNftsByCollection = async (
     '?limit=' +
     limit;
 
-  console.log(url);
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -72,7 +72,6 @@ export const getNft = async (
   headers.set('x-api-key', key);
   let url = `https://api.opensea.io/api/v2/chain/${chain}/contract/${address}/nfts/${id}`;
 
-  console.log(url);
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -99,7 +98,6 @@ export const getCollectionsByChain = async (
     '&limit=' +
     limit;
 
-  console.log(url);
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -122,7 +120,6 @@ export const getListingsByCollections = async (
   headers.set('x-api-key', key);
   let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/all?limit=${limit}`;
 
-  console.log(url);
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -144,7 +141,7 @@ export const getBestOfferForNft = async (
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
   const url = `https://api.opensea.io/api/v2/offers/collection/${collectionSlug}/nfts/${id}/best`;
-  console.log(url);
+
   const request: RequestInfo = new Request(url, {
     method: 'GET',
     headers: headers
@@ -176,13 +173,6 @@ export const getListingsByCollectionsMetadata = async (
 
   if (listings) {
     const nftsPromises = listings.map(async (listing) => {
-      console.log(listing.protocol_data.parameters.offer[0]);
-      console.log('Token:', listing.protocol_data.parameters.offer[0].token);
-      console.log(
-        'Identifier/Criteria:',
-        listing.protocol_data.parameters.offer[0].identifierOrCriteria
-      );
-
       const current_price = listing.price.current || null;
       const owner = listing.protocol_data.parameters.offerer;
       const animation_url = '';
@@ -231,4 +221,28 @@ export const getCollectionStats = async (
   const responseJson = await response.json();
   const stats = responseJson as CollectionStats;
   return stats;
+};
+
+//
+
+export const getCollectionSaleEvents = async (
+  collectionSlug: string,
+  limit: string
+): Promise<AssetEvent[]> => {
+  const key: string = process.env.OPENSEA || 'no_api_key';
+  const headers = {
+    accept: 'application/json',
+    'x-api-key': key
+  };
+
+  const url = `https://api.opensea.io/api/v2/events/collection/${collectionSlug}?event_type=sale&limit=${limit}`;
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: headers
+  });
+  const responseJson = await response.json();
+  const events = responseJson.asset_events as Events;
+  const assetEvents = responseJson.asset_events as AssetEvent[];
+  return assetEvents;
 };

@@ -276,3 +276,61 @@ export interface Total {
   floor_price: number;
   floor_price_symbol: string;
 }
+
+export interface Events {
+  asset_events: AssetEvent[];
+  next: string;
+}
+
+export interface AssetEvent {
+  event_type: string;
+  order_hash?: string;
+  maker?: string;
+  event_timestamp: number;
+  nft?: Asset;
+  order_type?: OrderType;
+  protocol_address?: string;
+  start_date?: number;
+  expiration_date?: number;
+  asset?: Asset;
+  quantity?: number;
+  taker?: string;
+  payment?: Payment;
+  criteria?: Criteria;
+  is_private_listing?: boolean;
+  closing_date?: number;
+  seller?: string;
+  buyer?: string;
+  transaction?: string;
+  from_address?: string;
+  to_address?: string;
+}
+
+export interface Asset {
+  identifier: string;
+  collection: string;
+  contract: string;
+  token_standard: string;
+  name: string;
+  description: string;
+  image_url: string;
+  metadata_url: string;
+  opensea_url: string;
+  updated_at: string;
+  is_disabled: boolean;
+  is_nsfw: boolean;
+}
+
+export interface Trait {
+  type: string;
+  value: string;
+}
+
+export interface OrderType {}
+
+export interface Payment {
+  quantity: string;
+  token_address: string;
+  decimals: number;
+  symbol: string;
+}

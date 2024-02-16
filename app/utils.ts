@@ -24,7 +24,6 @@ export function convertWeiToEth(
 // Testing the function
 
 export const parsePrice = (currentPrice: CurrentListingPrice) => {
-  console.log(currentPrice);
   return currentPrice.currency === 'ETH'
     ? convertWeiToEth('ETH', 18, currentPrice.value) +
         ' ' +
