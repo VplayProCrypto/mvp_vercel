@@ -96,83 +96,83 @@ export interface Nft {
 }
 
 export interface Trait {
-  trait_type: string,
-  display_type: null | string,
-  max_value: null | string,
-  value: string
+  trait_type: string;
+  display_type: null | string;
+  max_value: null | string;
+  value: string;
 }
 
 export interface NftExtended extends Nft {
   current_price: CurrentListingPrice | null;
-  owner: string | null
-  animation_url: null | string,
-  is_suspicious: boolean,
-  creator: string,
-  traits: Trait[]
+  owner: string | null;
+  animation_url: null | string;
+  is_suspicious: boolean;
+  creator: string;
+  traits: Trait[];
 }
 
 export interface NftResponse {
-  nft: NftExtended
+  nft: NftExtended;
 }
 
 export interface CurrentListingPrice {
-  currency: string,
-  decimals: number,
-  value: string
+  currency: string;
+  decimals: number;
+  value: string;
 }
 
 export interface ListingPrice {
-  current: CurrentListingPrice
+  current: CurrentListingPrice;
 }
 
 export interface Offer {
-  itemType: number,
-  token: string,                         // contract_address
-  identifierOrCriteria: string           // token_id
-  startAmount: string,
-  endAmount: string
+  itemType: number;
+  token: string; // contract_address
+  identifierOrCriteria: string; // token_id
+  startAmount: string;
+  endAmount: string;
 }
 
 export interface ConsiderationItem {
-  itemType: number,
-  token: string,
-  identifierOrCriteria: string,
-  startAmount: string,
-  endAmount: string,
-  recipient: string
+  itemType: number;
+  token: string;
+  identifierOrCriteria: string;
+  startAmount: string;
+  endAmount: string;
+  recipient: string;
 }
 
 export interface ProtocolParameters {
-  offerer: string,
-  offer: Offer[],
-  consideration: ConsiderationItem[],
-  startTime: string,
-  endTime: string,
-  orderType: 0,
-  zone: string,
-  zoneHash: string,
-  salt: string,
-  conduitKey: string,
-  totalOriginalConsiderationItems: 0,
-  counter: 0
+  offerer: string;
+  offer: Offer[];
+  consideration: ConsiderationItem[];
+  startTime: string;
+  endTime: string;
+  orderType: 0;
+  zone: string;
+  zoneHash: string;
+  salt: string;
+  conduitKey: string;
+  totalOriginalConsiderationItems: 0;
+  counter: 0;
 }
 
 export interface ProtocolData {
-  parameters: ProtocolParameters, 
-  signature: string
+  parameters: ProtocolParameters;
+  signature: string;
 }
 
 export interface Listing {
-  order_hash: string,
-  type: string,
-  price: ListingPrice, 
-  protocol_data: ProtocolData, 
-  protocol_address: string
+  order_hash: string;
+  type: string;
+  price: ListingPrice;
+  protocol_data: ProtocolData;
+  protocol_address: string;
 }
 
 export interface Listings {
-  listings: Listing[], 
-  next: string
+  listings: Listing[];
+  next: string;
 }
 
 export interface Database {
@@ -186,7 +186,151 @@ export interface UserTable {
   username: string | null;
 }
 
-
 export type Users = Selectable<UserTable>;
 export type NewUser = Insertable<UserTable>;
 export type UserUpdate = Updateable<UserTable>;
+
+export interface Offers {
+  offers: Offer[];
+  next: string;
+}
+
+export interface Offer {
+  order_hash: string;
+  chain: Chain;
+  price: Price;
+  criteria: Criteria;
+  protocol_data: ProtocolData;
+  protocol_address: string;
+}
+
+export interface Chain {}
+
+export interface Criteria {
+  collection: Collection;
+  contract: Contract;
+  trait: Trait;
+  encoded_token_ids: string;
+}
+
+export interface Contract {
+  address: string;
+}
+
+export interface Trait {
+  type: string;
+  value: string;
+}
+
+export interface Price {
+  currency: string;
+  decimals: number;
+  value: string;
+}
+
+export interface Parameters {
+  offerer: string;
+  offer: Consideration[];
+  consideration: Consideration[];
+  startTime: string;
+  endTime: string;
+  orderType: number;
+  zone: string;
+  zoneHash: string;
+  salt: string;
+  conduitKey: string;
+  totalOriginalConsiderationItems: number;
+  counter: number;
+}
+
+export interface Consideration {
+  itemType: number;
+  token: string;
+  identifierOrCriteria: string;
+  startAmount: string;
+  endAmount: string;
+  recipient?: string;
+}
+
+export interface CollectionStats {
+  total: Total;
+  intervals: Interval[];
+}
+
+export interface Interval {
+  interval: string;
+  volume: number;
+  volume_diff: number;
+  volume_change: number;
+  sales: number;
+  sales_diff: number;
+  average_price: number;
+}
+
+export interface Total {
+  volume: number;
+  sales: number;
+  average_price: number;
+  num_owners: number;
+  market_cap: number;
+  floor_price: number;
+  floor_price_symbol: string;
+}
+
+export interface Events {
+  asset_events: AssetEvent[];
+  next: string;
+}
+
+export interface AssetEvent {
+  event_type: string;
+  order_hash?: string;
+  maker?: string;
+  event_timestamp: number;
+  nft?: Asset;
+  order_type?: OrderType;
+  protocol_address?: string;
+  start_date?: number;
+  expiration_date?: number;
+  asset?: Asset;
+  quantity?: number;
+  taker?: string;
+  payment?: Payment;
+  criteria?: Criteria;
+  is_private_listing?: boolean;
+  closing_date?: number;
+  seller?: string;
+  buyer?: string;
+  transaction?: string;
+  from_address?: string;
+  to_address?: string;
+}
+
+export interface Asset {
+  identifier: string;
+  collection: string;
+  contract: string;
+  token_standard: string;
+  name: string;
+  description: string;
+  image_url: string;
+  metadata_url: string;
+  opensea_url: string;
+  updated_at: string;
+  is_disabled: boolean;
+  is_nsfw: boolean;
+}
+
+export interface Trait {
+  type: string;
+  value: string;
+}
+
+export interface OrderType {}
+
+export interface Payment {
+  quantity: string;
+  token_address: string;
+  decimals: number;
+  symbol: string;
+}
