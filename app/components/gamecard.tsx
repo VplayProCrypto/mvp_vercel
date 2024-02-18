@@ -1,19 +1,28 @@
-import { Collection } from '../types';
 import Image from 'next/image';
+import { Card, Title } from '@tremor/react';
 
 interface GameCardProps {
-    collection: Collection;
-  }
-
-  export const GameCard: React.FC<GameCardProps> = ({ collection }) => {
-    return (
-    <div className="collection-card">
-    {collection.image_url && (
-        <img src={collection.image_url} alt={collection.name} className="collection-image" />
-    )}
-    <h2>{collection.name}</h2>
-    <p>{collection.description}</p>
-    {/* Display more data as needed */}
-    </div>
-);
+  gameName: string;
+  background: string;
 }
+
+export const GameCard: React.FC<GameCardProps> = ({ gameName, background }) => {
+  return (
+    <Card className="game-card relative">
+      <Title>{gameName}</Title>
+      <div className="game-background relative h-60"> {/* Adjust height as needed */}
+        {/* Use Next.js Image component for optimized images */}
+        <Image
+          src={background}
+          decoding='async'
+          layout="fill" // This makes the image cover the container, adjust as needed
+          objectFit="cover" // Adjust according to your styling needs
+          alt={`${gameName} background`}
+        />
+      </div>
+      <h1>
+        
+      </h1>
+    </Card>
+  );
+};

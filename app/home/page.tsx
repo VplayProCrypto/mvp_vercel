@@ -1,56 +1,55 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { Title, Text } from '@tremor/react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title as ChartTitle, Tooltip, Legend } from 'chart.js';
+import React, { useEffect, useState } from 'react';
+import { Card, AreaChart, Title, Text } from '@tremor/react';
 
-// Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ChartTitle, Tooltip, Legend);
-
-const SalesChartPage = () => {
-  const [salesData, setSalesData] = useState([]);
-
-  useEffect(() => {
-    const fetchSalesData = async () => {
-      const options = { method: 'GET', headers: { accept: 'application/json' } };
-      try {
-        const response = await fetch('https://eth-mainnet.g.alchemy.com/nft/v3//getNFTSales?fromBlock=0&toBlock=latest&order=asc&marketplace=seaport&contractAddress=0x06012c8cf97BEaD5deAe237070F9587f8E7A266d&tokenId=44&limit=50', options);
-        const data = await response.json();
-        // Process the data to extract block number and ETH amount
-        const processedData = data.nftSales.map(sale => ({
-          blockNumber: sale.blockNumber,
-          // Convert amount from wei to ETH by dividing by 10^decimals
-          ethAmount: parseFloat(sale.sellerFee.amount) / (10 ** sale.sellerFee.decimals)
-        }));
-        setSalesData(processedData);
-      } catch (error) {
-        console.error('Error fetching sales data:', error);
-      }
-    };
-
-    fetchSalesData();
-  }, []);
-
-  const chartData = {
-    labels: salesData.map(sale => `Block ${sale.blockNumber}`),
-    datasets: [
-      {
-        label: 'Seller Fee (ETH)',
-        data: salesData.map(sale => sale.ethAmount),
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      },
-    ],
-  };
-
-  return (
-    <main className="p-4 md:p-10 mx-auto max-w-7xl">
-      <Title>NFT Sales Chart</Title>
-      <Text>Visualizing Seller Fees from NFT Sales</Text>
-      <Line data={chartData} />
-    </main>
-  );
+type SandboxStatItem = {
+  on_date: string;
+  number_of_active_users: number;
+  volume: number;
 };
 
-export default SalesChartPage;
+type TransformedDataItem = {
+  Date: string;
+  'Active Users': number;
+  Volume: number;
+};
+
+export default function Dashboard() {
+  // Use the type with useState to let TypeScript know what the state will hold
+  const [data, setData] = useState<TransformedDataItem[]>([]);
+
+  useEffect(() => {
+    fetch('/api/sandbox-stats') // Corrected path
+      .then(response => response.json())
+      .then((apiData: SandboxStatItem[]) => {
+        const transformedData = apiData.map((item: SandboxStatItem) => ({
+          Date: item.on_date,
+          'Active Users': item.number_of_active_users,
+          Volume: item.volume,
+        }));
+        setData(transformedData);
+      })
+      .catch(error => console.error("Failed to fetch data", error));
+  }, []);
+  
+
+
+  return (
+    <Card className="mt-8">
+      <Title>The Sandbox Protocol Stats</Title>
+      <Text>Active Users and Volume over time</Text>
+      <AreaChart
+        className="mt-4 h-80"
+        data={data}
+        categories={['Active Users', 'Volume']}
+        index="Date"
+        colors={['blue', 'green']}
+        valueFormatter={(number) =>
+          number.toLocaleString('us', { style: 'currency', currency: 'USD' })
+        }
+        yAxisWidth={60}
+      />
+    </Card>
+  );
+}
