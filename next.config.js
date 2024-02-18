@@ -9,7 +9,28 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'avatar.vercel.sh'
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.seadn.io'
+      },
+      {
+        protocol: 'https',
+        hostname: 'openseauserdata.com'
+      },
+      { protocol: 'https', hostname: 'nft.mavia.com' },
+      { protocol: 'https', hostname: 'ipfs.io' },
+      { protocol: 'https', hostname: 'gateway.pinata.cloud' },
+      { protocol: 'https', hostname: 'api.opensea.io' },
+      {
+        protocol: 'https',
+        hostname: 'skygatetaiwan.s3.ap-southeast-1.amazonaws.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'pixelmon-training-rewards.s3-accelerate.amazonaws.com'
+      },
+      { protocol: 'https', hostname: 'resources.xter.io' }
     ]
   }
 };
