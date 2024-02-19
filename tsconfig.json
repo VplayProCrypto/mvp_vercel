@@ -28,6 +28,6 @@
     "**/*.tsx",
     "*/*/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "pages/dashboard/components/hero_bar.jsx"  ],
   "exclude": ["node_modules"]
 }
