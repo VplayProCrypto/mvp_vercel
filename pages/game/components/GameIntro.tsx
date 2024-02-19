@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type GameIntroProps = {
   title: string;
@@ -9,13 +9,69 @@ type GameIntroProps = {
   communityScore: string;
   playerCount: string;
   rewardsText: string;
-  stars: number;
-  twentyDayRR: string;
-  rpgText: string;
-  beginnerFriendly: string;
-  engine: string;
+  stars: string;
+  rr: string;
+  genre: string;
+  friendly: string;
 };
-import Image from 'next/image';
+import Image from "next/image";
+
+interface DescriptionCardsProps {
+  communityScore: string;
+  playerCount: string;
+  rewardsText: string;
+  stars: string;
+  rr: string;
+  genre: string;
+  friendly: string;
+}
+
+interface DescriptionCardProps {
+  item: string;
+  description?: string;
+}
+
+const DescriptionCard: React.FC<DescriptionCardProps> = ({
+  item,
+  description,
+}) => {
+  return (
+    <div className="flex flex-col bg-black rounded-full items-center justify-center m-2">
+      <span className=" text-white font-bold text-1xl">{item}</span>
+      <span className="text-xs mt-1">{description}</span>
+    </div>
+  );
+};
+
+const DescriptionCards: React.FC<DescriptionCardsProps> = ({
+  communityScore,
+  playerCount,
+  rewardsText,
+  stars,
+  rr,
+  genre,
+  friendly,
+}) => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white p-4 rounded-lg">
+      <DescriptionCard
+        item={communityScore}
+        description="A VPLAY Community Score"
+      />
+      <DescriptionCard item={playerCount} description="Player Count" />
+      <DescriptionCard item={rewardsText} description="Rewards" />{" "}
+      {/* Assuming you want a description here */}
+      <DescriptionCard item={stars} description="Stars" />
+      <DescriptionCard item={rr} description="RR" />{" "}
+      {/* Assuming you want a description here */}
+      <DescriptionCard item={genre} description="Genre" />{" "}
+      {/* Assuming you want a description here */}
+      <DescriptionCard item={friendly} />{" "}
+      {/* Assuming you want a description here */}
+    </div>
+  );
+};
+
 const GameIntro: React.FC<GameIntroProps> = ({
   title,
   description,
@@ -26,10 +82,9 @@ const GameIntro: React.FC<GameIntroProps> = ({
   playerCount,
   rewardsText,
   stars,
-  twentyDayRR,
-  rpgText,
-  beginnerFriendly,
-  engine
+  rr,
+  genre,
+  friendly,
 }) => {
   return (
     <div className="bg-stone-800 text-white p-4">
@@ -58,24 +113,16 @@ const GameIntro: React.FC<GameIntroProps> = ({
             {itemsText}
           </button>
         </div>
-
-        <div className="space-x-2">
-          <span className="text-green-500">{rewardsText}</span>
-          <span>{'★'.repeat(stars)}</span>
-          <span className="text-green-500">{twentyDayRR}</span>
-        </div>
       </div>
-      <div className="flex justify-between items-center">
-        <span className="bg-blue-500 text-white font-bold py-1 px-2 rounded">
-          {communityScore}
-        </span>
-        <span>{playerCount}</span>
-      </div>
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-red-500">{rpgText}</span>
-        <span className="text-green-500">{beginnerFriendly}</span>
-      </div>
-      <p className="mt-4">{engine}</p>
+      <DescriptionCards
+        communityScore={communityScore}
+        playerCount={playerCount}
+        rewardsText={rewardsText}
+        stars={stars}
+        rr={rr}
+        genre={genre}
+        friendly={friendly}
+      />
     </div>
   );
 };
