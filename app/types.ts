@@ -334,3 +334,25 @@ export interface Payment {
   decimals: number;
   symbol: string;
 }
+
+export interface Cryptokitty {
+  id: number;
+  tokenId: number;
+  created_at: Date;
+  name: string;
+  background_color: string;
+  image: string;
+  external_url: string;
+  genes: string;
+  fetched_at: number;
+  nickname: string;
+  description: string;
+  attributes: Attribute[];
+  mutable_attributes: Attribute[];
+}
+
+export interface Attribute {
+  trait_type: string;
+  value: number | string;
+  display_type?: string;
+}

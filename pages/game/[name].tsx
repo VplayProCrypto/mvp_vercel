@@ -20,12 +20,13 @@ export const getServerSideProps: GetServerSideProps = async ({
   const collectionStats = await getCollectionStats(name as string);
   const collectionSaleEvents = await getCollectionSaleEvents(
     name as string,
-    '5'
+    '50'
   );
   return {
     props: { collection, listings, collectionStats, collectionSaleEvents }
   };
 };
+//https://www.youtube.com/watch?v=3PTstAK-cH8
 
 export default function Page({
   collection,
@@ -34,8 +35,9 @@ export default function Page({
   collectionSaleEvents
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <main className="h-full bg-gray-50">
+    <main className="h-full bg-stone-800">
       <Hero game={collection} />
+
       <Socials game={collection} />
       <Stats game={collection} stats={collectionStats} />
       <ScatterChartHero assetEvents={collectionSaleEvents} />
