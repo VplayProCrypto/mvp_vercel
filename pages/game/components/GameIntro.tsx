@@ -2,21 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import { DescriptionCards } from './DescriptionCards';
 import { Socials } from './Socials'; // Ensure this path is correct
-import { Collection } from '../../../app/types'; // Ensure this path is correct
+import { Collection, GameDescription } from '../../../app/types'; // Ensure this path is correct
 
 type GameIntroProps = {
   title: string;
   description: string;
   imageUrl?: string;
-  playNowButtonText: string;
-  itemsText: string;
-  communityScore: string;
-  playerCount: string;
-  rewardsText: string;
-  stars: string;
-  rr: string;
-  genre: string;
-  friendly: string;
+  gameDescription: GameDescription;
   game: Collection; // Added to pass to the Socials component
 };
 
@@ -24,15 +16,7 @@ const GameIntro: React.FC<GameIntroProps> = ({
   title,
   description,
   imageUrl,
-  playNowButtonText,
-  itemsText,
-  communityScore,
-  playerCount,
-  rewardsText,
-  stars,
-  rr,
-  genre,
-  friendly,
+  gameDescription,
   game // This is the new property we're passing down
 }) => {
   return (
@@ -62,22 +46,22 @@ const GameIntro: React.FC<GameIntroProps> = ({
                 className="flex items-center text-green-500 hover:text-green-700"
               >
                 <button className="mb-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  {playNowButtonText}
+                  {gameDescription.playNowButtonText}
                 </button>
               </a>
               <button className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                {itemsText}
+                {gameDescription.itemsText}
               </button>
             </div>
           </div>
           <DescriptionCards
-            communityScore={communityScore}
-            playerCount={playerCount}
-            rewardsText={rewardsText}
-            stars={stars}
-            rr={rr}
-            genre={genre}
-            friendly={friendly}
+            communityScore={gameDescription.communityScore}
+            playerCount={gameDescription.playerCount}
+            rewardsText={gameDescription.rewardsText}
+            stars={gameDescription.stars}
+            rr={gameDescription.rr}
+            genre={gameDescription.genre}
+            friendly={gameDescription.friendly}
           />
         </div>
         <div className="flex-none mt-4 lg:mt-0 lg:ml-4">

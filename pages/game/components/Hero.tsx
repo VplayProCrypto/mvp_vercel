@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Collection } from '../../../app/types';
+import { Collection, GameDescription } from '../../../app/types';
 
 import YouTube from 'react-youtube';
 import Carousel from './Carousel';
@@ -31,36 +31,27 @@ const VideoUrls: VideoUrlsType = {
   Decentraland: 'M6gD3afBmkc'
 };
 
-export const Hero: React.FC<{ game: Collection }> = ({ game }) => {
-  const images = [
-    VideoUrls[game.name],
-    game.banner_image_url,
-    ImageImages[game.name]
-  ];
+interface HeroProps {
+  game: Collection;
+  gameDescription: GameDescription;
+}
+
+export const Hero: React.FC<HeroProps> = ({ game, gameDescription }) => {
+  const videoId = game.name in VideoUrls ? VideoUrls[game.name] : '';
+  const images = [videoId, game.banner_image_url, ImageImages[game.name]];
 
   return (
     <div className="bg-stone-800 text-white rounded-lg shadow-lg p-4 m-4 flex flex-col items-center">
-      <div className="relative mt-4 mb-4">
-        <Carousel
-          images={images}
-          hasVideo={game.name in VideoUrls}
-          hasImage={game.name in ImageImages}
-        />
-      </div>
-
+      <Carousel
+        images={images}
+        hasVideo={!!videoId}
+        hasImage={!!ImageImages[game.name]}
+      />
       <GameIntro
         title={game.name}
         description={game.description}
         imageUrl={game.image_url}
-        playNowButtonText="Play Now"
-        itemsText="Items"
-        communityScore="A VPLAY Community Score"
-        playerCount="Top 20% Player Count"
-        rewardsText="High Rewards"
-        stars="4"
-        rr="10 Day RR"
-        genre="Pet"
-        friendly="Beginner Friendly"
+        gameDescription={gameDescription}
         game={game}
       />
     </div>

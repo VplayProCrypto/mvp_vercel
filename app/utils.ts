@@ -30,3 +30,5 @@ export const parsePrice = (currentPrice: CurrentListingPrice) => {
         currentPrice.currency
     : currentPrice.value + ' ' + currentPrice.currency;
 };
+
+//This is temporary code

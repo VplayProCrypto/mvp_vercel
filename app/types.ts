@@ -356,3 +356,21 @@ export interface Attribute {
   value: number | string;
   display_type?: string;
 }
+
+export interface GameDescription {
+  playNowButtonText: string;
+  itemsText: string;
+  communityScore: string;
+  playerCount: string;
+  rewardsText: string;
+  stars: string;
+  rr: string;
+  genre: string;
+  friendly: string;
+}
+
+// Define an interface for the container of all game entries
+// Adjusted to allow more flexible game names
+export interface GameDescriptions {
+  [key: string]: GameDescription;
+}
