@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 export default function AccessPage() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ export default function AccessPage() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ email, name })
       });
 
       const data = await response.json();
@@ -63,6 +64,13 @@ export default function AccessPage() {
           onSubmit={handleSubmit}
           className="flex flex-col items-center w-full max-w-lg px-4"
         >
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)} // Make sure to define `name` and `setName` with useState
+            className="w-full border-2 border-transparent bg-gray-800 bg-opacity-50 focus:border-blue-500 focus:ring-blue-500 text-base outline-none text-white py-3 px-5 leading-8 transition-colors duration-200 ease-in-out rounded-lg mb-4"
+          />
           <input
             type="email"
             placeholder="Email"

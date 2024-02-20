@@ -2,7 +2,7 @@
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const { email } = req.body;
+    const { email, name } = req.body;
 
     // Your Airtable API URL and headers
     const AIRTABLE_URL = `https://api.airtable.com/v0/app1XIenbHqdqZsVe/tblrAwAXSlvbs0lAP`;
@@ -16,6 +16,7 @@ export default async function handler(req, res) {
         records: [
           {
             fields: {
+              Name: name,
               Email: email // Assuming you're storing the email address in a field named "Email"
               // Add other fields you want to include here
             }
