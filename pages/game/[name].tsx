@@ -24,7 +24,7 @@ const games = ['cryptokitties', 'mavia-land', 'pixels-farm', 'decentraland'];
 // Define an interface for the games' individual entry
 
 // Define the main gameDescription constant with the new interface
-const gameDescription: GameDescriptions = {
+export const gameDescription: GameDescriptions = {
   cryptokitties: {
     playNowButtonText: 'Play Now',
     itemsText: 'Items',
