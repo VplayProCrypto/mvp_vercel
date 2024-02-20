@@ -3,6 +3,7 @@
 import Head from 'next/head';
 import React, { useState } from 'react';
 import Navbar from '../../app/navbar';
+import Footer from '../../app/components/footer';
 export default function AccessPage() {
   const [email, setEmail] = useState('');
 
@@ -72,6 +73,7 @@ export default function AccessPage() {
           </button>
         </form>
       </div>
+      <Footer />
     </>
   );
 }
