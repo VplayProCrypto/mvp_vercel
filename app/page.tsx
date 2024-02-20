@@ -5,6 +5,7 @@ import Search from './search';
 import { ImageTextCard } from './components/imageTextCard';
 import { StageComponent } from './components/stagesCards';
 import LandingFooter from './components/landingfooter';
+import CallToAction from './components/callToAction';
 export default function IndexPage() {
   return (
     <section className="bg-[#000] text-[#fff]">
@@ -24,6 +25,7 @@ export default function IndexPage() {
       <div>
         <StageComponent />
       </div>
+      <CallToAction />
       <LandingFooter />
     </section>
   );
