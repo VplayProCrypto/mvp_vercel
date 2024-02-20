@@ -30,7 +30,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'pixelmon-training-rewards.s3-accelerate.amazonaws.com'
       },
-      { protocol: 'https', hostname: 'resources.xter.io' }
+      { protocol: 'https', hostname: 'resources.xter.io' },
+      { protocol: 'https', hostname: 'ipfs.io' },
+      { protocol: 'https', hostname: 'nftstorage.link' },
+      { protocol: 'https', hostname: 'www.cryptokitties.co' },
+      { protocol: 'https', hostname: 'img.youtube.com' }
     ]
   }
 };

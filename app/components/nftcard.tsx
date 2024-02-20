@@ -1,7 +1,5 @@
 import { Nft } from '../types';
 import Image from 'next/image';
-import { getBestOfferForNft } from '../opensea';
-import { useState, useEffect } from 'react';
 
 interface NftCardProps {
   nft: Nft;
@@ -9,16 +7,27 @@ interface NftCardProps {
 }
 
 export const NftCard: React.FC<NftCardProps> = ({ nft, price }) => {
-
   return (
-    <div className="border border-gray-300 rounded-md p-4">
+    <div className="border border-gray-500 rounded-md p-4 bg-stone-900 text-white">
       {nft.image_url ? (
-        <Image src={nft.image_url} width="100" height="100" alt=":(" />
+        <div className="flex justify-center">
+          <Image
+            src={nft.image_url}
+            width="200"
+            height="100"
+            alt={'No Image :('}
+            className="rounded-md"
+          />
+        </div>
       ) : (
-        <h3 className="text-sm overflow-hidden">No image</h3>
+        <h3 className="text-sm overflow-hidden text-center">
+          No image available
+        </h3>
       )}
-      <h3 className="text-sm overflow-hidden">{nft.name}</h3>
-      <h3>{price}</h3>
+      <div className="mt-2">
+        <h3 className="text-lg font-semibold overflow-hidden">{nft.name}</h3>
+        <h3 className="text-md">{price}</h3>
+      </div>
     </div>
   );
 };
