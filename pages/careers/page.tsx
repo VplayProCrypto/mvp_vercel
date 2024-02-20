@@ -33,9 +33,12 @@ const CareersPage: React.FC = () => {
         {/* Iframe section */}
         <div className="w-full max-w-6xl mx-auto mb-8">
           <iframe
-            src="https://airtable.com/embed/shrQM6oiMinYxQOLz?backgroundColor=cyan&layout=card&viewControls=on"
+            className="airtable-embed w-full h-[533px] bg-transparent border border-gray-300"
+            src="https://airtable.com/embed/appb30pDqbguNgmbd/shrQM6oiMinYxQOLz?backgroundColor=cyan&layout=card&viewControls=on"
             frameBorder="0"
-            className="w-full h-[533px] bg-transparent border border-gray-300"
+            width="100%"
+            height="533"
+            style={{ background: 'transparent', border: '1px solid #ddd' }}
           ></iframe>
         </div>
 
