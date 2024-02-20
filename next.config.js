@@ -8,6 +8,10 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'giphy.com'
+      },
+      {
+        protocol: 'https',
         hostname: 'avatar.vercel.sh'
       },
       {

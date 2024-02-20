@@ -2,7 +2,7 @@ import Head from 'next/head';
 import React, { useState } from 'react';
 import Navbar from '../../app/navbar';
 import Footer from '../../app/components/footer';
-import logo from './v.jpg';
+import logo from 'public/images/logo.png';
 import Image from 'next/image';
 
 export default function AccessPage() {
