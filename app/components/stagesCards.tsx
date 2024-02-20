@@ -12,19 +12,19 @@ const stageData: StageData[] = [
   {
     title: 'STAGE 01',
     imageUrl: '/images/stage1_c1.gif',
-    imageAlt: 'A description of the image for stage 1',
+    imageAlt: 'Stage 1 image: data',
     description: " Vplay showcases GameFi insights from filtered and categorized big data for players to browse, access and play by the play aggregator. From NFT renting split reward earnings, to other passive incomes, from tokens that are down with a strong active community to listed games in order of highest rewards. Current player methods involve in depth GameFi knowledge learning and researching. "
   },
   {
     title: 'STAGE 02',
     imageUrl: '/images/stage2_c.gif',
-    imageAlt: 'A description of the image for stage 2',
+    imageAlt: 'Stage 2 image: AI',
     description: 'Natural language queries, VPlay allows searches in natural language, allowing players to search from their own concepts and view results, uniquely presenting new opportunities, and significantly cutting down time and skill researching.'
   },
   {
     title: 'STAGE 03',
     imageUrl: '/images/stage3_c.gif',
-    imageAlt: 'A description of the image for stage 3',
+    imageAlt: 'Stage 3 image: games',
     description: 'Engage in full-scale GameFi activities directly in your search & instructional chat results. Playing, passive game income streams, trading, buying, selling, swapping, renting NFTs, tokens, coins and staking — all become seamlessly integrated into your VPlay experience. Eliminating the use of different protocols and Ul difficulties for various GameFi activities.'
   },
   // Add more stages as needed
@@ -70,11 +70,11 @@ export const StageComponent: React.FC = () => {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 40px;
             padding: 0 20px;
           }
           .image-container {
-            max-width: 50%;
+            max-width: 40%;
           }
           .stage-title {
             font-size: 2rem;
