@@ -18,20 +18,25 @@ import {
 export const getCollection = async (
   collectionName: string
 ): Promise<Collection> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  let url = 'https://api.opensea.io/api/v2/collections' + '/' + collectionName;
-
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
+  // Ensure environment variables are suitable for client-side use
+  const key: string = process.env.REACT_APP_OPENSEA || 'no_api_key'; // Using REACT_APP_ prefix as an example
+  const headers = new Headers({
+    Accept: 'application/json',
+    'X-Api-Key': key // Ensure this key is safe for client-side exposure
   });
+  const url = `https://api.opensea.io/api/v2/collections/${collectionName}`;
 
-  const res = await fetch(request);
-  const data = await res.json();
-  return data as Collection;
+  try {
+    const response = await fetch(url, { method: 'GET', headers });
+    if (!response.ok) {
+      throw new Error(`Error fetching collection: ${response.statusText}`);
+    }
+    const data = await response.json();
+    return data as Collection;
+  } catch (error) {
+    console.error('Failed to fetch collection:', error);
+    throw error; // Rethrow or handle as needed
+  }
 };
 
 export const getNftsByCollection = async (
@@ -39,7 +44,9 @@ export const getNftsByCollection = async (
   limit: string
 ): Promise<Nft[]> => {
   const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
+  const key: string = process.env.REACT_APP_OPENSEA
+    ? process.env.REACT_APP_OPENSEA
+    : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
   let url =

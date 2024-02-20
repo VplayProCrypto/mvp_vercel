@@ -49,7 +49,7 @@ const Carousel: React.FC<CarouselProps> = ({ images, hasVideo }) => {
           <Image
             src={images[index]}
             alt={`image ${index + 1}`}
-            width={2000}
+            width={1000}
             height={300}
             className="rounded-lg"
           />
