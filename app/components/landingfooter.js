@@ -45,14 +45,11 @@ export default function LandingFooter() {
             Linkedin
           </a>
 
-          <a href="#" className="text-gray-400 hover:text-gray-300 mb-1">
-            Telegram (Soon)
-          </a>
-          <a href="#" className="text-gray-400 hover:text-gray-300 mb-1">
-            Discord (Soon)
-          </a>
-          <a href="#" className="text-gray-400 hover:text-gray-300">
-            Facebook (Soon)
+          <a
+            href="https://t.me/VPLAY_ProPlatform"
+            className="text-gray-400 hover:text-gray-300 mb-1"
+          >
+            Telegram
           </a>
         </div>
       </div>
