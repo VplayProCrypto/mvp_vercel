@@ -6,15 +6,24 @@ import Navbar from '../../app/navbar';
 export default function AccessPage() {
   const [email, setEmail] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (email) {
-      // Simulate an action, such as sending an email
-      alert(
-        `Thank you for joining VPLAY! We've sent a confirmation to ${email}`
-      );
-      // Redirect to mailto link targeting vplaycrypto@gmail.com
-      window.location.href = `mailto:vplaycrypto@gmail.com?subject=VPLAY Community Sign-Up&body=I'm interested in joining the VPLAY community. My email is ${email}.`;
+      const response = await fetch('/api/sendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (response.ok) {
+        alert(
+          'Thank you for joining VPLAY! Check your inbox for confirmation.'
+        );
+      } else {
+        alert('There was an issue with your sign-up. Please try again.');
+      }
     } else {
       alert('Please enter your email address.');
     }
