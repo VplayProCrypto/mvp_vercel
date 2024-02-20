@@ -9,6 +9,9 @@ export default function IndexPage() {
       <div>
         <img src={'/images/vpl.png'} alt="image" className={'w-full'} />
       </div>
+      <div>
+        <img src={'/images/text.svg'} alt="image" className={'w-full'} />
+      </div>
     </section>
   )
 }
