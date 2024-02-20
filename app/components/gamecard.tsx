@@ -6,7 +6,7 @@ interface GameCardProps {
   rewardRate: string; // Expected reward rate
   activeWallets: number; // Number of active wallets
   activeUsers: number; // Number of active users
-  onClick: () => void; // Function to execute on card click, for navigation
+  // onClick: () => void; // Function to execute on card click, for navigation
 }
 
 export const GameCard: React.FC<GameCardProps> = ({ banner, name, rewardRate, activeWallets, activeUsers, onClick }) => {
