@@ -72,6 +72,15 @@ export default function AccessPage() {
             Join Us
           </button>
         </form>
+        <iframe
+          className="airtable-embed"
+          src="https://airtable.com/embed/appb30pDqbguNgmbd/shrQM6oiMinYxQOLz?backgroundColor=cyan&layout=card&viewControls=on"
+          frameBorder="0"
+          onWheel="" // `onmousewheel` is non-standard; use `onWheel` for React if you need wheel event handling, otherwise remove it if not needed
+          width="100%"
+          height="533"
+          style={{ background: 'transparent', border: '1px solid #ddd' }}
+        ></iframe>
       </div>
       <Footer />
     </>
