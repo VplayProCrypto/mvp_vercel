@@ -43,7 +43,7 @@ export default async function IndexPage({
       <Search />
       <div className='grid grid-cols-6 gap-4 mt-4'>
         {games.map((game, index) => (
-          <GameCard key={index} gameName={game.name} background={game.background} />
+          <GameCard key={index} name={game.name} banner={game.background} />
         ))}
         {nfts.map((nft) => {
           return <NftCard nft={nft} price={''} />;
