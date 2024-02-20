@@ -1,9 +1,10 @@
-// pages/access.js in your Next.js project
-
 import Head from 'next/head';
 import React, { useState } from 'react';
 import Navbar from '../../app/navbar';
 import Footer from '../../app/components/footer';
+import logo from './v.jpg';
+import Image from 'next/image';
+
 export default function AccessPage() {
   const [email, setEmail] = useState('');
 
@@ -36,14 +37,18 @@ export default function AccessPage() {
         <title>Join VPLAY Community</title>
       </Head>
       <Navbar />
-      <div
-        className="flex flex-col items-center justify-center min-h-screen py-2"
-        style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif' }}
-      >
-        <h1 className="text-2xl font-bold" style={{ marginBottom: '1rem' }}>
+      <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gradient-to-r from-gray-900 to-stone-800 text-white px-4 lg:px-0">
+        <Image
+          src={logo}
+          alt="VPLAY Logo"
+          width={150}
+          height={150}
+          className="mx-auto mb-8"
+        />
+        <h1 className="text-4xl font-bold mb-6 text-center">
           Join the VPLAY Community and Beta Testing
         </h1>
-        <p style={{ maxWidth: '600px', marginBottom: '2rem' }}>
+        <p className="max-w-lg mb-8 text-lg text-center">
           VPLAY is rolling out activities for gamers and NFT enthusiasts like
           you. Join our community, get updates and early access to the VPLAY
           platform, contribute by letting us know what you think and help shape
@@ -51,36 +56,22 @@ export default function AccessPage() {
         </p>
         <form
           onSubmit={handleSubmit}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
+          className="flex flex-col items-center w-full max-w-lg px-4"
         >
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out rounded"
-            style={{ marginBottom: '1rem' }}
+            className="w-full border-2 border-transparent bg-gray-800 bg-opacity-50 focus:border-blue-500 focus:ring-blue-500 text-base outline-none text-white py-3 px-5 leading-8 transition-colors duration-200 ease-in-out rounded-lg mb-6"
           />
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg"
           >
             Join Us
           </button>
         </form>
-        <iframe
-          className="airtable-embed"
-          src="https://airtable.com/embed/appb30pDqbguNgmbd/shrQM6oiMinYxQOLz?backgroundColor=cyan&layout=card&viewControls=on"
-          frameBorder="0"
-          onWheel="" // `onmousewheel` is non-standard; use `onWheel` for React if you need wheel event handling, otherwise remove it if not needed
-          width="100%"
-          height="533"
-          style={{ background: 'transparent', border: '1px solid #ddd' }}
-        ></iframe>
       </div>
       <Footer />
     </>
