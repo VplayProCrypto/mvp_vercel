@@ -20,12 +20,7 @@ import { TableHero } from '../dashboard/components/games_table';
 import { SparkAreaUsageExample } from '../dashboard/components/game_stat_charts';
 import { Collection, CollectionStats } from '../../app/types';
 
-const games = [
-  "cryptokitties",
-  "mavia-land",
-  "axie",
-  "delysium"
-]
+const games = ['cryptokitties', 'mavia-land', 'axie', 'delysium'];
 
 export const getServerSideProps: GetServerSideProps = async ({
   query: { name }
@@ -56,35 +51,34 @@ export default function Page({
       <div
         className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 justify-center items-start`}
       >
-      <Search />
-      <Hero game={collection} />
-      <SparkAreaUsageExample />
-      <TableHero key={collection} game={collection} stats={collectionStats}/>
-      <Socials game={collection} />
-      <Stats game={collection} stats={collectionStats} />
-      <ScatterChartHero assetEvents={collectionSaleEvents} />
-      <p className="text-2xl font-bold mb-2 mt-4">NFTS</p>
-      <div className="grid grid-cols-6 gap-4 mt-4">
-        {listings ? (
-          listings.map((nftextended: NftExtended) => (
-            <NftCard
-              key={nftextended.identifier}
-              nft={nftextended}
-              price={
-                nftextended.current_price
-                  ? parsePrice(nftextended.current_price)
-                  : 'No price'
-              }
-            />
-          ))
-        ) : (
-          <h1 className="col-span-full text-center">No NFTs</h1>
-        )}
+        <Search />
+        <Hero game={collection} />
+        <SparkAreaUsageExample />
+        <TableHero key={collection} game={collection} stats={collectionStats} />
+        <Socials game={collection} />
+        <Stats game={collection} stats={collectionStats} />
+        <ScatterChartHero assetEvents={collectionSaleEvents} />
+        <p className="text-2xl font-bold mb-2 mt-4">NFTS</p>
+        <div className="grid grid-cols-6 gap-4 mt-4">
+          {listings ? (
+            listings.map((nftextended: NftExtended) => (
+              <NftCard
+                key={nftextended.identifier}
+                nft={nftextended}
+                price={
+                  nftextended.current_price
+                    ? parsePrice(nftextended.current_price)
+                    : 'No price'
+                }
+              />
+            ))
+          ) : (
+            <h1 className="col-span-full text-center">No NFTs</h1>
+          )}
+        </div>
       </div>
       <Stats game={collection} stats={collectionStats} />
       <ScatterChartHero assetEvents={collectionSaleEvents} />
     </main>
   );
 }
-
-
