@@ -9,16 +9,6 @@ interface NftCardProps {
 }
 
 export const NftCard: React.FC<NftCardProps> = ({ nft, price }) => {
-  // const [bestOffer, setBestOffer] = useState<any>(null);
-
-  // useEffect(() => {
-  //   const fetchBestOffer = async () => {
-  //     const offer = await getBestOfferForNft(nft.identifier, nft.collection);
-  //     setBestOffer(offer);
-  //   };
-
-  //   fetchBestOffer();
-  // }, [nft]);
 
   return (
     <div className="border border-gray-300 rounded-md p-4">

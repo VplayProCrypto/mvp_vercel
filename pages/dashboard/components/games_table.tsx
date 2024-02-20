@@ -13,11 +13,8 @@ import {
     game: Collection;
     stats: CollectionStats;
   }
-  interface StatsProps {
-    interval : Interval;
-  }
 
-  export const TableHero: React.FC<StatsProps> = ({game, stats, interval}) => (
+  export const TableHero: React.FC<StatsProps> = ({game, stats}) => (
     <div className="mx-auto max-w-2xl">
       <Table>
         <TableHead>
@@ -28,9 +25,9 @@ import {
             </TableHeaderCell>
             <TableHeaderCell>Chain</TableHeaderCell>
             <TableHeaderCell>Supply</TableHeaderCell>
-            <TableHeaderCell>24H Change</TableHeaderCell>
+            {/* <TableHeaderCell>24H Change</TableHeaderCell>
             <TableHeaderCell>24H Volume</TableHeaderCell>
-            <TableHeaderCell>24H Sales</TableHeaderCell>
+            <TableHeaderCell>24H Sales</TableHeaderCell> */}
             <TableHeaderCell>RR</TableHeaderCell>
           </TableRow>
         </TableHead>
@@ -41,9 +38,9 @@ import {
                 <TableCell className='text-right'> {stats.total.floor_price} </TableCell>
                 <TableCell> {stats.total.floor_price_symbol}</TableCell>
                 <TableCell> {game.total_supply}</TableCell>
-                <TableCell> {interval.volume_change}</TableCell>
+                {/* <TableCell> {interval.volume_change}</TableCell>
                 <TableCell> {interval.volume}</TableCell>
-                <TableCell> {interval.sales}</TableCell>
+                <TableCell> {interval.sales}</TableCell> */}
                 <TableCell> Coming soon</TableCell>
             </TableRow>
         </TableBody>

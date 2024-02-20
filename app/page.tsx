@@ -6,7 +6,7 @@ import { db } from './database';
 import 'dotenv/config';
 import { UserUpdate, Users, NewUser, Collection, Nft, Nfts } from './types';
 import {
-  getCollectionOpenSeaSDK,
+  // getCollectionOpenSeaSDK,
   getCollection,
   getNftsByCollection,
   getCollectionsByChain
@@ -34,22 +34,22 @@ export default async function IndexPage({
   ];
 
   const collection = await getCollection('cryptokitties');
-  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '10');
+  const nfts: Nft[] = await getNftsByCollection('cryptokitties', '1');
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>Feature Games</Title>
       <Text>A list of users retrieved from a Postgres database.</Text>
       <Search />
-      {games.map((game, index) => (
-        <GameCard key={index} gameName={game.name} background={game.background} />
-      ))}
-      {nfts.map((nft) => {
-        return <NftCard nft={nft} />;
-      })}
+      <div className='grid grid-cols-6 gap-4 mt-4'>
+        {games.map((game, index) => (
+          <GameCard key={index} gameName={game.name} background={game.background} />
+        ))}
+        {nfts.map((nft) => {
+          return <NftCard nft={nft} price={''} />;
+        })}
+      </div>
     </main>
   );
 }
-// import { NftCard } from './components/nftcard';
-// import { GameCard } from './components/gamecard';
 

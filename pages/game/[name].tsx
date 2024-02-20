@@ -12,6 +12,21 @@ import { Hero } from './components/Hero';
 import { Socials } from './components/Socials';
 import { Stats } from './components/Stats';
 import { ScatterChartHero } from './components/EventScatterPlot';
+import React, { useEffect, useState } from 'react';
+import { Card, AreaChart, Title, Text } from '@tremor/react';
+import Search from '../../app/search';
+import Navbar from '../dashboard/components/hero_bar';
+import { TableHero } from '../dashboard/components/games_table';
+import { SparkAreaUsageExample } from '../dashboard/components/game_stat_charts';
+import { Collection, CollectionStats } from '../../app/types';
+
+const games = [
+  "cryptokitties",
+  "mavia-land",
+  "axie",
+  "delysium"
+]
+
 export const getServerSideProps: GetServerSideProps = async ({
   query: { name }
 }) => {
@@ -35,7 +50,10 @@ export default function Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main className="h-full bg-gray-50">
+      <Search />
       <Hero game={collection} />
+      <SparkAreaUsageExample />
+      <TableHero key={collection} game={collection} stats={collectionStats}/>
       <Socials game={collection} />
       <Stats game={collection} stats={collectionStats} />
       <ScatterChartHero assetEvents={collectionSaleEvents} />
@@ -61,3 +79,5 @@ export default function Page({
     </main>
   );
 }
+
+

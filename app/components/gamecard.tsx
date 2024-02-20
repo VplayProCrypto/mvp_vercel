@@ -1,28 +1,33 @@
-import Image from 'next/image';
-import { Card, Title } from '@tremor/react';
+import React from 'react';
 
 interface GameCardProps {
-  gameName: string;
-  background: string;
+  banner: string; // URL to the game banner image
+  name: string; // Name of the game
+  rewardRate: string; // Expected reward rate
+  activeWallets: number; // Number of active wallets
+  activeUsers: number; // Number of active users
+  onClick: () => void; // Function to execute on card click, for navigation
 }
 
-export const GameCard: React.FC<GameCardProps> = ({ gameName, background }) => {
+export const GameCard: React.FC<GameCardProps> = ({ banner, name, rewardRate, activeWallets, activeUsers, onClick }) => {
   return (
-    <Card className="game-card relative">
-      <Title>{gameName}</Title>
-      <div className="game-background relative h-60"> {/* Adjust height as needed */}
-        {/* Use Next.js Image component for optimized images */}
-        <Image
-          src={background}
-          decoding='async'
-          layout="fill" // This makes the image cover the container, adjust as needed
-          objectFit="cover" // Adjust according to your styling needs
-          alt={`${gameName} background`}
-        />
+    <div
+      className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer hover:bg-gray-100"
+      onClick={onClick}
+    >
+      <img className="rounded-t-lg w-full h-40 object-cover" src={banner} alt={name} />
+
+      <div className="p-5">
+        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{name}</h5>
+
+        <p className="mb-3 font-normal text-gray-700">Expected Reward: {rewardRate}</p>
+
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600 text-sm">Active Wallets: {activeWallets}</span>
+          <span className="text-gray-600 text-sm">Active Users: {activeUsers}</span>
+        </div>
       </div>
-      <h1>
-        
-      </h1>
-    </Card>
+    </div>
   );
 };
+
