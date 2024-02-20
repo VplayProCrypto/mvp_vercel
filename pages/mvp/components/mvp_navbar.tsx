@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ gasFee }) => {
                 />
             </div>
             <div className="info">
-                <span className="gas-fee mr-4">Gas Fee: {gasFee}</span>
+                <span className="gas-fee mr-4">Gas Fee: {'coming soon'}</span>
                 <button
                     className="connect-wallet bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     onClick={() => {console.log()}}
