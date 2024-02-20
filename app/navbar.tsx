@@ -1,5 +1,6 @@
 'use client';
-
+import Link from 'next/link';
+import Image from 'next/image';
 import { Fragment, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
@@ -10,7 +11,6 @@ import {
   ChevronDownIcon
 } from '@heroicons/react/24/outline';
 import { signIn, signOut } from 'next-auth/react';
-import Image from 'next/image';
 
 const navigation = [
   { name: 'Community', href: '/sign_up/page' },
@@ -33,7 +33,10 @@ export default function Navbar({
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <Disclosure as="nav" className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
+    <Disclosure
+      as="nav"
+      className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -41,9 +44,14 @@ export default function Navbar({
               {/* Logo */}
               <div className="flex items-center">
                 <div className="shrink-0">
-                  <a className='home_button' href='/'>
-                  <img src={'/images/vplay.png'} alt="image" width={100} height={100} />
-                  </a>
+                  <Link className="home_button" href="/">
+                    <img
+                      src={'/images/vplay.png'}
+                      alt="image"
+                      width={100}
+                      height={100}
+                    />
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
@@ -51,8 +59,6 @@ export default function Navbar({
                   </div>
                 </div>
               </div>
-
-              
 
               {/* Right-side elements */}
               <div className="ml-4 flex items-center md:ml-6">
@@ -78,7 +84,7 @@ export default function Navbar({
                       {navigation.map((item) => (
                         <Menu.Item key={item.name}>
                           {({ active }) => (
-                            <a
+                            <Link
                               href={item.href}
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
@@ -86,7 +92,7 @@ export default function Navbar({
                               )}
                             >
                               {item.name}
-                            </a>
+                            </Link>
                           )}
                         </Menu.Item>
                       ))}
@@ -96,11 +102,11 @@ export default function Navbar({
 
                 {/* Action Button */}
                 <div className="ml-3 relative">
-                  <a href="/mvp/page">
+                  <Link href="/mvp/page">
                     <button className="bg-blue-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                       Access VPLAY
                     </button>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

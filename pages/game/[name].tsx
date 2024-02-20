@@ -13,11 +13,9 @@ import { Socials } from './components/Socials';
 import { Stats } from './components/Stats';
 import { ScatterChartHero } from './components/EventScatterPlot';
 import React, { useEffect, useState } from 'react';
-import { Card, AreaChart, Title, Text } from '@tremor/react';
+
 import Navbar from '../../app/navbar';
-import { TableHero } from '../dashboard/components/games_table';
-import { SparkAreaUsageExample } from '../dashboard/components/game_stat_charts';
-import { Collection, CollectionStats } from '../../app/types';
+
 import Footer from '../../app/components/footer';
 const games = ['cryptokitties', 'mavia-land', 'pixels-farm', 'decentraland'];
 

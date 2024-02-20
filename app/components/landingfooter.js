@@ -1,6 +1,7 @@
 // components/Footer.js or a similar file
 import Image from 'next/image';
 import logo from '../../pages/careers/small.png';
+import Link from 'next/link';
 export default function LandingFooter() {
   return (
     <footer className="bg-gray-900 text-white p-10">
@@ -13,44 +14,47 @@ export default function LandingFooter() {
             height={25}
           />
           <span className="font-bold text-xl mt-6 mb-2">EXPLORE</span>
-          <a
+          <Link
             href="/sign_up/page"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Contact Us
-          </a>
-          <a href="/careers/page" className="text-gray-400 hover:text-gray-300">
+          </Link>
+          <Link
+            href="/careers/page"
+            className="text-gray-400 hover:text-gray-300"
+          >
             Contribute
-          </a>
+          </Link>
         </div>
         <div className="flex flex-col">
           <span className="font-bold text-xl mb-2">SOCIAL</span>
           {/* Assuming 'X' is a placeholder for a name, replace with actual name */}
-          <a
+          <Link
             href="https://twitter.com/VPLAY_PRO"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Twitter
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://medium.com/@vplaypro"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Medium
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://www.linkedin.com/company/vplaypro/"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Linkedin
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="https://t.me/VPLAY_ProPlatform"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Telegram
-          </a>
+          </Link>
         </div>
       </div>
       <div className="text-center text-gray-500 text-sm mt-10">

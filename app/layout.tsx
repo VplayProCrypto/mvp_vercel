@@ -1,7 +1,6 @@
 import './globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
-import Nav from './nav';
 import Toast from './toast';
 import { Suspense } from 'react';
 
@@ -19,9 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full bg-gray-50">
       <body className="h-full">
-        <Suspense>
-          <Nav />
-        </Suspense>
+        <Suspense></Suspense>
         {children}
         <Analytics />
         <Toast />

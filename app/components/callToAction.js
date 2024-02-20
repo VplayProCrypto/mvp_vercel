@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import background from './rewards.png'; // Adjust the import path to where your image is located
-
+import Link from 'next/link';
 export default function CallToAction() {
   return (
     <div className="relative h-screen w-full">
@@ -24,11 +24,11 @@ export default function CallToAction() {
           <p className="mb-5 text-lg text-gray-300">
             Be an early member and contribute to our journey!
           </p>
-          <a href="/sign_up/page">
+          <Link href="/sign_up/page">
             <button className="px-6 py-3 text-lg text-blue-700 bg-white rounded-md shadow-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
               Sign Up Now
             </button>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
