@@ -10,18 +10,42 @@ const Video = () => {
   return <YouTube videoId={videoId} />;
 };
 
+interface ImageUrlsType {
+  [key: string]: string;
+}
+
+const ImageImages: ImageUrlsType = {
+  CryptoKitties:
+    'https://www.cryptokitties.co/images/blog/kitty-cup-2022/kitty-cup-2022.jpg',
+  Decentraland:
+    'https://places.decentraland.org/places/images/places/genesis_plaza_banner.jpg'
+};
+
+interface VideoUrlsType {
+  [key: string]: string;
+}
+//https://www.youtube.com/watch?v=M6gD3afBmkc
+const VideoUrls: VideoUrlsType = {
+  CryptoKitties: '3PTstAK-cH8',
+  'Mavia Land': 'bYmpEeRG-_o',
+  Decentraland: 'M6gD3afBmkc'
+};
+
 export const Hero: React.FC<{ game: Collection }> = ({ game }) => {
   const images = [
-    '3PTstAK-cH8',
+    VideoUrls[game.name],
     game.banner_image_url,
-    'https://www.cryptokitties.co/images/blog/kitty-cup-2022/kitty-cup-2022.jpg',
-    'https://www.cryptokitties.co/images/blog/a-new-fancy-cat-has-joined-the-round-table-of-catelot/a-new-fancy-cat-has-joined-the-round-table-of-catelot.jpg'
+    ImageImages[game.name]
   ];
 
   return (
     <div className="bg-stone-800 text-white rounded-lg shadow-lg p-4 m-4 flex flex-col items-center">
       <div className="relative mt-4 mb-4">
-        <Carousel images={images} hasVideo={true} />
+        <Carousel
+          images={images}
+          hasVideo={game.name in VideoUrls}
+          hasImage={game.name in ImageImages}
+        />
       </div>
 
       <GameIntro

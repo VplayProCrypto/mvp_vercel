@@ -38,7 +38,11 @@ const nextConfig = {
       { protocol: 'https', hostname: 'ipfs.io' },
       { protocol: 'https', hostname: 'nftstorage.link' },
       { protocol: 'https', hostname: 'www.cryptokitties.co' },
-      { protocol: 'https', hostname: 'img.youtube.com' }
+      { protocol: 'https', hostname: 'img.youtube.com' },
+      { protocol: 'https', hostname: 'api.decentraland.org' },
+      { protocol: 'https', hostname: 'worlds-content-server.decentraland.org' },
+      { protocol: 'https', hostname: 'places.decentraland.org' },
+      { protocol: 'https', hostname: 'hang.mypinata.cloud' }
     ]
   }
 };
