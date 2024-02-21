@@ -67,7 +67,7 @@ export const gameDescription: GameDescriptions = {
     friendly: 'Beginner Frq'
   }
 };
-
+//
 export const getServerSideProps: GetServerSideProps = async ({
   query: { name }
 }) => {
