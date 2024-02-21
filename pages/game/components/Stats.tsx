@@ -90,7 +90,7 @@ const TotalStatsCard: React.FC<{ supply: number; total: Total }> = ({
   );
 };
 
-export const Stats: React.FC<StatsProps> = ({ game, stats }) => {
+const Stats: React.FC<StatsProps> = ({ game, stats }) => {
   return (
     <div className="bg-stone-800 p-6 m-4 rounded-lg shadow-lg text-white">
       <h3 className="text-2xl font-semibold mb-4">Stats for {game.name}</h3>
@@ -103,3 +103,5 @@ export const Stats: React.FC<StatsProps> = ({ game, stats }) => {
     </div>
   );
 };
+
+export default Stats;

@@ -27,7 +27,7 @@ const DescriptionCard: React.FC<DescriptionCardProps> = ({
   );
 };
 
-export const DescriptionCards: React.FC<DescriptionCardsProps> = ({
+const DescriptionCards: React.FC<DescriptionCardsProps> = ({
   communityScore,
   playerCount,
   rewardsText,
@@ -51,3 +51,5 @@ export const DescriptionCards: React.FC<DescriptionCardsProps> = ({
     </div>
   );
 };
+
+export default DescriptionCards;

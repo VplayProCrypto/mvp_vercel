@@ -15,7 +15,7 @@ interface SocialsProps {
   game: Collection;
 }
 
-export const Socials: React.FC<SocialsProps> = ({ game }) => {
+const Socials: React.FC<SocialsProps> = ({ game }) => {
   return (
     <div className="bg-stone-800 text-white rounded-lg shadow-lg p-4 m-4 max-w-xs">
       <h3 className="text-3xl font-bold mb-2 mt-4">Socials</h3>
@@ -78,3 +78,5 @@ export const Socials: React.FC<SocialsProps> = ({ game }) => {
     </div>
   );
 };
+
+export default Socials;

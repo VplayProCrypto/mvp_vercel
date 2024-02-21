@@ -36,7 +36,7 @@ interface HeroProps {
   gameDescription: GameDescription;
 }
 
-export const Hero: React.FC<HeroProps> = ({ game, gameDescription }) => {
+const Hero: React.FC<HeroProps> = ({ game, gameDescription }) => {
   const videoId = game.name in VideoUrls ? VideoUrls[game.name] : '';
   const images = [videoId, game.banner_image_url, ImageImages[game.name]];
 
@@ -57,3 +57,5 @@ export const Hero: React.FC<HeroProps> = ({ game, gameDescription }) => {
     </div>
   );
 };
+
+export default Hero;

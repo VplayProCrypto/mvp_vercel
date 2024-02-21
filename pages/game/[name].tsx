@@ -8,10 +8,9 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import { NftExtended, GameDescriptions } from '../../app/types';
 import { NftCard } from '../../app/components/nftcard';
 import { parsePrice } from '../../app/utils';
-import { Hero } from './components/Hero';
-import { Socials } from './components/Socials';
-import { Stats } from './components/Stats';
-import { ScatterChartHero } from './components/EventScatterPlot';
+import Hero from './components/Hero';
+import Stats from './components/Stats';
+import ScatterChartHero from './components/EventScatterPlot';
 import React, { useEffect, useState } from 'react';
 
 import Navbar from '../../app/navbar';

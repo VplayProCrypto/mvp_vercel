@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { DescriptionCards } from './DescriptionCards';
-import { Socials } from './Socials'; // Ensure this path is correct
+import DescriptionCards from './DescriptionCards';
+import Socials from './Socials'; // Ensure this path is correct
 import { Collection, GameDescription } from '../../../app/types'; // Ensure this path is correct
 
 type GameIntroProps = {

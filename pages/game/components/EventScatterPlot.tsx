@@ -18,9 +18,7 @@ const getScatterPlotPoints = (assetEvents: AssetEvent[]) => {
   }));
 };
 
-export const ScatterChartHero: React.FC<ScatterChartHeroProps> = ({
-  assetEvents
-}) => {
+const ScatterChartHero: React.FC<ScatterChartHeroProps> = ({ assetEvents }) => {
   if (!assetEvents || assetEvents.length === 0) {
     return <h2 className="text-white">No Events</h2>;
   }
@@ -64,3 +62,5 @@ export const ScatterChartHero: React.FC<ScatterChartHeroProps> = ({
     </div>
   );
 };
+
+export default ScatterChartHero;
