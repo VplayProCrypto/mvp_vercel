@@ -45,7 +45,7 @@ export default function Navbar({
               <div className="flex items-center">
                 <div className="shrink-0">
                   <Link className="home_button" href="/">
-                    <img
+                    <Image
                       src={'/images/vplay.png'}
                       alt="image"
                       width={100}

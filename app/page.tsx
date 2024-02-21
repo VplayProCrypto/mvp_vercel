@@ -6,14 +6,15 @@ import { ImageTextCard } from './components/imageTextCard';
 import { StageComponent } from './components/stagesCards';
 import LandingFooter from './components/landingfooter';
 import CallToAction from './components/callToAction';
+import Image from 'next/image';
 export default function IndexPage() {
   return (
     <section className="bg-[#000] text-[#fff]">
       <div>
-        <img src={'/images/vpl.png'} alt="image" className={'w-full'} />
+        <Image src={'/images/vpl.png'} alt="image" className={'w-full'} />
       </div>
       <div>
-        <img src={'/images/text.svg'} alt="image" className={'w-full'} />
+        <Image src={'/images/text.svg'} alt="image" className={'w-full'} />
       </div>
       <div>
         <ImageTextCard
