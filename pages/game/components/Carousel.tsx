@@ -8,7 +8,6 @@ interface CarouselProps {
   hasVideo?: boolean;
   hasImage?: boolean;
 }
-
 const Carousel: React.FC<CarouselProps> = ({ images, hasVideo, hasImage }) => {
   const [index, setIndex] = useState(0);
 

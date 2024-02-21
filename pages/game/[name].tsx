@@ -12,7 +12,7 @@ import Hero from './components/Hero';
 import Stats from './components/Stats';
 import ScatterChartHero from './components/EventScatterPlot';
 import React, { useEffect, useState } from 'react';
-
+export const dynamic = 'force-dynamic';
 import Navbar from '../../app/navbar';
 
 import Footer from '../../app/components/footer';
@@ -71,23 +71,41 @@ export const gameDescription: GameDescriptions = {
 export const getServerSideProps: GetServerSideProps = async ({
   query: { name }
 }) => {
-  const collection = await getCollection(name as string);
-  const listings = await getListingsByCollectionsMetadata(name as string, '20');
-  const collectionStats = await getCollectionStats(name as string);
-  const collectionSaleEvents = await getCollectionSaleEvents(
-    name as string,
-    '50'
-  );
-  const gamedescription = gameDescription[name as keyof GameDescriptions];
-  return {
-    props: {
-      collection,
-      listings,
-      collectionStats,
-      collectionSaleEvents,
-      gamedescription
-    }
-  };
+  try {
+    const collection = await getCollection(name as string);
+    const listings = await getListingsByCollectionsMetadata(
+      name as string,
+      '20'
+    );
+    const collectionStats = await getCollectionStats(name as string);
+    const collectionSaleEvents = await getCollectionSaleEvents(
+      name as string,
+      '50'
+    );
+    const gamedescription = gameDescription[name as keyof GameDescriptions];
+
+    // Ensure all fetched data is valid or provide fallbacks
+    return {
+      props: {
+        collection: collection || {}, // Fallback to empty object if undefined
+        listings: listings || [], // Fallback to empty array if undefined
+        collectionStats: collectionStats || {}, // Fallback to empty object if undefined
+        collectionSaleEvents: collectionSaleEvents || [], // Fallback to empty array if undefined
+        gamedescription: gamedescription || {} // Fallback to empty object or some default description
+      }
+    };
+  } catch (error) {
+    console.error('Error fetching data: ', error);
+    return {
+      props: {
+        collection: {},
+        listings: [],
+        collectionStats: {},
+        collectionSaleEvents: [],
+        gamedescription: {} // Provide a sensible default or redirect/error
+      }
+    };
+  }
 };
 
 export default function Page({

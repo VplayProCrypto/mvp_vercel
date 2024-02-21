@@ -3,7 +3,7 @@
 import { func } from 'prop-types';
 import React from 'react';
 
-import { GamesList } from './components/gameCards';
+import GamesList from './components/gameCards';
 import Navbar from './components/mvp_navbar';
 import LandingFooter from '../../app/components/footer';
 
