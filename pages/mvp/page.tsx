@@ -1,11 +1,11 @@
 'use client';
 
-import { func } from "prop-types";
-import React from "react";
+import { func } from 'prop-types';
+import React from 'react';
 
-import { GamesList } from "./components/gameCards";
-import { Navbar } from "./components/mvp_navbar";
-import LandingFooter from "../../app/components/footer"
+import { GamesList } from './components/gameCards';
+import Navbar from './components/mvp_navbar';
+import LandingFooter from '../../app/components/footer';
 
 export default function MVP_dashboard() {
   return (
@@ -21,5 +21,5 @@ export default function MVP_dashboard() {
       </div>
       <LandingFooter />
     </section>
-  )
+  );
 }
