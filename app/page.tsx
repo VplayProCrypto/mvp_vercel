@@ -6,10 +6,12 @@ import { ImageTextCard } from './components/imageTextCard';
 import { StageComponent } from './components/stagesCards';
 import LandingFooter from './components/landingfooter';
 import CallToAction from './components/callToAction';
+import Navbar from './navbar';
 import Image from 'next/image';
 export default function IndexPage() {
   return (
     <section className="bg-[#000] text-[#fff]">
+      <Navbar user={undefined} gasFee={''} />
       <div>
         <Image src={'/images/vpl.png'} alt="image" className={'w-full'} />
       </div>
