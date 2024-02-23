@@ -27,7 +27,13 @@
     "**/*.ts",
     "**/*.tsx",
     "*/*/*.tsx",
+    "*/*/*/*.tsx",
+    "*/*/*/*/*.tsx",
+    "*/*/*//*/*/*.ts",
+    "*/*/*//*/*/*/*.ts",
+    "pages/dashboard/components/hero_bar.jsx",
+    "app/signup/page.tsx",
     ".next/types/**/*.ts"
-, "pages/dashboard/components/hero_bar.jsx", "pages/sign_up/page.js"  ],
+  ],
   "exclude": ["node_modules"]
 }
