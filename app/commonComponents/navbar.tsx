@@ -35,7 +35,7 @@ export default function Navbar({
   return (
     <Disclosure
       as="nav"
-      className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10"
+      className="bg-white shadow-sm fixed top-0 left-0 right-0 z-10 mb-5"
     >
       {({ open }) => (
         <>
@@ -60,10 +60,7 @@ export default function Navbar({
                 </div>
               </div>
 
-              {/* Right-side elements */}
               <div className="ml-4 flex items-center md:ml-6">
-                {/* Pages Dropdown */}
-
                 <Link
                   href={'/careers'}
                   className={classNames(
@@ -74,9 +71,8 @@ export default function Navbar({
                   Careers
                 </Link>
 
-                {/* Action Button */}
                 <div className="ml-3 relative">
-                  <Link href="/signup">
+                  <Link href="/accessvplay">
                     <button className="bg-blue-800 hover:bg-blue-700 text-white f py-2 px-4 rounded">
                       Access VPLAY
                     </button>

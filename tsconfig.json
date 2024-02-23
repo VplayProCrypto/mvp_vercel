@@ -32,7 +32,7 @@
     "*/*/*//*/*/*.ts",
     "*/*/*//*/*/*/*.ts",
     "pages/dashboard/components/hero_bar.jsx",
-    "app/signup/page.tsx",
+    "app/accessvplay/page.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]

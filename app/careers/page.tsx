@@ -26,8 +26,6 @@ interface JobPosting {
   createdTime: string;
   fields: JobPostingFields;
 }
-// Import necessary modules from 'node-fetch' if you are using it in a Node.js environment
-// or rely on the global fetch API provided by the browser or polyfills in a frontend context.
 
 async function fetchWithRetry(
   url: string,
@@ -56,7 +54,7 @@ const CareersPage: React.FC = () => {
 
   useEffect(() => {
     const fetchJobPostings = async () => {
-      const url = '/api/airtable'; // Adjust this URL to your actual endpoint
+      const url = '/api/airtable';
       try {
         // Using fetchWithRetry instead of fetch directly
         const data = await fetchWithRetry(url);

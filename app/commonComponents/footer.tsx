@@ -16,7 +16,7 @@ const LandingFooter: React.FC = () => {
           />
           <span className="font-bold text-xl mt-6 mb-2">EXPLORE</span>
           <Link
-            href="/signup"
+            href="mailto:support@vplay.pro"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
             Contact Us

@@ -8,9 +8,8 @@ export async function POST(nextRequest: NextRequest) {
     let apiKeyEnvVar = '';
 
     if ('email' in requestBody && 'name' in requestBody) {
-      // Original request type
       AIRTABLE_URL = `https://api.airtable.com/v0/app1XIenbHqdqZsVe/tblrAwAXSlvbs0lAP`;
-      apiKeyEnvVar = process.env.AIRTABLE_SIGNUP as string; // Use the appropriate environment variable for this request type
+      apiKeyEnvVar = process.env.AIRTABLE_SIGNUP as string;
       bodyPayload = {
         records: [
           {
@@ -22,7 +21,6 @@ export async function POST(nextRequest: NextRequest) {
         ]
       };
     } else if ('records' in requestBody) {
-      // New request type
       AIRTABLE_URL = `https://api.airtable.com/v0/appb30pDqbguNgmbd/Applicants`;
       apiKeyEnvVar = process.env.AIRTABLE_CAREERS as string;
       bodyPayload = requestBody;
@@ -65,27 +63,22 @@ export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
     url.searchParams
   );
 
-  // Define the Airtable API URL
   const airtableUrl =
     'https://api.airtable.com/v0/appb30pDqbguNgmbd/Positions?pageSize=50&view=All%20positions';
 
-  // Make the fetch request to the Airtable API
   try {
     const response = await fetch(airtableUrl, {
-      method: 'GET', // HTTP method
+      method: 'GET',
       headers: {
-        Authorization: `Bearer ${process.env.AIRTABLE_CAREERS_GET_JOBS}` // Use environment variable for the API token
+        Authorization: `Bearer ${process.env.AIRTABLE_CAREERS_GET_JOBS}`
       }
     });
 
     if (!response.ok) {
-      // If the response is not ok, throw an error
       throw new Error(`Airtable API request failed: ${response.statusText}`);
     }
 
-    const data = await response.json(); // Parse the JSON response
-
-    // Return the data as a NextResponse (you might want to adjust this based on your needs)
+    const data = await response.json();
     return new NextResponse(JSON.stringify(data), {
       status: response.status,
       headers: {
@@ -94,9 +87,8 @@ export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     console.error('Error fetching data from Airtable:', error);
-    // Handle errors or return an error response
     return new NextResponse(JSON.stringify({ error: 'Failed to fetch data' }), {
-      status: 500, // Internal Server Error
+      status: 500,
       headers: {
         'Content-Type': 'application/json'
       }

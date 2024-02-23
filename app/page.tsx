@@ -11,6 +11,10 @@ import Image from 'next/image';
 import vpl from '../public/images/vpl.png';
 import text from '../public/images/text.svg';
 import pyramid from '../public/images/pyramid.gif';
+import thor from '../public/images/2.png';
+import stages from '../public/images/5.jpg';
+import three from '../public/images/3.png';
+import eight from '../public/images/8.jpg';
 export default function IndexPage() {
   return (
     <section className="bg-[#000] text-[#fff]">
@@ -28,8 +32,45 @@ export default function IndexPage() {
         <Image
           src={text}
           alt="image"
-          width={100}
-          height={100}
+          width={1920}
+          height={1240}
+          className={'w-full'}
+        />
+      </div>
+      <div></div>
+      <div>
+        <Image
+          src={thor}
+          alt="image"
+          width={1920}
+          height={1240}
+          className={'w-full'}
+        />
+      </div>
+      <div>
+        <Image
+          src={three}
+          alt="image"
+          width={1920}
+          height={1240}
+          className={'w-full'}
+        />
+      </div>
+      <div>
+        <Image
+          src={stages}
+          alt="image"
+          width={1920}
+          height={1240}
+          className={'w-full'}
+        />
+      </div>
+      <div>
+        <Image
+          src={eight}
+          alt="image"
+          width={1920}
+          height={1240}
           className={'w-full'}
         />
       </div>
@@ -40,9 +81,7 @@ export default function IndexPage() {
           text="VPlay Gaming is on track to open up GameFi, deploying a groundbreaking three-phase strategy."
         />
       </div>
-      <div>
-        <StageComponent />
-      </div>
+
       <CallToAction />
       <Footer />
     </section>
