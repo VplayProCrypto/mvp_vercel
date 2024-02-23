@@ -1,4 +1,3 @@
-// use client
 'use client';
 import Head from 'next/head';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
@@ -25,13 +24,19 @@ export default function SignUpPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (email) {
+    if (email && name) {
+      // Example request body, adjust based on your API requirements
+      const requestBody = {
+        email,
+        name
+      };
+
       const response = await fetch('/api/airtable', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, name })
+        body: JSON.stringify(requestBody)
       });
 
       const data: SubscribeResponse = await response.json();
@@ -47,7 +52,7 @@ export default function SignUpPage() {
         );
       }
     } else {
-      alert('Please enter your email address.');
+      alert('Please enter both your name and email address.');
     }
   };
 
