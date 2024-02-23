@@ -26,6 +26,29 @@ interface JobPosting {
   createdTime: string;
   fields: JobPostingFields;
 }
+// Import necessary modules from 'node-fetch' if you are using it in a Node.js environment
+// or rely on the global fetch API provided by the browser or polyfills in a frontend context.
+
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit = {},
+  retries: number = 3,
+  backoff: number = 300
+): Promise<any> {
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok)
+      throw new Error(`Fetch failed with status ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error(`Fetch attempt failed: ${error}`); // Log the error
+    if (retries > 0) {
+      console.log(`Retry #${4 - retries} after ${backoff}ms`);
+      await new Promise((resolve) => setTimeout(resolve, backoff));
+      return fetchWithRetry(url, options, retries - 1, backoff * 2);
+    } else throw error;
+  }
+}
 
 const CareersPage: React.FC = () => {
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
@@ -33,10 +56,10 @@ const CareersPage: React.FC = () => {
 
   useEffect(() => {
     const fetchJobPostings = async () => {
+      const url = '/api/airtable'; // Adjust this URL to your actual endpoint
       try {
-        const response = await fetch('/api/airtable');
-        if (!response.ok) throw new Error('Failed to fetch');
-        const data = await response.json();
+        // Using fetchWithRetry instead of fetch directly
+        const data = await fetchWithRetry(url);
         setJobPostings(data.records);
       } catch (error) {
         console.error('Error fetching job postings:', error);
