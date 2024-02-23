@@ -14,73 +14,59 @@ import pyramid from '../public/images/pyramid.gif';
 import thor from '../public/images/2.png';
 import stages from '../public/images/5.jpg';
 import three from '../public/images/3.png';
-import eight from '../public/images/8.jpg';
+import eight from '../public/images/8.svg';
 export default function IndexPage() {
   return (
     <section className="bg-[#000] text-[#fff]">
       <Navbar user={undefined} gasFee={''} />
-      <div>
-        <Image
-          src={vpl}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div>
-        <Image
-          src={text}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div></div>
-      <div>
-        <Image
-          src={thor}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div>
-        <Image
-          src={three}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div>
-        <Image
-          src={stages}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div>
-        <Image
-          src={eight}
-          alt="image"
-          width={1920}
-          height={1240}
-          className={'w-full'}
-        />
-      </div>
-      <div>
-        <ImageTextCard
-          imageUrl={pyramid}
-          altText="via GIPHY"
-          text="VPlay Gaming is on track to open up GameFi, deploying a groundbreaking three-phase strategy."
-        />
-      </div>
+
+      <Image
+        src={vpl}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
+
+      <Image
+        src={text}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
+
+      <Image
+        src={thor}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
+
+      <Image
+        src={three}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
+
+      <Image
+        src={stages}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
+
+      <Image
+        src={eight}
+        alt="image"
+        width={1920}
+        height={1240}
+        className={'w-full'}
+      />
 
       <CallToAction />
       <Footer />
