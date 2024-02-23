@@ -19,7 +19,7 @@ import {
 export const getCollection = async (
   collectionName: string
 ): Promise<Collection> => {
-  const key: string = process.env.REACT_APP_OPENSEA || 'no_api_key';
+  const key: string = process.env.OPENSEA || 'no_api_key';
   const headers = new Headers({
     Accept: 'application/json',
     'X-Api-Key': key
@@ -43,9 +43,7 @@ export const getNftsByCollection = async (
   limit: string
 ): Promise<Nft[]> => {
   const headers: Headers = new Headers();
-  const key: string = process.env.REACT_APP_OPENSEA
-    ? process.env.REACT_APP_OPENSEA
-    : 'no_api_key';
+  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
   headers.set('accept', 'application/json');
   headers.set('x-api-key', key);
   let url =

@@ -10,7 +10,7 @@ export async function POST(nextRequest: NextRequest) {
     if ('email' in requestBody && 'name' in requestBody) {
       // Original request type
       AIRTABLE_URL = `https://api.airtable.com/v0/app1XIenbHqdqZsVe/tblrAwAXSlvbs0lAP`;
-      apiKeyEnvVar = process.env.REACT_APP_AIRTABLE_SIGNUP as string; // Use the appropriate environment variable for this request type
+      apiKeyEnvVar = process.env.AIRTABLE_SIGNUP as string; // Use the appropriate environment variable for this request type
       bodyPayload = {
         records: [
           {
@@ -24,7 +24,7 @@ export async function POST(nextRequest: NextRequest) {
     } else if ('records' in requestBody) {
       // New request type
       AIRTABLE_URL = `https://api.airtable.com/v0/appb30pDqbguNgmbd/Applicants`;
-      apiKeyEnvVar = process.env.REACT_APP_AIRTABLE_CAREERS as string;
+      apiKeyEnvVar = process.env.AIRTABLE_CAREERS as string;
       bodyPayload = requestBody;
     } else {
       throw new Error('Invalid request format');
@@ -74,7 +74,7 @@ export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
     const response = await fetch(airtableUrl, {
       method: 'GET', // HTTP method
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_CAREERS_GET_JOBS}` // Use environment variable for the API token
+        Authorization: `Bearer ${process.env.AIRTABLE_CAREERS_GET_JOBS}` // Use environment variable for the API token
       }
     });
 
