@@ -21,6 +21,7 @@ interface JobPostingFields {
     label: string;
     url: string;
   };
+  record_id?: string;
 }
 
 interface JobPosting {
@@ -55,12 +56,32 @@ async function fetchWithRetry(
   }
 }
 
+async function submitToAirtable(data: FormData) {
+  try {
+    const response = await fetch('/api/airtable', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const responseData = await response.json();
+    if (response.ok) {
+      alert('Thank you for applying');
+    } else {
+      alert(JSON.stringify(responseData.message) || 'Error Encountered');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const CareersPage: React.FC = () => {
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
-
+  const [selectedJobName, setSelectedJobName] = useState<string | null>(null);
   useEffect(() => {
     const fetchJobPostings = async () => {
       const url = '/api/airtable';
@@ -78,8 +99,10 @@ const CareersPage: React.FC = () => {
   }, []);
 
   const handleApplyNow = (job: JobPosting) => {
-    const jobchosen = job.fields.Name as string;
+    const jobchosenname = job.fields.Name as string;
+    const jobchosen = job.fields.record_id as string;
     setSelectedJob(jobchosen);
+    setSelectedJobName(jobchosenname);
     setShowForm(true);
   };
 
@@ -87,18 +110,19 @@ const CareersPage: React.FC = () => {
     return <Loading />;
   }
 
-  if (showForm && selectedJob) {
+  if (showForm && selectedJob && selectedJobName) {
     return (
       <>
         <Head>
           <title>Open Positions - Careers</title>
         </Head>
         <Navbar user={undefined} gasFee={''} />
-        <div className="bg-gray-900 flex flex-col items-center align-middle justify-center">
+        <div className="bg-gray-900 flex flex-col items-center align-middle dark:bg-gray-900 min-h-screen justify-center">
           {' '}
           <ApplicationForm
+            selectedJobName={selectedJobName}
             selectedJob={selectedJob}
-            onSubmit={(formData) => console.log(formData)}
+            onSubmit={(formData) => submitToAirtable(formData)}
           />{' '}
           <button
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200"
@@ -132,6 +156,7 @@ const CareersPage: React.FC = () => {
                 <p className="text-sm text-gray-400">
                   {posting.fields.Department}
                 </p>
+                {posting.fields.record_id}
               </div>
               <div>
                 <p className="text-sm">{posting.fields.Category}</p>

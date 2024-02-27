@@ -14,11 +14,13 @@ interface FormData {
 interface ApplicationFormProps {
   onSubmit: (data: any) => void;
   selectedJob: string;
+  selectedJobName: string;
 }
 
 const ApplicationForm: React.FC<ApplicationFormProps> = ({
   onSubmit,
-  selectedJob
+  selectedJob,
+  selectedJobName
 }) => {
   const [formData, setFormData] = useState<FormData>({
     Name: '',
@@ -48,7 +50,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
             Name: formData.Name,
             'Email address': formData.Email,
             'Applying for': [formData.ApplyingFor],
-            Resume: formData.Resume, // Directly using the URL string
+            Resume: [{ url: formData.Resume }], // Directly using the URL string
             'Why do you want to work with us?':
               formData.WhyDoYouWantToWorkWithUs,
             Phone: formData.Phone
@@ -61,7 +63,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="bg-gray-900  space-y-4">
-      <h2 className="text-white text-2xl font-bold">{selectedJob}</h2>
+      <h2 className="text-white text-2xl font-bold">{selectedJobName}</h2>
       <Input
         className="w-min p-2 rounded-lg text-gray-900"
         type="text"
@@ -78,13 +80,16 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
         onChange={handleInputChange}
         placeholder="Email Address"
       />
+      <p className="text-white">
+        Please provide a publicly accessible url to your resume
+      </p>
       <Input
         className="w-full p-2 rounded-lg text-gray-900"
         type="text"
         name="Resume"
         value={formData.Resume}
         onChange={handleInputChange}
-        placeholder="Resume URL: Please provide a public url to your resume"
+        placeholder="Resume Public URL"
       />
       <textarea
         className="w-full p-2 rounded-lg text-gray-900"
