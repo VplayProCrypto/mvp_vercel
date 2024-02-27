@@ -1,9 +1,11 @@
+// Import necessary dependencies
 'use client';
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Navbar from '../commonComponents/navbar'; // Adjust the import path as needed
 import Footer from '../commonComponents/footer'; // Adjust the import path as needed
 import Loading from '../commonComponents/loading';
+import ApplicationForm from './components/applicationform'; // Ensure this path is correct
 
 interface JobPostingFields {
   Introduction?: string;
@@ -27,6 +29,11 @@ interface JobPosting {
   fields: JobPostingFields;
 }
 
+// Define the interface for your form data if needed
+interface FormData {
+  ApplyingFor: string[];
+}
+
 async function fetchWithRetry(
   url: string,
   options: RequestInit = {},
@@ -39,7 +46,7 @@ async function fetchWithRetry(
       throw new Error(`Fetch failed with status ${response.status}`);
     return await response.json();
   } catch (error) {
-    console.error(`Fetch attempt failed: ${error}`); // Log the error
+    console.error(`Fetch attempt failed: ${error}`);
     if (retries > 0) {
       console.log(`Retry #${4 - retries} after ${backoff}ms`);
       await new Promise((resolve) => setTimeout(resolve, backoff));
@@ -51,12 +58,13 @@ async function fetchWithRetry(
 const CareersPage: React.FC = () => {
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const [selectedJob, setSelectedJob] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchJobPostings = async () => {
       const url = '/api/airtable';
       try {
-        // Using fetchWithRetry instead of fetch directly
         const data = await fetchWithRetry(url);
         setJobPostings(data.records);
       } catch (error) {
@@ -69,14 +77,46 @@ const CareersPage: React.FC = () => {
     fetchJobPostings();
   }, []);
 
+  const handleApplyNow = (job: JobPosting) => {
+    const jobchosen = job.fields.Name as string;
+    setSelectedJob(jobchosen);
+    setShowForm(true);
+  };
+
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (showForm && selectedJob) {
+    return (
+      <>
+        <Head>
+          <title>Open Positions - Careers</title>
+        </Head>
+        <Navbar user={undefined} gasFee={''} />
+        <div className="bg-gray-900 flex flex-col items-center align-middle justify-center">
+          {' '}
+          <ApplicationForm
+            selectedJob={selectedJob}
+            onSubmit={(formData) => console.log(formData)}
+          />{' '}
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200"
+            onClick={() => setShowForm(false)}
+          >
+            Go Back
+          </button>
+        </div>
+
+        <Footer />
+      </>
+    );
   }
 
   return (
     <>
       <Head>
-        <title>Open Positions - Careers at VPLAY</title>
+        <title>Open Positions - Careers</title>
       </Head>
       <Navbar user={undefined} gasFee={''} />
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white py-10">
@@ -96,14 +136,12 @@ const CareersPage: React.FC = () => {
               <div>
                 <p className="text-sm">{posting.fields.Category}</p>
                 {posting.fields['Apply Now'] && (
-                  <a
-                    href={posting.fields['Apply Now'].url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => handleApplyNow(posting)}
                     className="inline-block mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
                   >
                     Apply Now
-                  </a>
+                  </button>
                 )}
               </div>
             </div>
