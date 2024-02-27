@@ -22,7 +22,7 @@ export async function POST(nextRequest: NextRequest) {
       };
     } else if ('records' in requestBody) {
       AIRTABLE_URL = `https://api.airtable.com/v0/appb30pDqbguNgmbd/Applicants`;
-      apiKeyEnvVar = process.env.AIRTABLE_CAREERS as string;
+      apiKeyEnvVar = process.env.AIRTABLE_CAREERS_APPLY as string;
       bodyPayload = requestBody;
     } else {
       throw new Error('Invalid request format');
@@ -47,9 +47,10 @@ export async function POST(nextRequest: NextRequest) {
     return NextResponse.json({ message: 'Success', data }, { status: 200 });
   } catch (error) {
     console.log(error);
+    console.log(nextRequest);
     // Catch and return any errors
     return NextResponse.json(
-      { message: (error as string) || 'An error occurred' },
+      { message: (error as Error) || 'An error occurred' },
       { status: 500 }
     );
   }
