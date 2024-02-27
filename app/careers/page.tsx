@@ -156,7 +156,6 @@ const CareersPage: React.FC = () => {
                 <p className="text-sm text-gray-400">
                   {posting.fields.Department}
                 </p>
-                {posting.fields.record_id}
               </div>
               <div>
                 <p className="text-sm">{posting.fields.Category}</p>
