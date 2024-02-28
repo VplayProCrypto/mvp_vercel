@@ -7,6 +7,7 @@ import Footer from '../commonComponents/footer';
 import Loading from '../commonComponents/loading';
 import ApplicationForm from './components/applicationform';
 import { Button } from '../../@/components/ui/button';
+import Link from 'next/link';
 
 interface JobPostingFields {
   Introduction?: string;
@@ -262,18 +263,13 @@ const CareersPage: React.FC = () => {
               </div>
             </div>
 
-            <ApplicationForm
-              selectedJobName={selectedJobName}
-              selectedJob={selectedJob}
-              onSubmit={(formData) => {
-                submitToAirtable(formData);
-                setShowForm(false);
-                setSelectedJob(null);
-                setSelectedJobName(null);
-              }}
-            />
+            <Button className="bg-blue-500 text-white text-lg px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+              <Link href="https://airtable.com/appb30pDqbguNgmbd/shrV6cUTmfm78otQH">
+                Apply Now
+              </Link>
+            </Button>
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200"
+              className="bg-red-500 text-white text-lg px-4 py-2 rounded hover:bg-red-600 transition duration-200"
               onClick={() => setShowForm(false)}
             >
               Go Back
@@ -309,7 +305,7 @@ const CareersPage: React.FC = () => {
                         onClick={() => handleApplyNow(posting)}
                         className="inline-block mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
                       >
-                        Apply Now
+                        See Details
                       </button>
                     )}
                   </div>
