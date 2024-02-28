@@ -249,7 +249,7 @@ const CareersPage: React.FC = () => {
       <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg space-y-3 flex flex-col items-center">
         {showForm && selectedJob && selectedJobName ? (
           <>
-            <div className="bg-gray-900 min-h-screen flex items-center justify-center text-center p-5">
+            <div className="bg-gray-900 min-h-screen flex items-center justify-center text-center mt-20 p-5">
               <div>
                 <h2 className="text-white text-3xl md:text-4xl font-bold mb-5">
                   {selectedJobName}
