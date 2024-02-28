@@ -62,8 +62,7 @@ const ApplicationForm: React.FC<ApplicationFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-900  space-y-4">
-      <h2 className="text-white text-2xl font-bold">{selectedJobName}</h2>
+    <form onSubmit={handleSubmit} className="bg-gray-900 mt-10 space-y-4">
       <Input
         className="w-min p-2 rounded-lg text-gray-900"
         type="text"
