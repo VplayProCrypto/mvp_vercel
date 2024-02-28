@@ -240,12 +240,11 @@ const CareersPage: React.FC = () => {
       </Head>
       <Navbar user={undefined} gasFee={''} />
       {showModal && (
-        <Modal
-          onClose={handleCloseModal}
-          children="Thank you for applying! We will get back to you soon."
-          isOpen={showModal}
-        />
+        <Modal onClose={handleCloseModal} isOpen={showModal}>
+          Thank you for applying! We will get back to you soon.
+        </Modal>
       )}
+
       {/* Modal component to show a friendly message */}
       <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg space-y-3 flex flex-col items-center">
         {showForm && selectedJob && selectedJobName ? (
