@@ -4,8 +4,8 @@ import {
   Insertable,
   JSONColumnType,
   Selectable,
-  Updateable
-} from 'kysely';
+  Updateable,
+} from "kysely";
 
 export type Collection = {
   collection: string;
@@ -72,7 +72,7 @@ export interface Rarity {
 export interface SafelistStatus {}
 
 export enum TokenStandard {
-  Erc721 = 'erc721'
+  Erc721 = "erc721",
 }
 
 export interface Nfts {
@@ -355,24 +355,6 @@ export interface Attribute {
   trait_type: string;
   value: number | string;
   display_type?: string;
-}
-
-export interface GameDescription {
-  playNowButtonText: string;
-  itemsText: string;
-  communityScore: string;
-  playerCount: string;
-  rewardsText: string;
-  stars: string;
-  rr: string;
-  genre: string;
-  friendly: string;
-}
-
-// Define an interface for the container of all game entries
-// Adjusted to allow more flexible game names
-export interface GameDescriptions {
-  [key: string]: GameDescription;
 }
 
 export type ApiResponse = {

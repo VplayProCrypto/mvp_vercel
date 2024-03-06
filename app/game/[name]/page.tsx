@@ -7,11 +7,9 @@ import {
   Collection,
   CollectionStats,
   AssetEvent,
-  GameDescription,
 } from "../../../utils/apiTypes";
 
 import { parsePrice } from "../../../utils/utils";
-import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import ScatterChartHero from "../components/EventScatterPlot";
 
@@ -22,94 +20,36 @@ import Footer from "@/components/footer";
 import NftCard from "@/components/nftcard";
 import Navbar from "@/components/navbar";
 import Loading from "@/components/loading";
+import useFetchGameData from "@/hooks/useFetchGameData";
+import GameHero from "@/components/gameComponents/gameHero";
+
 const Page: NextPage = () => {
   const router = useRouter();
   const pathName = usePathname();
   // States for storing fetched data
-  const [collection, setCollection] = useState<Collection | null>(null);
-  const [listings, setListings] = useState<NftExtended[]>([]);
-  const [collectionStats, setCollectionStats] =
-    useState<CollectionStats | null>(null);
-  const [collectionSaleEvents, setCollectionSaleEvents] = useState<
-    AssetEvent[]
-  >([]);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    if (!pathName) return;
-    // Extract game name from the URL
-    const gameName = pathName.split("/game/").pop();
-    if (!gameName) return;
+  const {
+    loading,
+    collection,
+    listings,
+    collectionStats,
+    collectionSaleEvents,
+  } = useFetchGameData();
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Define the base URL for your API calls
-        const apiUrl = "/api/opensea";
-        const fetchOptions = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        };
-
-        // Fetch requests for various data
-        const collectionPromise = fetch(
-          `${apiUrl}?action=getCollection&collectionName=${gameName}`,
-          fetchOptions
-        );
-        const nftListingsPromise = fetch(
-          `${apiUrl}?action=getListingsByCollectionsMetadata&collection_slug=${gameName}&limit=20`,
-          fetchOptions
-        );
-        const statsPromise = fetch(
-          `${apiUrl}?action=getCollectionStats&collectionSlug=${gameName}`,
-          fetchOptions
-        );
-        const eventsPromise = fetch(
-          `${apiUrl}?action=getCollectionSaleEvents&collectionSlug=${gameName}&limit=50`,
-          fetchOptions
-        );
-
-        // Await all fetch promises and process responses
-        const responses = await Promise.all([
-          collectionPromise,
-          nftListingsPromise,
-          statsPromise,
-          eventsPromise,
-        ]);
-        const [
-          collectionResponse,
-          nftListingsResponse,
-          statsResponse,
-          eventsResponse,
-        ] = await Promise.all(responses.map((res) => res.json()));
-
-        // Update state with fetched data
-        setCollection(collectionResponse);
-        setListings(nftListingsResponse.nftListings);
-        setCollectionStats(statsResponse);
-        setCollectionSaleEvents(eventsResponse.events);
-
-        // setGameDescription(gamedescription[gameName as string]); // Assuming gameDescriptionData is a map of game descriptions
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-        console.log("fetched data");
-      }
-    };
-
-    fetchData();
-  }, [pathName]); // Depend on `router.asPath` to re-fetch data when the path changes
   // console.log(collection, listings, collectionStats, collectionSaleEvents);
   if (loading || !collection || !collectionStats) {
     return <Loading />;
   }
 
   return (
-    <main>
+    <main className=" mt-5">
       <Navbar user={undefined} gasFee={""} />
+      <div className="mr-5 ml-5">
+        <GameHero
+          game={collection}
+          gameDescription={gameDescription[collection.name]}
+        />
+      </div>
 
       <Footer />
     </main>
