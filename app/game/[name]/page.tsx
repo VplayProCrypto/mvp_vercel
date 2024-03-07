@@ -1,17 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-
-import {
-  NftExtended,
-  Collection,
-  CollectionStats,
-  AssetEvent,
-} from "../../../utils/apiTypes";
-
-import { parsePrice } from "../../../utils/utils";
-import Stats from "../components/Stats";
-import ScatterChartHero from "../components/EventScatterPlot";
 
 import { NextPage } from "next";
 
@@ -22,12 +10,13 @@ import Navbar from "@/components/navbar";
 import Loading from "@/components/loading";
 import useFetchGameData from "@/hooks/useFetchGameData";
 import GameHero from "@/components/gameComponents/gameHero";
-
+import GameTabs from "@/components/gameComponents/gameTabs";
+import { Tab } from "@/utils/localTypes";
+import Stats from "../components/Stats";
+import Socials from "../components/Socials";
+import Overview from "@/components/gameComponents/gameOverview";
+import useFetchEthPrice from "@/hooks/useFetchETHPrice";
 const Page: NextPage = () => {
-  const router = useRouter();
-  const pathName = usePathname();
-  // States for storing fetched data
-
   const {
     loading,
     collection,
@@ -36,11 +25,41 @@ const Page: NextPage = () => {
     collectionSaleEvents,
   } = useFetchGameData();
 
-  // console.log(collection, listings, collectionStats, collectionSaleEvents);
+  const { loading: ethPriceLoading, ethPrice } = useFetchEthPrice();
+
   if (loading || !collection || !collectionStats) {
     return <Loading />;
   }
 
+  const tabs: Tab[] = [
+    {
+      name: "Overview",
+      value: (
+        <Overview
+          game={collection}
+          stats={collectionStats}
+          ethPrice={ethPrice}
+        />
+      ),
+    },
+    { name: "In Game Items", value: <div>In Game Items</div> },
+    {
+      name: "Stats",
+      value: <Stats game={collection} stats={collectionStats} />,
+    },
+    {
+      name: "Project Team",
+      value: <div>Project Team</div>,
+    },
+    {
+      name: "Socials",
+      value: <h1>Socials</h1>,
+    },
+    {
+      name: "Reviews",
+      value: <h1>Reviews</h1>,
+    },
+  ];
   return (
     <main className=" mt-5">
       <Navbar user={undefined} gasFee={""} />
@@ -50,7 +69,7 @@ const Page: NextPage = () => {
           gameDescription={gameDescription[collection.name]}
         />
       </div>
-
+      <GameTabs tabs={tabs} />
       <Footer />
     </main>
   );

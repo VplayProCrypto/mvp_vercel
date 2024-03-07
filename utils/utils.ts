@@ -60,3 +60,8 @@ export async function fetchWithRetry(
 //   const videoId = "3PTstAK-cH8"; // Extract the video ID from the URL
 //   return <YouTube videoId={videoId} />;
 // };
+
+export const convertEthToUsd = (
+  amountInEth: number,
+  ethPriceInUsd: number | null
+): number => amountInEth * (ethPriceInUsd || 0.0);

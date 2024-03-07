@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface JobPostingFields {
   Introduction?: string;
   "Required experience"?: string;
@@ -55,4 +57,9 @@ export const Images: ImageUrlsType = {
     "https://www.cryptokitties.co/images/blog/kitty-cup-2022/kitty-cup-2022.jpg",
   Decentraland:
     "https://places.decentraland.org/places/images/places/genesis_plaza_banner.jpg",
+};
+
+export type Tab = {
+  name: string;
+  value: ReactNode;
 };

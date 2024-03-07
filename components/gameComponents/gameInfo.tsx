@@ -17,49 +17,40 @@ const GameInfo: React.FC<GameInfoProps> = ({
   renderStars,
 }) => {
   return (
-    <div className="flex flex-row justify-between mt-5">
-      <div className="flex">
-        <div className="flex-shrink-0">
-          <Image
-            src={game.image_url}
-            alt={game.name}
-            width={100}
-            height={100}
-          />
-        </div>
-        <div className="flex flex-col space-between ml-5">
-          <div className="flex flex-row mt-5 mb-5 space-between">
-            {/* Add mr-4 for margin to the right of each badge except the last one */}
-            <Badge variant="secondary" className="mr-4">
-              {gameDescription.genre}
-            </Badge>
-            <Badge variant="secondary" className="mr-4">
-              {gameDescription.rewardsText}
-            </Badge>
-            {/* No margin right for the last badge to avoid unnecessary spacing at the end */}
-            <Badge variant="secondary">{gameDescription.friendly}</Badge>
-          </div>
-          <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h2 className="text-3xl font-semibold tracking-tight transition-colors mr-5 mb-4">
-                {game.name}
-              </h2>
-              <Button variant="outline">
-                {gameDescription.communityScore + " "}
-                <Users />
-              </Button>
-            </div>
-            <div className="flex ml-2">
-              {renderStars(gameDescription.stars)}
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-row items-center mt-5">
+      <div className="flex-shrink-0">
+        <Image src={game.image_url} alt={game.name} width={100} height={100} />
       </div>
-      <div className="flex">
-        <Button variant="default" className="self-center">
+      <div className="flex flex-col ml-5">
+        <div className="flex flex-row items-center mb-2">
+          <Badge variant="secondary" className="mr-4">
+            {gameDescription.genre}
+          </Badge>
+          <Badge variant="secondary" className="mr-4">
+            {gameDescription.rewardsText}
+          </Badge>
+          <Badge variant="secondary">{gameDescription.friendly}</Badge>
+        </div>
+        <div className="flex flex-row items-center">
+          <h2 className="text-3xl font-semibold tracking-tight transition-colors mr-5">
+            {game.name}
+          </h2>
+          <Button variant="outline">
+            {gameDescription.communityScore}
+            <Users />
+          </Button>
+        </div>
+        <div className="flex ml-2">{renderStars(gameDescription.stars)}</div>
+      </div>
+      <div className="flex-grow"></div>
+      <div className="flex flex-col items-center">
+        <Button variant="default" className="mb-2">
           <Gamepad2 />
           Play Now
         </Button>
+        <span className="text-sm">
+          {gameDescription.playerCount.toLocaleString()} players
+        </span>
       </div>
     </div>
   );
