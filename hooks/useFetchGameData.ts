@@ -11,7 +11,6 @@ import type {
 
 // Custom hook for fetching data
 const useFetchGameData = () => {
-  const router = useRouter();
   const pathName = usePathname();
   const [collection, setCollection] = useState<Collection | null>(null);
   const [listings, setListings] = useState<NftExtended[]>([]);
