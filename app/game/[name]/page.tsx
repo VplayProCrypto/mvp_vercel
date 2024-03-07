@@ -62,6 +62,7 @@ const Page: NextPage = () => {
   ];
   return (
     <main className=" mt-5">
+      <title>{collection.name}</title>
       <Navbar user={undefined} gasFee={""} />
       <div className="mr-5 ml-5">
         <GameHero

@@ -1,3 +1,4 @@
+import YouTube from "react-youtube";
 import { CurrentListingPrice } from "./apiTypes";
 
 export function convertWeiToEth(
@@ -55,11 +56,6 @@ export async function fetchWithRetry(
     } else throw error;
   }
 }
-
-// const Video = () => {
-//   const videoId = "3PTstAK-cH8"; // Extract the video ID from the URL
-//   return <YouTube videoId={videoId} />;
-// };
 
 export const convertEthToUsd = (
   amountInEth: number,
