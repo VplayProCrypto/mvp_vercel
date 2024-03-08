@@ -24,6 +24,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-youtube": "^10.1.0",
+    "recharts": "^2.12.2",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.5.2"

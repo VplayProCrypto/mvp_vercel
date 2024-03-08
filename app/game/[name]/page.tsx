@@ -8,7 +8,6 @@ import Loading from "@/components/loading";
 import GameHero from "@/components/gameComponents/gameHero";
 import GameTabs from "@/components/gameComponents/gameTabs";
 import { Tab } from "@/utils/localTypes";
-import Stats from "../components/Stats";
 import Socials from "../components/Socials";
 import Overview from "@/components/gameComponents/gameOverview";
 import useGameStore from "@/store/gameStore";
@@ -64,10 +63,7 @@ const Page: NextPage = () => {
       name: "Project Team",
       value: <div>Project Team</div>,
     },
-    {
-      name: "Socials",
-      value: <h1>Socials</h1>,
-    },
+
     {
       name: "Reviews",
       value: <h1>Reviews</h1>,

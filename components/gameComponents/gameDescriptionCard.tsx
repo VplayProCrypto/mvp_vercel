@@ -1,4 +1,11 @@
-import { BookOpen, Instagram, Twitter, Send, Gamepad2 } from "lucide-react";
+import {
+  BookOpen,
+  Instagram,
+  Twitter,
+  Send,
+  Gamepad2,
+  Book,
+} from "lucide-react";
 import YouTube from "react-youtube";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Collection } from "@/utils/apiTypes";
@@ -51,6 +58,16 @@ const DescriptionCard: React.FC = () => {
                 <polyline points="15 3 21 3 21 9"></polyline>
                 <line x1="10" y1="14" x2="21" y2="3"></line>
               </svg>
+            </Link>
+          )}
+          {collection.wiki_url && (
+            <Link
+              href={collection.wiki_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">Wiki</span>
+              <Book className="w-6 h-6" />
             </Link>
           )}
           {collection.discord_url && (

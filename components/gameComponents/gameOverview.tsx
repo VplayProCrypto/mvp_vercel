@@ -16,6 +16,7 @@ import { StatsCardData, StatsCard } from "./gameDescriptionStatsCard";
 import DescriptionCard from "./gameDescriptionCard";
 import useGameStore from "@/store/gameStore";
 import useEthPriceStore from "@/store/ethPriceStore";
+import NftSaleGraph from "./nftSaleGraph";
 
 const Overview: React.FC = () => {
   const { collection: game, collectionStats: stats } = useGameStore();
@@ -88,6 +89,7 @@ const Overview: React.FC = () => {
           />
         ))}
       </div>
+      <NftSaleGraph />
     </div>
   );
 };
