@@ -1,34 +1,48 @@
-import { Nft } from '../../utils/apiTypes';
-import Image from 'next/image';
+import { Nft, NftExtended } from "@/utils/apiTypes";
+import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 
 interface NftCardProps {
-  nft: Nft;
-  price: string;
+  nft: NftExtended;
 }
 
-const NftCard: React.FC<NftCardProps> = ({ nft, price }) => {
+const NftCard: React.FC<NftCardProps> = ({ nft }) => {
+  const price = nft.current_price
+    ? `${nft.current_price.value} ${nft.current_price.currency}`
+    : null;
+
   return (
-    <div className="border border-gray-500 rounded-md p-4 bg-stone-900 text-white">
-      {nft.image_url ? (
-        <div className="flex justify-center">
-          <Image
-            src={nft.image_url}
-            width="200"
-            height="100"
-            alt={'No Image :('}
-            className="rounded-md"
-          />
-        </div>
-      ) : (
-        <h3 className="text-sm overflow-hidden text-center">
-          No image available
-        </h3>
-      )}
-      <div className="mt-2">
-        <h3 className="text-lg font-semibold overflow-hidden">{nft.name}</h3>
-        <h3 className="text-md">{price}</h3>
-      </div>
-    </div>
+    <Card>
+      <CardHeader>
+        {nft.image_url ? (
+          <div className="flex justify-center">
+            <Image
+              src={nft.image_url}
+              width="200"
+              height="100"
+              alt={"No Image :("}
+              className="rounded-md"
+            />
+          </div>
+        ) : (
+          <CardTitle className="text-sm overflow-hidden text-center">
+            No image available
+          </CardTitle>
+        )}
+      </CardHeader>
+      <CardContent>
+        <CardTitle className="text-lg font-semibold overflow-hidden">
+          {nft.name}
+        </CardTitle>
+        <CardDescription className="text-md">{price}</CardDescription>
+      </CardContent>
+    </Card>
   );
 };
 

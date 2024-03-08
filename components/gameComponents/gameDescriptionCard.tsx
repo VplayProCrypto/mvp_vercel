@@ -3,12 +3,13 @@ import YouTube from "react-youtube";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Collection } from "@/utils/apiTypes";
 import Link from "next/link";
-
-const DescriptionCard: React.FC<{
-  game: Collection;
-  gameDescription: string;
-  videoId: string;
-}> = ({ game, gameDescription, videoId }) => {
+import useGameStore from "@/store/gameStore";
+import { gameDescription } from "@/utils/consts";
+const DescriptionCard: React.FC = () => {
+  const { collection } = useGameStore();
+  if (!collection) return <h1>ERROR NO INFO</h1>;
+  const description = gameDescription[collection?.name];
+  const videoId = "3PTstAK-cH8";
   const opts = {
     height: "400",
     width: "100%",
@@ -26,12 +27,12 @@ const DescriptionCard: React.FC<{
       <CardContent className="flex flex-col">
         <YouTube videoId={videoId} opts={opts} />
         <p className="text-1xl font-medium tracking-tight mt-4">
-          {gameDescription}
+          {collection.description}
         </p>
         <div className="flex items-center space-x-4 mt-6">
-          {game.project_url && (
+          {collection.project_url && (
             <Link
-              href={game.project_url}
+              href={collection.project_url}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -52,9 +53,9 @@ const DescriptionCard: React.FC<{
               </svg>
             </Link>
           )}
-          {game.discord_url && (
+          {collection.discord_url && (
             <Link
-              href={`${game.discord_url}`}
+              href={`${collection.discord_url}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -62,9 +63,9 @@ const DescriptionCard: React.FC<{
               <Gamepad2 className="w-6 h-6" />
             </Link>
           )}
-          {game.twitter_username && (
+          {collection.twitter_username && (
             <Link
-              href={`https://twitter.com/${game.twitter_username}`}
+              href={`https://twitter.com/${collection.twitter_username}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -72,9 +73,9 @@ const DescriptionCard: React.FC<{
               <Twitter className="w-6 h-6" />
             </Link>
           )}
-          {game.instagram_username && (
+          {collection.instagram_username && (
             <Link
-              href={`https://instagram.com/${game.instagram_username}`}
+              href={`https://instagram.com/${collection.instagram_username}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -82,9 +83,9 @@ const DescriptionCard: React.FC<{
               <Instagram className="w-6 h-6" />
             </Link>
           )}
-          {game.telegram_url && (
+          {collection.telegram_url && (
             <Link
-              href={game.telegram_url}
+              href={collection.telegram_url}
               target="_blank"
               rel="noopener noreferrer"
             >

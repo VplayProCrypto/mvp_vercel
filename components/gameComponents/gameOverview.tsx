@@ -14,14 +14,16 @@ import { convertEthToUsd } from "@/utils/utils";
 import YouTube from "react-youtube";
 import { StatsCardData, StatsCard } from "./gameDescriptionStatsCard";
 import DescriptionCard from "./gameDescriptionCard";
+import useGameStore from "@/store/gameStore";
+import useEthPriceStore from "@/store/ethPriceStore";
 
-interface OverviewProps {
-  game: Collection;
-  stats: CollectionStats;
-  ethPrice: number | null;
-}
+const Overview: React.FC = () => {
+  const { collection: game, collectionStats: stats } = useGameStore();
+  const { ethPrice } = useEthPriceStore();
+  if (!game || !stats) {
+    return null;
+  }
 
-const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
   const cardsData: StatsCardData[] = [
     {
       title: "Total Items",
@@ -73,11 +75,7 @@ const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
   return (
     <div className="flex flex-col mx-5 my-5 gap-5">
       <div className="w-full">
-        <DescriptionCard
-          game={game}
-          videoId="3PTstAK-cH8"
-          gameDescription={game.description}
-        />
+        <DescriptionCard />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cardsData.map((card, index) => (

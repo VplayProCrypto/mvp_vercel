@@ -4,43 +4,51 @@ import { GameDescription } from "@/utils/localTypes";
 import { Collection } from "@/utils/apiTypes";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import useGameStore from "@/store/gameStore";
+import { gameDescription } from "@/utils/consts";
+const renderStars = (stars: string) => {
+  const totalStars = parseInt(stars, 10);
+  let starElements = [];
+  for (let i = 0; i < totalStars; i++) {
+    starElements.push(<Star key={i} />);
+  }
+  return starElements;
+};
 
-interface GameInfoProps {
-  game: Collection;
-  gameDescription: GameDescription;
-  renderStars: (stars: string) => JSX.Element[];
-}
-
-const GameInfo: React.FC<GameInfoProps> = ({
-  game,
-  gameDescription,
-  renderStars,
-}) => {
+const GameInfo: React.FC = () => {
+  const { collection } = useGameStore();
+  if (!collection) return <h1>ERROR NO INFO</h1>;
+  const description = gameDescription[collection?.name];
   return (
     <div className="flex flex-row items-center mt-5">
       <div className="flex-shrink-0">
-        <Image src={game.image_url} alt={game.name} width={100} height={100} />
+        <Image
+          src={collection.image_url}
+          alt={collection.name}
+          width={100}
+          height={100}
+        />
       </div>
       <div className="flex flex-col ml-5">
         <div className="flex flex-row items-center mb-2">
           <Badge variant="secondary" className="mr-4">
-            {gameDescription.genre}
+            {description.genre}
           </Badge>
           <Badge variant="secondary" className="mr-4">
-            {gameDescription.rewardsText}
+            {description.rewardsText}
           </Badge>
-          <Badge variant="secondary">{gameDescription.friendly}</Badge>
+          <Badge variant="secondary">{description.friendly}</Badge>
         </div>
         <div className="flex flex-row items-center">
           <h2 className="text-3xl font-semibold tracking-tight transition-colors mr-5">
-            {game.name}
+            {collection.name}
           </h2>
           <Button variant="outline">
-            {gameDescription.communityScore}
+            {description.communityScore}
             <Users />
           </Button>
         </div>
-        <div className="flex ml-2">{renderStars(gameDescription.stars)}</div>
+        <div className="flex ml-2">{renderStars(description.stars)}</div>
       </div>
       <div className="flex-grow"></div>
       <div className="flex flex-col items-center">
@@ -49,7 +57,7 @@ const GameInfo: React.FC<GameInfoProps> = ({
           Play Now
         </Button>
         <span className="text-sm">
-          {gameDescription.playerCount.toLocaleString()} players
+          {description.playerCount.toLocaleString()} players
         </span>
       </div>
     </div>

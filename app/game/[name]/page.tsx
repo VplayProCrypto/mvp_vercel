@@ -12,17 +12,26 @@ import Stats from "../components/Stats";
 import Socials from "../components/Socials";
 import Overview from "@/components/gameComponents/gameOverview";
 import useGameStore from "@/store/gameStore";
+import useEthPriceStore from "@/store/ethPriceStore";
 import { useEffect } from "react";
 import useFetchGameData from "@/hooks/useFetchGameData";
-import useFetchEthPrice from "@/hooks/useFetchETHPrice";
+import GameItems from "@/components/gameComponents/gameItems";
 
 const Page: NextPage = () => {
-  const { collection, collectionStats, listings, collectionSaleEvents } =
-    useGameStore();
-  const { setGameData } = useGameStore();
+  const {
+    collection,
+    collectionStats,
+    listings,
+    collectionSaleEvents,
+    setGameData,
+  } = useGameStore();
+  const {
+    ethPrice,
+    loading: ethPriceLoading,
+    fetchEthPrice,
+  } = useEthPriceStore();
 
   const { loading: gameDataLoading, ...gameData } = useFetchGameData();
-  const { loading: ethPriceLoading, ethPrice } = useFetchEthPrice();
 
   useEffect(() => {
     if (!gameDataLoading) {
@@ -30,29 +39,39 @@ const Page: NextPage = () => {
     }
   }, [gameDataLoading]);
 
-  if (gameDataLoading || !collection || !collectionStats) {
+  useEffect(() => {
+    fetchEthPrice();
+  }, []);
+
+  if (gameDataLoading || ethPriceLoading || !collection || !collectionStats) {
     return <Loading />;
   }
 
   const tabs: Tab[] = [
     {
       name: "Overview",
-      value: (
-        <Overview
-          game={collection}
-          stats={collectionStats}
-          ethPrice={ethPrice}
-        />
-      ),
+      value: <Overview />,
     },
-    { name: "In Game Items", value: <div>In Game Items</div> },
+    {
+      name: "In Game Items",
+      value: <GameItems />,
+    },
     {
       name: "Stats",
-      value: <Stats game={collection} stats={collectionStats} />,
+      value: <h1>Stats</h1>,
     },
-    { name: "Project Team", value: <div>Project Team</div> },
-    { name: "Socials", value: <h1>Socials</h1> },
-    { name: "Reviews", value: <h1>Reviews</h1> },
+    {
+      name: "Project Team",
+      value: <div>Project Team</div>,
+    },
+    {
+      name: "Socials",
+      value: <h1>Socials</h1>,
+    },
+    {
+      name: "Reviews",
+      value: <h1>Reviews</h1>,
+    },
   ];
 
   return (
@@ -60,10 +79,7 @@ const Page: NextPage = () => {
       <title>{collection.name}</title>
       <Navbar user={undefined} gasFee={""} />
       <div className="mr-5 ml-5">
-        <GameHero
-          game={collection}
-          gameDescription={gameDescription[collection.name]}
-        />
+        <GameHero />
       </div>
       <GameTabs tabs={tabs} />
       <Footer />
