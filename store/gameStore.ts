@@ -34,13 +34,24 @@ const useGameStore = create<GameStore>((set, get) => ({
       collectionStats: data.collectionStats,
       collectionSaleEvents: data.collectionSaleEvents,
     }),
-  updateListings: (newListings) =>
-    set((state) => ({
-      listings: {
-        nfts: [...state.listings.nfts, ...newListings.nfts],
-        next: newListings.next,
-      },
-    })),
+  updateListings: (newListings: NftListings) =>
+    set((state) => {
+      if (
+        newListings &&
+        typeof newListings === "object" &&
+        Array.isArray(newListings.nfts)
+      ) {
+        return {
+          listings: {
+            nfts: [...state.listings.nfts, ...newListings.nfts],
+            next: newListings.next || "", // Update the next string
+          },
+        };
+      } else {
+        console.error("newListings is not of the expected type:", newListings);
+        return state;
+      }
+    }),
 }));
 
 export default useGameStore;

@@ -19,7 +19,7 @@ const useFetchGameData = () => {
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [lastFetchTime, setLastFetchTime] = useState<number>(0);
-  const [rateLimitDelay] = useState<number>(1000); // 1 second delay between fetches
+  const [rateLimitDelay] = useState<number>(5000); // 1 second delay between fetches
 
   useEffect(() => {
     if (!pathName) return;
@@ -82,6 +82,8 @@ const useFetchGameData = () => {
   }, [pathName]);
 
   const fetchMoreListings = async () => {
+    const gameName = pathName.split("/game/").pop();
+    if (!gameName) return;
     const currentTime = Date.now();
     if (
       listings.next &&
@@ -98,14 +100,19 @@ const useFetchGameData = () => {
             "Content-Type": "application/json",
           },
         };
+
         const response = await fetch(
-          `${apiUrl}?action=getListingsByCollectionsMetadata&next=${listings.next}`,
+          `${apiUrl}?action=getListingsByCollectionsMetadata&collection_slug=${gameName}&limit=20&next=${listings.next}`,
           fetchOptions
         );
-        const data = await response.json();
-        return data.nftListings;
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = (await response.json()).nftListings;
+        return data;
       } catch (error) {
         console.error("Error fetching more listings:", error);
+        throw error; // Throw the error to be handled by the caller
       } finally {
         setLoading(false);
       }
