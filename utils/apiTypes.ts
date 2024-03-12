@@ -115,6 +115,11 @@ export interface NftResponse {
   nft: NftExtended;
 }
 
+export interface NftListings {
+  nfts: NftExtended[];
+  next: string;
+}
+
 export interface CurrentListingPrice {
   currency: string;
   decimals: number;

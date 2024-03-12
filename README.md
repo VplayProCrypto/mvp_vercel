@@ -6,7 +6,7 @@
 
 ### By default the middleware will prevent access to the mvp, please make a branch from main and modify the middleware paths to work on the mvp before making a pull request and changing back the middleware
 
-### How to contribute/navigate
+## How to contribute/navigate
 
 ## Styling
 

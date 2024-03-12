@@ -46,3 +46,12 @@ export const gameDescription: GameDescriptions = {
     friendly: "Beginner Friendly",
   },
 };
+
+const key: string = process.env.OPENSEA || "no_api_key";
+
+export const headers: Headers = new Headers({
+  accept: "application/json",
+  "x-api-key": key,
+});
+
+export const BASE_URL = "https://api.opensea.io/api/v2";

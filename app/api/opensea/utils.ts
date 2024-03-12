@@ -1,252 +1,111 @@
+import { fetchApi } from "@/utils/utils";
 import {
   Collections,
   Collection,
-  Nft,
   Nfts,
-  Listing,
   Listings,
   NftExtended,
   NftResponse,
   Offers,
   Offer,
-  Trait,
   CollectionStats,
   AssetEvent,
-  Events,
-  GameDescription
-} from '../../../utils/apiTypes';
+  NftListings,
+  Listing,
+} from "../../../utils/apiTypes";
+import { BASE_URL } from "../../../utils/consts";
 
-export const getCollection = async (
-  collectionName: string
-): Promise<Collection> => {
-  const key: string = process.env.OPENSEA || 'no_api_key';
-  const headers = new Headers({
-    Accept: 'application/json',
-    'X-Api-Key': key
-  });
-  const url = `https://api.opensea.io/api/v2/collections/${collectionName}`;
-  try {
-    const response = await fetch(url, { method: 'GET', headers });
-    if (!response.ok) {
-      throw new Error(`Error fetching collection: ${response.statusText}`);
-    }
-    const data = await response.json();
-    return data as Collection;
-  } catch (error) {
-    console.error('Failed to fetch collection:', error);
-    throw error; // Rethrow or handle as needed
-  }
-};
+export const getCollection = (collectionName: string): Promise<Collection> =>
+  fetchApi(`${BASE_URL}/collections/${collectionName}`);
 
-export const getNftsByCollection = async (
+export const getNftsByCollection = (
   collectionName: string,
   limit: string
-): Promise<Nft[]> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  let url =
-    'https://api.opensea.io/api/v2/collection' +
-    '/' +
-    collectionName +
-    '/nfts' +
-    '?limit=' +
-    limit;
-
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
-  });
-
-  let response = await fetch(request);
-  let responseJson = await response.json();
-  let nfts = responseJson as Nfts;
-  return nfts.nfts;
-};
+): Promise<Nfts> =>
+  fetchApi(`${BASE_URL}/collection/${collectionName}/nfts?limit=${limit}`);
 
 export const getNft = async (
   address: string,
   id: string,
-  chain: string = 'ethereum'
+  chain: string = "ethereum"
 ): Promise<NftExtended> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  let url = `https://api.opensea.io/api/v2/chain/${chain}/contract/${address}/nfts/${id}`;
-
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
-  });
-
-  let response = await fetch(request);
-  let responseJson = await response.json();
-  let nft = responseJson as NftResponse;
+  const nft = await fetchApi<NftResponse>(
+    `${BASE_URL}/chain/${chain}/contract/${address}/nfts/${id}`
+  );
   return nft.nft;
 };
 
-export const getCollectionsByChain = async (
+export const getCollectionsByChain = (
   chain: string,
-  limit: string
-): Promise<Collection[]> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  let url =
-    'https://api.opensea.io/api/v2/collections' +
-    '?chain=' +
-    chain +
-    '&limit=' +
-    limit;
+  limit: string,
+  next?: string
+): Promise<Collection[]> =>
+  fetchApi<Collections>(
+    `${BASE_URL}/collections?chain=${chain}&limit=${limit}${
+      next ? `&next=${next}` : ""
+    }`
+  ).then((collections) => collections.collections);
 
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
-  });
-
-  let response = await fetch(request);
-  let responseJson = await response.json();
-  let collections = responseJson as Collections;
-  return collections.collections;
-};
-
-export const getListingsByCollections = async (
+export const getListingsByCollections = (
   collection_slug: string,
-  limit: string
-  //next_page: string
-): Promise<Listing[]> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  let url = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/all?limit=${limit}`;
+  limit: string,
+  next?: string
+): Promise<Listing[]> =>
+  fetchApi<Listings>(
+    `${BASE_URL}/listings/collection/${collection_slug}/all?limit=${limit}${
+      next ? `&next=${next}` : ""
+    }`
+  ).then((listings) => listings.listings);
 
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
-  });
-
-  let response = await fetch(request);
-  let responseJson = await response.json();
-  let listings = responseJson as Listings;
-  return listings.listings;
-  //return responseJson
-};
-
-export const getBestOfferForNft = async (
+export const getBestOfferForNft = (
   id: string,
   collectionSlug: string
-): Promise<Offer> => {
-  const headers: Headers = new Headers();
-  const key: string = process.env.OPENSEA ? process.env.OPENSEA : 'no_api_key';
-  headers.set('accept', 'application/json');
-  headers.set('x-api-key', key);
-  const url = `https://api.opensea.io/api/v2/offers/collection/${collectionSlug}/nfts/${id}/best`;
-
-  const request: RequestInfo = new Request(url, {
-    method: 'GET',
-    headers: headers
-  });
-
-  let response = await fetch(request);
-  let responseJson = await response.json();
-  let offers = responseJson as Offers;
-  return offers.offers[0];
-};
+): Promise<Offer> =>
+  fetchApi<Offers>(
+    `${BASE_URL}/offers/collection/${collectionSlug}/nfts/${id}/best`
+  ).then((offers) => offers.offers[0]);
 
 export const getListingsByCollectionsMetadata = async (
   collection_slug: string,
-  limit: string
-): Promise<NftExtended[]> => {
-  const key: string = process.env.OPENSEA || 'no_api_key';
-  const headers = {
-    accept: 'application/json',
-    'x-api-key': key
-  };
-  const listingsUrl = `https://api.opensea.io/api/v2/listings/collection/${collection_slug}/best?limit=${limit}`;
+  limit: string,
+  next?: string
+): Promise<NftListings> => {
+  const responseJson = await fetchApi<Listings>(
+    `${BASE_URL}/listings/collection/${collection_slug}/best?limit=${limit}${
+      next ? `&next=${next}` : ""
+    }`
+  );
+  const listings = responseJson.listings;
 
-  const response = await fetch(listingsUrl, {
-    method: 'GET',
-    headers: headers
-  });
-  const responseJson = await response.json();
-  const listings: Listing[] = responseJson.listings;
+  if (!listings) return { nfts: [], next: "" };
 
-  if (listings) {
-    const nftsPromises = listings.map(async (listing) => {
-      const current_price = listing.price.current || null;
-      const owner = listing.protocol_data.parameters.offerer;
-      const animation_url = '';
-      const is_suspicious = false;
-      const creator = '';
-      const traits: Trait[] = [];
-
-      const nft = await getNft(
+  const nfts = await Promise.all(
+    listings.map(async (listing) => ({
+      ...(await getNft(
         listing.protocol_data.parameters.offer[0].token,
         listing.protocol_data.parameters.offer[0].identifierOrCriteria
-      );
+      )),
+      current_price: listing.price.current || null,
+      owner: listing.protocol_data.parameters.offerer,
+      animation_url: "",
+      is_suspicious: false,
+      creator: "",
+      traits: [],
+    }))
+  );
 
-      return {
-        ...nft,
-        current_price,
-        owner,
-        animation_url,
-        is_suspicious,
-        creator,
-        traits
-      };
-    });
-
-    const nfts = (await Promise.all(nftsPromises)) as NftExtended[];
-    return nfts;
-  }
-  return [];
+  return { nfts, next: responseJson.next || "" };
 };
 
-export const getCollectionStats = async (
+export const getCollectionStats = (
   collectionSlug: string
-): Promise<CollectionStats> => {
-  const key: string = process.env.OPENSEA || 'no_api_key';
-  const headers = {
-    accept: 'application/json',
-    'x-api-key': key
-  };
+): Promise<CollectionStats> =>
+  fetchApi(`${BASE_URL}/collections/${collectionSlug}/stats`);
 
-  const listingsUrl = `https://api.opensea.io/api/v2/collections/${collectionSlug}/stats`;
-
-  const response = await fetch(listingsUrl, {
-    method: 'GET',
-    headers: headers
-  });
-
-  const responseJson = await response.json();
-  const stats = responseJson as CollectionStats;
-  return stats;
-};
-
-//
-
-export const getCollectionSaleEvents = async (
+export const getCollectionSaleEvents = (
   collectionSlug: string,
   limit: string
-): Promise<AssetEvent[]> => {
-  const key: string = process.env.OPENSEA || 'no_api_key';
-  const headers = {
-    accept: 'application/json',
-    'x-api-key': key
-  };
-
-  const url = `https://api.opensea.io/api/v2/events/collection/${collectionSlug}?event_type=sale&limit=${limit}`;
-
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: headers
-  });
-  const responseJson = await response.json();
-  const events = responseJson.asset_events as Events;
-  const assetEvents = responseJson.asset_events as AssetEvent[];
-  return assetEvents;
-};
+): Promise<AssetEvent[]> =>
+  fetchApi<{ asset_events: AssetEvent[] }>(
+    `${BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${limit}`
+  ).then((responseJson) => responseJson.asset_events);

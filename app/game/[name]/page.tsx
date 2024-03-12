@@ -8,7 +8,6 @@ import Loading from "@/components/loading";
 import GameHero from "@/components/gameComponents/gameHero";
 import GameTabs from "@/components/gameComponents/gameTabs";
 import { Tab } from "@/utils/localTypes";
-import Socials from "../components/Socials";
 import Overview from "@/components/gameComponents/gameOverview";
 import useGameStore from "@/store/gameStore";
 import useEthPriceStore from "@/store/ethPriceStore";
@@ -34,7 +33,9 @@ const Page: NextPage = () => {
 
   useEffect(() => {
     if (!gameDataLoading) {
-      setGameData(gameData);
+      setGameData({
+        ...gameData,
+      });
     }
   }, [gameDataLoading]);
 

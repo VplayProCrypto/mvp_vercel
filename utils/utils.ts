@@ -1,6 +1,6 @@
 import YouTube from "react-youtube";
 import { CurrentListingPrice } from "./apiTypes";
-
+import { headers, BASE_URL } from "./consts";
 export function convertWeiToEth(
   currency: string,
   decimals: number,
@@ -61,3 +61,11 @@ export const convertEthToUsd = (
   amountInEth: number,
   ethPriceInUsd: number | null
 ): number => amountInEth * (ethPriceInUsd || 0.0);
+
+export const fetchApi = async <T>(url: string): Promise<T> => {
+  const response = await fetch(url, { method: "GET", headers });
+  if (!response.ok) {
+    throw new Error(`Error fetching data: ${response.statusText}`);
+  }
+  return (await response.json()) as T;
+};

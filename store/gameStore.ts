@@ -1,27 +1,30 @@
+// gameStore.ts
 import { create } from "zustand";
 import {
   Collection,
   CollectionStats,
   AssetEvent,
   NftExtended,
+  NftListings,
 } from "@/utils/apiTypes";
 
 interface GameStore {
   collection: Collection | null;
-  listings: NftExtended[];
+  listings: NftListings;
   collectionStats: CollectionStats | null;
   collectionSaleEvents: AssetEvent[];
   setGameData: (data: {
     collection: Collection | null;
-    listings: NftExtended[];
+    listings: NftListings;
     collectionStats: CollectionStats | null;
     collectionSaleEvents: AssetEvent[];
   }) => void;
+  updateListings: (newListings: NftListings) => void;
 }
 
-const useGameStore = create<GameStore>((set) => ({
+const useGameStore = create<GameStore>((set, get) => ({
   collection: null,
-  listings: [],
+  listings: { nfts: [], next: "" },
   collectionStats: null,
   collectionSaleEvents: [],
   setGameData: (data) =>
@@ -31,6 +34,13 @@ const useGameStore = create<GameStore>((set) => ({
       collectionStats: data.collectionStats,
       collectionSaleEvents: data.collectionSaleEvents,
     }),
+  updateListings: (newListings) =>
+    set((state) => ({
+      listings: {
+        nfts: [...state.listings.nfts, ...newListings.nfts],
+        next: newListings.next,
+      },
+    })),
 }));
 
 export default useGameStore;

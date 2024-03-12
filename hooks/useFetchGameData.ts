@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-
-// Import necessary types
 import type {
   Collection,
   NftExtended,
   CollectionStats,
   AssetEvent,
+  NftListings,
 } from "../utils/apiTypes";
 
-// Custom hook for fetching data
 const useFetchGameData = () => {
   const pathName = usePathname();
   const [collection, setCollection] = useState<Collection | null>(null);
-  const [listings, setListings] = useState<NftExtended[]>([]);
+  const [listings, setListings] = useState<NftListings>({ nfts: [], next: "" });
   const [collectionStats, setCollectionStats] =
     useState<CollectionStats | null>(null);
   const [collectionSaleEvents, setCollectionSaleEvents] = useState<
     AssetEvent[]
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
+  const [rateLimitDelay] = useState<number>(1000); // 1 second delay between fetches
 
   useEffect(() => {
     if (!pathName) return;
@@ -81,12 +81,45 @@ const useFetchGameData = () => {
     fetchData();
   }, [pathName]);
 
+  const fetchMoreListings = async () => {
+    const currentTime = Date.now();
+    if (
+      listings.next &&
+      !loading &&
+      currentTime - lastFetchTime >= rateLimitDelay
+    ) {
+      setLoading(true);
+      setLastFetchTime(currentTime);
+      try {
+        const apiUrl = "/api/opensea";
+        const fetchOptions = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const response = await fetch(
+          `${apiUrl}?action=getListingsByCollectionsMetadata&next=${listings.next}`,
+          fetchOptions
+        );
+        const data = await response.json();
+        return data.nftListings;
+      } catch (error) {
+        console.error("Error fetching more listings:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    return null;
+  };
+
   return {
     loading,
     collection,
     listings,
     collectionStats,
     collectionSaleEvents,
+    fetchMoreListings,
   };
 };
 
