@@ -1,18 +1,19 @@
-'use client';
-import Head from 'next/head';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import Navbar from '../commonComponents/navbar';
-import Footer from '../commonComponents/footer';
-import logo from 'public/images/logo.png';
-import Image from 'next/image';
+"use client";
+import Head from "next/head";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+
+import logo from "@/public/images/logo.png";
+import Image from "next/image";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 interface SubscribeResponse {
   message?: string;
 }
 
 export default function AccessVplaypPage() {
-  const [email, setEmail] = useState<string>('');
-  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -28,31 +29,31 @@ export default function AccessVplaypPage() {
       // Example request body, adjust based on your API requirements
       const requestBody = {
         email,
-        name
+        name,
       };
 
-      const response = await fetch('/api/airtable', {
-        method: 'POST',
+      const response = await fetch("/api/airtable", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody),
       });
 
       const data: SubscribeResponse = await response.json();
 
       if (response.ok) {
         alert(
-          'Thank you for joining VPLAY! Check your inbox for confirmation.'
+          "Thank you for joining VPLAY! Check your inbox for confirmation."
         );
       } else {
         alert(
           data.message ||
-            'There was an issue with your sign-up. Please try again.'
+            "There was an issue with your sign-up. Please try again."
         );
       }
     } else {
-      alert('Please enter both your name and email address.');
+      alert("Please enter both your name and email address.");
     }
   };
 
@@ -61,7 +62,7 @@ export default function AccessVplaypPage() {
       <Head>
         <title>Join VPLAY Community</title>
       </Head>
-      <Navbar user={undefined} gasFee={''} />
+      <Navbar user={undefined} gasFee={""} />
       <div className="flex flex-col items-center justify-center mt-16 min-h-screen py-2 bg-gradient-to-r from-gray-900 to-stone-800 text-white px-4 lg:px-0">
         <Image
           src={logo}

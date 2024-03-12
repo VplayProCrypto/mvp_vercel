@@ -30,12 +30,17 @@ export default function Navbar({
   return (
     <div className="flex justify-between items-center flex-row">
       <MenuButton />
-      <Button variant="ghost">VPLAY</Button>
+      <Link href="/">
+        <Button variant="ghost">VPLAY</Button>
+      </Link>
+
       <Input type="search" placeholder=" Search..." />
       <Button variant="ghost">
         <Search />
       </Button>
-      <Button variant="default">Access Vplay</Button>
+      <Button variant="default">
+        <Link href="/accessvplay">Access Vplay</Link>
+      </Button>
     </div>
   );
 }

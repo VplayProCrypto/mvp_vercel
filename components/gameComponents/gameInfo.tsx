@@ -6,6 +6,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import useGameStore from "@/store/gameStore";
 import { gameDescription } from "@/utils/consts";
+import Link from "next/link";
 const renderStars = (stars: string) => {
   const totalStars = parseInt(stars, 10);
   let starElements = [];
@@ -52,10 +53,12 @@ const GameInfo: React.FC = () => {
       </div>
       <div className="flex-grow"></div>
       <div className="flex flex-col items-center">
-        <Button variant="default" className="mb-2">
-          <Gamepad2 />
-          Play Now
-        </Button>
+        <Link href={collection.project_url}>
+          <Button variant="default" className="mb-2">
+            <Gamepad2 />
+            Play Now
+          </Button>{" "}
+        </Link>
         <span className="text-sm">
           {description.playerCount.toLocaleString()} players
         </span>
