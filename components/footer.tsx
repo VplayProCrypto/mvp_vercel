@@ -1,15 +1,16 @@
 // Rename the file to LandingFooter.tsx or a similar name with a .tsx extension
 
-import Image from 'next/image';
-import Link from 'next/link';
+import { Book, Linkedin, Send, Twitter } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-const LandingFooter: React.FC = () => {
+const Footer: React.FC = () => {
   return (
-    <footer className="bg-gray-900 text-white p-10">
+    <footer className=" text-white p-10">
       <div className="max-w-6xl mx-auto flex justify-between">
         <div className="flex flex-col">
           <Image
-            src={'/images/logo.png'}
+            src={"/images/logo.png"}
             alt="VPLAY Logo"
             width={50}
             height={25}
@@ -31,26 +32,34 @@ const LandingFooter: React.FC = () => {
             href="https://twitter.com/VPLAY_PRO"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
-            Twitter
+            <div className="flex items-center space-between">
+              <Twitter className="w-4 h-4 mr-2" /> Twitter
+            </div>
           </Link>
           <Link
             href="https://medium.com/@vplaypro"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
-            Medium
+            <div className="flex items-center space-between">
+              <Book className="w-4 h-4 mr-2" /> Medium
+            </div>
           </Link>
           <Link
             href="https://www.linkedin.com/company/vplaypro/"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
-            Linkedin
+            <div className="flex items-center space-between">
+              <Linkedin className="w-4 h-4 mr-2" /> Linkedin
+            </div>
           </Link>
 
           <Link
             href="https://t.me/VPLAY_ProPlatform"
             className="text-gray-400 hover:text-gray-300 mb-1"
           >
-            Telegram
+            <div className="flex items-center space-between">
+              <Send className="w-4 h-4 mr-2" /> Telegram
+            </div>
           </Link>
         </div>
       </div>
@@ -61,4 +70,4 @@ const LandingFooter: React.FC = () => {
   );
 };
 
-export default LandingFooter;
+export default Footer;
