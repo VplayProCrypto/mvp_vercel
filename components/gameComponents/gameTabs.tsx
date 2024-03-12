@@ -10,7 +10,7 @@ interface GameTabsProps {
 const GameTabs: React.FC<GameTabsProps> = (props) => {
   const { tabs } = props;
   return (
-    <Tabs defaultValue="account" className="w-full">
+    <Tabs defaultValue="Overview" className="w-full">
       <TabsList className="grid w-full grid-cols-8">
         {tabs.map((tab) => (
           <TabsTrigger value={tab.name}>{tab.name}</TabsTrigger>
