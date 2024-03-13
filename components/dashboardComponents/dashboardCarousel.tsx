@@ -1,26 +1,22 @@
-import React, { useState } from "react";
-import Image from "next/image";
-import YouTube from "react-youtube";
-import Autoplay from "embla-carousel-autoplay";
-import { Card, CardContent } from "@/components/ui/card";
+import React from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from "../ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import Image from "next/image";
 
-interface CarouselProps {
+interface DashboardCarouselProps {
   images: string[];
 }
 
-const GameCarousel: React.FC<CarouselProps> = ({ images }) => {
-  const [index, setIndex] = useState(0);
+const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ images }) => {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
   );
-
   return (
     <Carousel
       plugins={[plugin.current]}
@@ -48,4 +44,4 @@ const GameCarousel: React.FC<CarouselProps> = ({ images }) => {
   );
 };
 
-export default GameCarousel;
+export default DashboardCarousel;
