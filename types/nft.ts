@@ -1,70 +1,5 @@
-export type Collection = {
-  collection: string;
-  name: string;
-  description: string;
-  image_url: string;
-  banner_image_url: string;
-  owner: string;
-  safelist_status: SafelistStatus;
-  category: string;
-  is_disabled: boolean;
-  is_nsfw: boolean;
-  trait_offers_enabled: boolean;
-  collection_offers_enabled: boolean;
-  opensea_url: string;
-  project_url: string;
-  wiki_url: string;
-  discord_url: string;
-  telegram_url: string;
-  twitter_username: string;
-  instagram_username: string;
-  contracts: Contract[];
-  editors: string[];
-  fees: Fee[];
-  rarity: Rarity;
-  payment_tokens: PaymentToken[];
-  total_supply: number;
-  created_date: Date;
-};
-
-export type Collections = {
-  collections: Collection[];
-  next: string;
-};
-
-export interface Contract {
-  address: string;
-}
-
-export interface Fee {
-  fee: number;
-  recipient: string;
-  required: boolean;
-}
-
-export interface PaymentToken {
-  symbol: string;
-  address: string;
-  chain: string;
-  image: string;
-  name: string;
-  decimals: number;
-  eth_price: string;
-  usd_price: string;
-}
-
-export interface Rarity {
-  strategy_version: string;
-  calculated_at: string;
-  max_rank: number;
-  total_supply: number;
-}
-
-export interface SafelistStatus {}
-
-export enum TokenStandard {
-  Erc721 = "erc721",
-}
+import { Chain, Contract, Price, TokenStandard } from "./blockchain";
+import { Collection } from "./collection";
 
 export interface Nfts {
   nfts: Nft[];
@@ -121,23 +56,6 @@ export interface ListingPrice {
   current: CurrentListingPrice;
 }
 
-export interface Offer {
-  itemType: number;
-  token: string; // contract_address
-  identifierOrCriteria: string; // token_id
-  startAmount: string;
-  endAmount: string;
-}
-
-export interface ConsiderationItem {
-  itemType: number;
-  token: string;
-  identifierOrCriteria: string;
-  startAmount: string;
-  endAmount: string;
-  recipient: string;
-}
-
 export interface ProtocolParameters {
   offerer: string;
   offer: Offer[];
@@ -185,8 +103,6 @@ export interface Offer {
   protocol_address: string;
 }
 
-export interface Chain {}
-
 export interface Criteria {
   collection: Collection;
   contract: Contract;
@@ -194,19 +110,26 @@ export interface Criteria {
   encoded_token_ids: string;
 }
 
-export interface Contract {
-  address: string;
-}
-
 export interface Trait {
   type: string;
   value: string;
 }
 
-export interface Price {
-  currency: string;
-  decimals: number;
-  value: string;
+export interface Offer {
+  itemType: number;
+  token: string; // contract_address
+  identifierOrCriteria: string; // token_id
+  startAmount: string;
+  endAmount: string;
+}
+
+export interface ConsiderationItem {
+  itemType: number;
+  token: string;
+  identifierOrCriteria: string;
+  startAmount: string;
+  endAmount: string;
+  recipient: string;
 }
 
 export interface Parameters {
@@ -233,60 +156,6 @@ export interface Consideration {
   recipient?: string;
 }
 
-export interface CollectionStats {
-  total: Total;
-  intervals: Interval[];
-}
-
-export interface Interval {
-  interval: string;
-  volume: number;
-  volume_diff: number;
-  volume_change: number;
-  sales: number;
-  sales_diff: number;
-  average_price: number;
-}
-
-export interface Total {
-  volume: number;
-  sales: number;
-  average_price: number;
-  num_owners: number;
-  market_cap: number;
-  floor_price: number;
-  floor_price_symbol: string;
-}
-
-export interface Events {
-  asset_events: AssetEvent[];
-  next: string;
-}
-
-export interface AssetEvent {
-  event_type: string;
-  order_hash?: string;
-  maker?: string;
-  event_timestamp: number;
-  nft?: Asset;
-  order_type?: OrderType;
-  protocol_address?: string;
-  start_date?: number;
-  expiration_date?: number;
-  asset?: Asset;
-  quantity?: number;
-  taker?: string;
-  payment?: Payment;
-  criteria?: Criteria;
-  is_private_listing?: boolean;
-  closing_date?: number;
-  seller?: string;
-  buyer?: string;
-  transaction?: string;
-  from_address?: string;
-  to_address?: string;
-}
-
 export interface Asset {
   identifier: string;
   collection: string;
@@ -307,13 +176,10 @@ export interface Trait {
   value: string;
 }
 
-export interface OrderType {}
-
-export interface Payment {
-  quantity: string;
-  token_address: string;
-  decimals: number;
-  symbol: string;
+export interface Attribute {
+  trait_type: string;
+  value: number | string;
+  display_type?: string;
 }
 
 export interface Cryptokitty {
@@ -331,14 +197,3 @@ export interface Cryptokitty {
   attributes: Attribute[];
   mutable_attributes: Attribute[];
 }
-
-export interface Attribute {
-  trait_type: string;
-  value: number | string;
-  display_type?: string;
-}
-
-export type ApiResponse = {
-  message?: string;
-  [key: string]: any;
-};

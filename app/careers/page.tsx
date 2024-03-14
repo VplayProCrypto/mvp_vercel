@@ -1,16 +1,16 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Corrected from 'next/navigation' to 'next/router'
-import Head from 'next/head';
-import Navbar from '../commonComponents/navbar';
-import Footer from '../commonComponents/footer';
-import Loading from '../commonComponents/loading';
-import { Button } from '../../@/components/ui/button';
-import Link from 'next/link';
-import { fetchWithRetry } from '../../utils/utils';
-import FormattedText from './components/formattedtext';
-import Modal from './components/modal';
-import { JobPosting } from '../../utils/localTypes';
+"use client";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Corrected from 'next/navigation' to 'next/router'
+import Head from "next/head";
+import Navbar from "../commonComponents/navbar";
+import Footer from "../commonComponents/footer";
+import Loading from "../commonComponents/loading";
+import { Button } from "../../@/components/ui/button";
+import Link from "next/link";
+import { fetchWithRetry } from "../../utils/utils";
+import FormattedText from "./components/formattedtext";
+import Modal from "./components/modal";
+import { JobPosting } from "../../types/localTypes";
 
 const CareersPage: React.FC = () => {
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
@@ -30,12 +30,12 @@ const CareersPage: React.FC = () => {
 
   useEffect(() => {
     const fetchJobPostings = async () => {
-      const url = '/api/airtable';
+      const url = "/api/airtable";
       try {
         const data = await fetchWithRetry(url);
         setJobPostings(data.records);
       } catch (error) {
-        console.error('Error fetching job postings:', error);
+        console.error("Error fetching job postings:", error);
       } finally {
         setIsLoading(false);
       }
@@ -53,7 +53,7 @@ const CareersPage: React.FC = () => {
     setSelectedJobName(job.fields.Name as string);
     setShowForm(true);
     setSelectedJobOverview(job.fields.Overview as string);
-    setSelectedJobDescription(job.fields['Job Description'] as string);
+    setSelectedJobDescription(job.fields["Job Description"] as string);
   };
 
   if (isLoading || isSubmitting) {
@@ -65,7 +65,7 @@ const CareersPage: React.FC = () => {
       <Head>
         <title>Open Positions - Careers</title>
       </Head>
-      <Navbar user={undefined} gasFee={''} />
+      <Navbar user={undefined} gasFee={""} />
       {showModal && (
         <Modal onClose={handleCloseModal} isOpen={showModal}>
           Thank you for applying! We will get back to you soon.
@@ -126,7 +126,7 @@ const CareersPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-sm">{posting.fields.Category}</p>
-                    {posting.fields['Apply Now'] && (
+                    {posting.fields["Apply Now"] && (
                       <button
                         onClick={() => handleApplyNow(posting)}
                         className="inline-block mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"

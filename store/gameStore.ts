@@ -6,7 +6,7 @@ import {
   AssetEvent,
   NftExtended,
   NftListings,
-} from "@/utils/apiTypes";
+} from "@/types/apiTypes";
 
 interface GameStore {
   collection: Collection | null;

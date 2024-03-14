@@ -1,5 +1,5 @@
 import GameCarousel from "./gameCarousel";
-import { Images } from "@/utils/localTypes";
+import { Images } from "@/types/localTypes";
 import GameInfo from "./gameInfo";
 import useGameStore from "@/store/gameStore";
 

@@ -1,4 +1,4 @@
-import { Nft, NftExtended } from "@/utils/apiTypes";
+import { Nft, NftExtended } from "@/types/apiTypes";
 import Image from "next/image";
 import {
   Card,

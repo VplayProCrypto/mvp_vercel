@@ -15,7 +15,7 @@ import {
   Events,
   ApiResponse,
   NftListings,
-} from "../../../utils/apiTypes";
+} from "../../../types/apiTypes";
 import { NextRequest, NextResponse } from "next/server";
 import {
   getBestOfferForNft,

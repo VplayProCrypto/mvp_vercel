@@ -9,7 +9,7 @@ import {
   Activity,
   BookOpen,
 } from "lucide-react";
-import { Collection, CollectionStats } from "@/utils/apiTypes";
+import { Collection, CollectionStats } from "@/types/apiTypes";
 import { convertEthToUsd } from "@/utils/utils";
 import YouTube from "react-youtube";
 import { StatsCardData, StatsCard } from "./gameDescriptionStatsCard";

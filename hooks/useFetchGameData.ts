@@ -6,7 +6,7 @@ import type {
   CollectionStats,
   AssetEvent,
   NftListings,
-} from "../utils/apiTypes";
+} from "../types/apiTypes";
 
 const useFetchGameData = () => {
   const pathName = usePathname();

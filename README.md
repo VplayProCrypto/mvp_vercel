@@ -51,3 +51,11 @@
 #### middleware.ts
 
 - modify to limit access to certain pages and routes
+
+### db
+
+- drizzle orm and postgres database files and tables based on types
+
+### types
+
+- add more files here as necessary

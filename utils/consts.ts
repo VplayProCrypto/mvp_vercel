@@ -1,4 +1,4 @@
-import { GameDescriptions } from "./localTypes";
+import { GameDescriptions } from "../types/localTypes";
 //This is a temporary hack
 export const gameDescription: GameDescriptions = {
   CryptoKitties: {

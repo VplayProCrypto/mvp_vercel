@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { AssetEvent } from "@/utils/apiTypes";
+import { AssetEvent } from "@/types/apiTypes";
 import useGameStore from "@/store/gameStore";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { convertEthToUsd, convertWeiToEth } from "@/utils/utils";

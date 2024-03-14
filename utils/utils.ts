@@ -1,5 +1,5 @@
 import YouTube from "react-youtube";
-import { CurrentListingPrice } from "./apiTypes";
+import { CurrentListingPrice } from "../types/apiTypes";
 import { headers, BASE_URL } from "./consts";
 export function convertWeiToEth(
   currency: string,

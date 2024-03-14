@@ -1,7 +1,7 @@
 import { Gamepad2, Users, Star } from "lucide-react";
 import Image from "next/image";
-import { GameDescription } from "@/utils/localTypes";
-import { Collection } from "@/utils/apiTypes";
+import { GameDescription } from "@/types/localTypes";
+import { Collection } from "@/types/apiTypes";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import useGameStore from "@/store/gameStore";

@@ -1,4 +1,4 @@
-import { Collection } from "@/utils/apiTypes";
+import { Collection } from "@/types/apiTypes";
 import {
   pgTable,
   serial,
@@ -9,6 +9,13 @@ import {
   jsonb,
   timestamp,
 } from "drizzle-orm/pg-core";
+
+export const rarity = pgTable("rarity", {
+  strategy_version: varchar("strategy_version", { length: 255 }).notNull(),
+  calculated_at: timestamp("calculated_at").notNull(),
+  max_rank: integer("max_rank").notNull(),
+  total_supply: integer("total_supply").notNull(),
+});
 
 export const paymentToken = pgTable("payment_tokens", {
   symbol: varchar("symbol", { length: 255 }).notNull(),

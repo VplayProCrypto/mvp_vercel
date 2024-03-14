@@ -12,7 +12,7 @@ import {
   AssetEvent,
   NftListings,
   Listing,
-} from "../../../utils/apiTypes";
+} from "../../../types/apiTypes";
 import { BASE_URL } from "../../../utils/consts";
 
 export const getCollection = (collectionName: string): Promise<Collection> =>
