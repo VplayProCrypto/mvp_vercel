@@ -1,12 +1,3 @@
-import {
-  ColumnType,
-  Generated,
-  Insertable,
-  JSONColumnType,
-  Selectable,
-  Updateable,
-} from "kysely";
-
 export type Collection = {
   collection: string;
   name: string;
@@ -179,21 +170,6 @@ export interface Listings {
   listings: Listing[];
   next: string;
 }
-
-export interface Database {
-  users: UserTable;
-}
-
-export interface UserTable {
-  id: Generated<number>;
-  email: string;
-  name: string | null;
-  username: string | null;
-}
-
-export type Users = Selectable<UserTable>;
-export type NewUser = Insertable<UserTable>;
-export type UserUpdate = Updateable<UserTable>;
 
 export interface Offers {
   offers: Offer[];

@@ -19,7 +19,7 @@
 - pages of the website, to make a page create a directory with the page name and a page.tsx file
 - home/index page is in the page.tsx at the root of the app directory
 - globals.css is to set up tailwind, please use shadcn components and inline tailwind instead of css
-- api folder is for our api, make a directory and a route.ts to configure a new public api route
+- api folder is for our public api, make a directory and a route.ts to configure a new public api route -> NOTE: need to move the airtable and opensea routes to server
 
 #### components
 
