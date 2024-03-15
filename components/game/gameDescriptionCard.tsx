@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import YouTube from "react-youtube";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { Collection } from "@/types/apiTypes";
 import Link from "next/link";
 import useGameStore from "@/store/gameStore";
 import { gameDescription } from "@/utils/consts";
