@@ -59,3 +59,7 @@
 ### types
 
 - add more files here as necessary
+
+### schema 
+
+![schema](./version0.1_schema.png)
