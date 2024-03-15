@@ -5,6 +5,9 @@ import {
   numeric,
   boolean,
   integer,
+  doublePrecision,
+  timestamp,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 export interface Contract {
@@ -85,3 +88,39 @@ export const payments = pgTable("payments", {
   decimals: integer("decimals").notNull(),
   symbol: varchar("symbol", { length: 255 }).notNull(),
 });
+
+export const erc20Transfers = pgTable(
+  "erc20_transfers",
+  {
+    buyer: varchar("buyer").notNull(),
+    seller: varchar("seller").notNull(),
+    contractAddress: varchar("contract_address").notNull(),
+    price: doublePrecision("price").notNull(),
+    symbol: varchar("symbol").notNull(),
+    decimals: integer("decimals").notNull(),
+    transactionHash: varchar("transaction_hash").notNull(),
+    eventTimestamp: timestamp("event_timestamp").notNull(),
+    collectionSlug: varchar("collection_slug"),
+  },
+  (erc20Transfers) => ({
+    pk: primaryKey(
+      erc20Transfers.transactionHash,
+      erc20Transfers.eventTimestamp
+    ),
+  })
+);
+
+export const tokenPrices = pgTable(
+  "token_prices",
+  {
+    contractAddress: varchar("contract_address").notNull(),
+    ethPrice: doublePrecision("eth_price").notNull(),
+    usdtPrice: doublePrecision("usdt_price").notNull(),
+    usdtConversionPrice: doublePrecision("usdt_conversion_price"),
+    ethConversionPrice: doublePrecision("eth_conversion_price"),
+    eventTimestamp: timestamp("event_timestamp").notNull(),
+  },
+  (tokenPrices) => ({
+    pk: primaryKey(tokenPrices.contractAddress, tokenPrices.eventTimestamp),
+  })
+);

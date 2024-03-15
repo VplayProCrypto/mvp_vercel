@@ -8,6 +8,8 @@ import {
   numeric,
   jsonb,
   boolean,
+  primaryKey,
+  timestamp,
 } from "drizzle-orm/pg-core";
 export interface CollectionStats {
   total: Total;
@@ -125,3 +127,68 @@ export const assetEvents = pgTable("asset_events", {
   from_address: varchar("from_address", { length: 255 }),
   to_address: varchar("to_address", { length: 255 }),
 });
+
+export const nftEvents = pgTable(
+  "nft_events",
+  {
+    transactionHash: varchar("transaction_hash").notNull(),
+    eventType: varchar("event_type"),
+    tokenId: varchar("token_id").notNull(),
+    contractAddress: varchar("contract_address").notNull(),
+    collectionSlug: varchar("collection_slug").notNull(),
+    seller: varchar("seller").notNull(),
+    buyer: varchar("buyer"),
+    priceVal: varchar("price_val"),
+    priceCurrency: varchar("price_currency"),
+    priceDecimals: varchar("price_decimals"),
+    startDate: timestamp("start_date"),
+    expirationDate: timestamp("expiration_date"),
+    eventTimestamp: timestamp("event_timestamp").notNull(),
+  },
+  (nftEvents) => ({
+    pk: primaryKey(
+      nftEvents.contractAddress,
+      nftEvents.tokenId,
+      nftEvents.eventTimestamp
+    ),
+  })
+);
+
+export const nftOwnerships = pgTable(
+  "nft_ownerships",
+  {
+    buyer: varchar("buyer").notNull(),
+    seller: varchar("seller").notNull(),
+    tokenId: varchar("token_id").notNull(),
+    contractAddress: varchar("contract_address").notNull(),
+    transactionHash: varchar("transaction_hash").notNull(),
+    buyTime: timestamp("buy_time").notNull(),
+    sellTime: timestamp("sell_time").notNull(),
+    collectionSlug: varchar("collection_slug").notNull(),
+  },
+  (nftOwnerships) => ({
+    pk: primaryKey(
+      nftOwnerships.contractAddress,
+      nftOwnerships.tokenId,
+      nftOwnerships.buyTime
+    ),
+  })
+);
+
+export const nftDynamics = pgTable(
+  "nft_dynamics",
+  {
+    collectionSlug: varchar("collection_slug").notNull(),
+    tokenId: varchar("token_id").notNull(),
+    contractAddress: varchar("contract_address").notNull(),
+    rr: integer("rr"),
+    eventTimestamp: timestamp("event_timestamp").notNull().defaultNow(),
+  },
+  (nftDynamics) => ({
+    pk: primaryKey(
+      nftDynamics.contractAddress,
+      nftDynamics.tokenId,
+      nftDynamics.eventTimestamp
+    ),
+  })
+);

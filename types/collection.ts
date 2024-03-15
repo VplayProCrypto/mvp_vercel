@@ -8,6 +8,8 @@ import {
   jsonb,
   timestamp,
   PgTable,
+  doublePrecision,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 import {
@@ -112,4 +114,29 @@ export const collectionPaymentTokens = pgTable("collection_payment_tokens", {
   payment_token_id: integer("payment_token_id").references(
     () => paymentTokens.id
   ),
+});
+
+export const collectionDynamics = pgTable("collection_dynamics", {
+  collectionSlug: varchar("collection_slug").references(
+    () => collections.collection
+  ),
+  totalAveragePrice: doublePrecision("total_average_price"),
+  totalSupply: doublePrecision("total_supply"),
+  totalVolume: doublePrecision("total_volume"),
+  totalNumOwners: integer("total_num_owners"),
+  totalSales: doublePrecision("total_sales"),
+  totalMarketCap: doublePrecision("total_market_cap"),
+  sales: doublePrecision("sales"),
+  volume: doublePrecision("volume"),
+  floorPrice: doublePrecision("floor_price"),
+  floorPriceCurrency: varchar("floor_price_currency"),
+  averagePrice: doublePrecision("average_price"),
+  uaw: integer("uaw"),
+  totalWallets: integer("total_wallets"),
+  twitterSentiment: doublePrecision("twitter_sentiment"),
+  facebookSentiment: doublePrecision("facebook_sentiment"),
+  instagramSentiment: doublePrecision("instagram_sentiment"),
+  redditSentiment: doublePrecision("reddit_sentiment"),
+  discordSentiment: doublePrecision("discord_sentiment"),
+  eventTimestamp: timestamp("event_timestamp").notNull(),
 });
