@@ -62,6 +62,26 @@ export type Collections = {
   next: string;
 };
 
+type CollectionMetadata = {
+  collection: string;
+  genre: string;
+  twitterSentiment: number;
+  facebookSentiment: number;
+  instagramSentiment: number;
+  redditSentiment: number;
+  discordSentiment: number;
+  playNowButtonText: string;
+  itemsText: string;
+  communityScore: string;
+  playerCount: string;
+  rewardsText: string;
+  stars: string;
+  rr: string;
+  friendly: string;
+  videoUrl: string;
+  image: string;
+};
+
 export const collections = pgTable("collections", {
   collection: varchar("collection", { length: 255 }).primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
@@ -139,4 +159,24 @@ export const collectionDynamics = pgTable("collection_dynamics", {
   redditSentiment: doublePrecision("reddit_sentiment"),
   discordSentiment: doublePrecision("discord_sentiment"),
   eventTimestamp: timestamp("event_timestamp").notNull(),
+});
+
+export const collectionMetadata = pgTable("collection_metadata", {
+  collection: varchar("collection", { length: 255 }).primaryKey(),
+  genre: varchar("genre", { length: 255 }),
+  twitterSentiment: doublePrecision("twitter_sentiment"),
+  facebookSentiment: doublePrecision("facebook_sentiment"),
+  instagramSentiment: doublePrecision("instagram_sentiment"),
+  redditSentiment: doublePrecision("reddit_sentiment"),
+  discordSentiment: doublePrecision("discord_sentiment"),
+  playNowButtonText: varchar("play_now_button_text", { length: 255 }),
+  itemsText: varchar("items_text", { length: 255 }),
+  communityScore: varchar("community_score", { length: 255 }),
+  playerCount: varchar("player_count", { length: 255 }),
+  rewardsText: varchar("rewards_text", { length: 255 }),
+  stars: varchar("stars", { length: 255 }),
+  rr: varchar("rr", { length: 255 }),
+  friendly: varchar("friendly", { length: 255 }),
+  videoUrl: varchar("video_url", { length: 255 }),
+  image: varchar("image", { length: 255 }),
 });
