@@ -33,6 +33,8 @@ export interface GameDescription {
   rr: string;
   genre: string;
   friendly: string;
+  videoUrl: string;
+  image: string;
 }
 
 export interface GameDescriptions {

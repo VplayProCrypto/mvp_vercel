@@ -62,7 +62,7 @@ export type Collections = {
   next: string;
 };
 
-type CollectionMetadata = {
+export type CollectionMetadata = {
   collection: string;
   genre: string;
   twitterSentiment: number;
