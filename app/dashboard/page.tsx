@@ -1,14 +1,32 @@
-import React from "react";
-import { GetServerSideProps } from "next";
-import DashboardCarousel from "@/components/dashboardComponents/dashboardCarousel";
+// app/dashboard/page.tsx
+import DashboardCarousel from "@/components/dashboard/dashboardCarousel";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
+import { Collection } from "@/types/collection";
+import { getCollections, getMultipleCollections } from "../api/opensea/utils";
 
 interface DashboardPageProps {
   images: string[];
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = ({ images }) => {
+const collectionNames = [
+  "cryptokitties",
+  "axie",
+  "spider-tanks",
+  "championsarena",
+  "mirandus",
+];
+
+const DashboardPage = async () => {
+  const collections: Collection[] = await getMultipleCollections(
+    collectionNames
+  );
+  console.log(collections);
+
+  const images = collections.map((collection: Collection) => {
+    return collection.banner_image_url;
+  });
+
   return (
     <main>
       <title>VPLAY</title>
@@ -17,18 +35,6 @@ const DashboardPage: React.FC<DashboardPageProps> = ({ images }) => {
       <Footer />
     </main>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<
-  DashboardPageProps
-> = async () => {
-  const images = await fetchImages();
-
-  return {
-    props: {
-      images,
-    },
-  };
 };
 
 export default DashboardPage;

@@ -1,19 +1,18 @@
 import { fetchApi } from "@/utils/utils";
+
+import { BASE_URL } from "../../../utils/consts";
+import { Collection, Collections } from "@/types/collection";
 import {
-  Collections,
-  Collection,
   Nfts,
-  Listings,
   NftExtended,
   NftResponse,
-  Offers,
-  Offer,
-  CollectionStats,
-  AssetEvent,
-  NftListings,
   Listing,
-} from "../../../types/apiTypes";
-import { BASE_URL } from "../../../utils/consts";
+  Listings,
+  Offer,
+  Offers,
+  NftListings,
+} from "@/types/nft";
+import { CollectionStats, AssetEvent } from "@/types/stats";
 
 export const getCollection = (collectionName: string): Promise<Collection> =>
   fetchApi(`${BASE_URL}/collections/${collectionName}`);
@@ -35,16 +34,24 @@ export const getNft = async (
   return nft.nft;
 };
 
-export const getCollectionsByChain = (
-  chain: string,
-  limit: string,
+export const getCollections = async (
+  limit?: string,
+  chain?: string,
   next?: string
-): Promise<Collection[]> =>
-  fetchApi<Collections>(
-    `${BASE_URL}/collections?chain=${chain}&limit=${limit}${
-      next ? `&next=${next}` : ""
-    }`
-  ).then((collections) => collections.collections);
+): Promise<Collection[]> => {
+  const params = [
+    limit ? `limit=${limit}` : "",
+    chain ? `chain=${chain}` : "",
+    next ? `next=${next}` : "",
+  ]
+    .filter(Boolean)
+    .join("&");
+
+  const url = `${BASE_URL}/collections${params ? `?${params}` : ""}`;
+
+  const { collections } = await fetchApi<Collections>(url);
+  return collections;
+};
 
 export const getListingsByCollections = (
   collection_slug: string,
@@ -109,3 +116,13 @@ export const getCollectionSaleEvents = (
   fetchApi<{ asset_events: AssetEvent[] }>(
     `${BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${limit}`
   ).then((responseJson) => responseJson.asset_events);
+
+export const getMultipleCollections = async (
+  collectionNames: string[]
+): Promise<Collection[]> => {
+  const collectionPromises = collectionNames.map((collectionName) =>
+    getCollection(collectionName)
+  );
+  const collections = await Promise.all(collectionPromises);
+  return collections;
+};

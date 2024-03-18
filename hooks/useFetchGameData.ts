@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import type {
-  Collection,
-  NftExtended,
-  CollectionStats,
-  AssetEvent,
-  NftListings,
-} from "../types/apiTypes";
+import { Collection } from "@/types/collection"
+import { NftListings } from "@/types/nft"
+import { CollectionStats, AssetEvent } from "@/types/stats"
+
 
 const useFetchGameData = () => {
   const pathName = usePathname();

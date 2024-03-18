@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Carousel,
@@ -8,15 +10,18 @@ import {
 } from "../ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import { Card, CardContent } from "../ui/card";
 
 interface DashboardCarouselProps {
   images: string[];
 }
 
 const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ images }) => {
+  console.log(images);
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
   );
+
   return (
     <Carousel
       plugins={[plugin.current]}
@@ -25,15 +30,17 @@ const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ images }) => {
     >
       <CarouselContent>
         {images.map((image, index) => (
-          <CarouselItem key={index}>
+          <CarouselItem
+            key={index}
+            className="flex justify-center items-center"
+          >
             <Image
               key={index}
               src={image}
               alt={`image ${index + 1}`}
-              layout="responsive"
-              width={500}
-              height={300}
-              className="rounded-md"
+              width={800}
+              height={400}
+              className="rounded-md mt-5"
             />
           </CarouselItem>
         ))}

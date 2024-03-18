@@ -1,33 +1,18 @@
-import {
-  Collections,
-  Collection,
-  Nft,
-  Nfts,
-  Listing,
-  Listings,
-  NftExtended,
-  NftResponse,
-  Offers,
-  Offer,
-  Trait,
-  CollectionStats,
-  AssetEvent,
-  Events,
-  ApiResponse,
-  NftListings,
-} from "../../../types/apiTypes";
 import { NextRequest, NextResponse } from "next/server";
 import {
   getBestOfferForNft,
   getCollection,
   getCollectionSaleEvents,
   getCollectionStats,
-  getCollectionsByChain,
+  getCollections,
   getListingsByCollections,
   getListingsByCollectionsMetadata,
   getNft,
   getNftsByCollection,
 } from "./utils";
+import { Collection } from "@/types/collection";
+import { Nfts, Nft, Listing, Offer, NftListings } from "@/types/nft";
+import { CollectionStats, AssetEvent } from "@/types/stats";
 
 export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
   const url = new URL(nextRequest.url);
@@ -59,8 +44,9 @@ export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
         );
         return NextResponse.json(nft);
 
-      case "getCollectionsByChain":
-        const collections: Collection[] = await getCollectionsByChain(
+      case "getCollections":
+        console.log(params);
+        const collections: Collection[] = await getCollections(
           params.chain as string,
           params.limit as string,
           params.next as string | undefined

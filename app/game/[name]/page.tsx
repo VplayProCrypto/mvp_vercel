@@ -1,19 +1,17 @@
-// Page.tsx
 "use client";
 import { NextPage } from "next";
-import { gameDescription } from "../../../utils/consts";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Loading from "@/components/loading";
-import GameHero from "@/components/gameComponents/gameHero";
-import GameTabs from "@/components/gameComponents/gameTabs";
+import GameHero from "@/components/game/gameHero";
+import GameTabs from "@/components/game/gameTabs";
 import { Tab } from "@/types/localTypes";
-import Overview from "@/components/gameComponents/gameOverview";
+import Overview from "@/components/game/gameOverview";
 import useGameStore from "@/store/gameStore";
 import useEthPriceStore from "@/store/ethPriceStore";
 import { useEffect } from "react";
 import useFetchGameData from "@/hooks/useFetchGameData";
-import GameItems from "@/components/gameComponents/gameItems";
+import GameItems from "@/components/game/gameItems";
 
 const Page: NextPage = () => {
   const {
