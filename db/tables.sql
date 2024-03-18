@@ -179,3 +179,24 @@ CREATE TABLE asset_events (
   from_address VARCHAR(255),
   to_address VARCHAR(255)
 );
+
+CREATE TABLE collection_metadata (
+    collection VARCHAR(255) PRIMARY KEY,
+    genre VARCHAR(255),
+    twitter_sentiment DOUBLE PRECISION,
+    facebook_sentiment DOUBLE PRECISION,
+    instagram_sentiment DOUBLE PRECISION,
+    reddit_sentiment DOUBLE PRECISION,
+    discord_sentiment DOUBLE PRECISION,
+    play_now_button_text VARCHAR(255),
+    items_text VARCHAR(255),
+    community_score VARCHAR(255),
+    player_count VARCHAR(255),
+    rewards_text VARCHAR(255),
+    stars VARCHAR(255),
+    rr VARCHAR(255),
+    friendly VARCHAR(255),
+    video_url VARCHAR(255),
+    image VARCHAR(255),
+    FOREIGN KEY (collection) REFERENCES collections(collection)
+);
