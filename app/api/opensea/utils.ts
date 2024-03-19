@@ -117,7 +117,7 @@ export const getCollectionSaleEvents = (
     `${BASE_URL}/events/collection/${collectionSlug}?event_type=sale&limit=${limit}`
   ).then((responseJson) => responseJson.asset_events);
 
-export const getMultipleCollections = async (
+export const getMultipleCollectionsOpensea = async (
   collectionNames: string[]
 ): Promise<Collection[]> => {
   const collectionPromises = collectionNames.map((collectionName) =>

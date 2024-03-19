@@ -1,4 +1,3 @@
-import { Nft, NftExtended } from "@/types/apiTypes";
 import Image from "next/image";
 import {
   Card,
@@ -7,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { NftExtended } from "@/types/nft";
 
 interface NftCardProps {
   nft: NftExtended;

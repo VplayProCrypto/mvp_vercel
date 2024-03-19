@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { NftExtended } from "@/types/nft";
 
 const GameItems: React.FC = () => {
   const { listings, updateListings } = useGameStore();
@@ -52,7 +53,7 @@ const GameItems: React.FC = () => {
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {currentItems.map((nft) => (
+        {currentItems.map((nft: NftExtended) => (
           <NftCard key={nft.identifier} nft={nft} />
         ))}
       </div>

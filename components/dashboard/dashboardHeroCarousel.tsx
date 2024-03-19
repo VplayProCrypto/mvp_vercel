@@ -16,7 +16,9 @@ interface DashboardCarouselProps {
   images: string[];
 }
 
-const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ images }) => {
+const DashboardHeroCarousel: React.FC<DashboardCarouselProps> = ({
+  images,
+}) => {
   console.log(images);
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
@@ -51,4 +53,9 @@ const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ images }) => {
   );
 };
 
-export default DashboardCarousel;
+export default DashboardHeroCarousel;
+
+//ask anmol for timeline for 5 games
+//connect to data three weeks
+// llm to one week
+// node program same time as llm roughly
