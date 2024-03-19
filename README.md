@@ -6,13 +6,23 @@
 
 ### By default the middleware will prevent access to the mvp, please make a branch from main and modify the middleware paths to work on the mvp before making a pull request and changing back the middleware
 
+```
+npm i
+npm run dev
+```
+
+
 ## How to contribute/navigate
 
 ## Styling
 
 ### Use shadcn components wherever possible and inline tailwind everywhere else, no raw css/scss please
 
-## Directories
+## Directories and important files
+
+### package.json
+
+- see commands/scripts and dependencies here
 
 #### app
 
