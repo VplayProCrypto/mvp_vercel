@@ -45,7 +45,6 @@ export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
         return NextResponse.json(nft);
 
       case "getCollections":
-        console.log(params);
         const collections: Collection[] = await getCollections(
           params.chain as string,
           params.limit as string,

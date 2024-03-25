@@ -5,7 +5,9 @@ import {
   collections,
 } from "@/types/collection";
 import { InferModel, sql } from "drizzle-orm";
-import { db } from "./database";
+import { db, pool } from "./database";
+import { AssetEvent, assetEvents, Events } from "@/types/stats";
+import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
 
 async function insertCollection(collection: Collection) {
   const database = await db();
@@ -81,5 +83,31 @@ export async function insertCollectionWithMetadata(
     console.log("Collection and metadata inserted successfully");
   } catch (error) {
     console.error("Error inserting collection and metadata:", error);
+  }
+}
+
+export async function insertAssetEvent(
+  database: NodePgDatabase,
+  assetEvent: AssetEvent
+) {
+  try {
+    await database.insert(assetEvents).values(assetEvent).returning();
+  } catch (error) {
+    console.error("Error inserting asset event:", error);
+  }
+}
+
+export async function insertAssetEvents(assetEvents: AssetEvent[]) {
+  const client = await pool.connect();
+  try {
+    const database = drizzle(client);
+    await Promise.all(
+      assetEvents.map((assetEvent) => insertAssetEvent(database, assetEvent))
+    );
+  } catch (error) {
+    console.error("Error inserting asset events:", error);
+    throw error;
+  } finally {
+    client.release();
   }
 }

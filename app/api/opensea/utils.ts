@@ -12,7 +12,7 @@ import {
   Offers,
   NftListings,
 } from "@/types/nft";
-import { CollectionStats, AssetEvent } from "@/types/stats";
+import { CollectionStats, AssetEvent, Events } from "@/types/stats";
 
 export const getCollection = (collectionName: string): Promise<Collection> =>
   fetchApi(`${BASE_URL}/collections/${collectionName}`);
@@ -125,4 +125,55 @@ export const getMultipleCollectionsOpensea = async (
   );
   const collections = await Promise.all(collectionPromises);
   return collections;
+};
+
+export const getCollectionEventsAll = async (
+  collectionSlug: string,
+  before: number,
+  after: number,
+  next?: string
+): Promise<Events> => {
+  let url = `${BASE_URL}/events/collection/${collectionSlug}?after=${after}&before=${before}&event_type=all`;
+  if (next) {
+    url += `&next=${next}`;
+  }
+  return (await fetchApi(url)) as Events;
+};
+
+export const calculateUniqueAddresses = async (
+  collectionSlug: string,
+  type: "daily" | "monthly"
+) => {
+  let after = 0;
+  let before = 0;
+
+  if (type === "daily") {
+    after = Math.floor(Date.now() / 1000) - 86400;
+    before = Math.floor(Date.now() / 1000);
+  } else if (type === "monthly") {
+    after = Math.floor(Date.now() / 1000) - 2592000;
+    before = Math.floor(Date.now() / 1000);
+  }
+
+  const events = await getCollectionEventsAll(collectionSlug, before, after);
+  const assetEvents = events.asset_events;
+  const uniqueAddresses = new Set<string>();
+
+  assetEvents.forEach((event) => {
+    if (event.event_type === "order") {
+      if (event.maker) uniqueAddresses.add(event.maker);
+      if (event.taker) uniqueAddresses.add(event.taker);
+    } else if (event.event_type === "sale") {
+      if (event.seller) uniqueAddresses.add(event.seller);
+      if (event.buyer) uniqueAddresses.add(event.buyer);
+    } else if (
+      event.event_type === "transfer" ||
+      event.event_type === "redemption"
+    ) {
+      if (event.from_address) uniqueAddresses.add(event.from_address);
+      if (event.to_address) uniqueAddresses.add(event.to_address);
+    }
+  });
+  console.log(assetEvents.length);
+  return uniqueAddresses.size;
 };

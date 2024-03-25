@@ -200,3 +200,17 @@ CREATE TABLE collection_metadata (
     image VARCHAR(255),
     FOREIGN KEY (collection) REFERENCES collections(collection)
 );
+
+CREATE TABLE daily_unique_active_wallets (
+  id SERIAL PRIMARY KEY,
+  collection VARCHAR(255) REFERENCES collections(collection),
+  player_count INTEGER NOT NULL,
+  timestamp TIMESTAMP DEFAULT now()
+);
+
+CREATE TABLE monthly_unique_active_wallets (
+  id SERIAL PRIMARY KEY,
+  collection VARCHAR(255) REFERENCES collections(collection),
+  player_count INTEGER NOT NULL,
+  timestamp TIMESTAMP DEFAULT now()
+);

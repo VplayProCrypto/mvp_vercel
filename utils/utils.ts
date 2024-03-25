@@ -1,6 +1,6 @@
 import YouTube from "react-youtube";
-import { CurrentListingPrice } from "../types/apiTypes";
 import { headers, BASE_URL } from "./consts";
+import { CurrentListingPrice } from "@/types/nft";
 export function convertWeiToEth(
   currency: string,
   decimals: number,
