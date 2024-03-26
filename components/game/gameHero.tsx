@@ -1,19 +1,28 @@
+"use client";
+
+import React from "react";
 import GameCarousel from "./gameCarousel";
-import { Images } from "@/types/localTypes";
+import { GameDescription, Images } from "@/types/localTypes";
 import GameInfo from "./gameInfo";
 import useGameStore from "@/store/gameStore";
+import { Collection } from "@/types/collection";
 
-const GameHero: React.FC = () => {
-  const { collection } = useGameStore();
+interface GameHeroProps {
+  collection: Collection;
+  description: GameDescription;
+}
+
+const GameHero: React.FC<GameHeroProps> = ({ collection, description }) => {
   if (!collection) return <h1>ERROR NO INFO</h1>;
+
   const images = [collection.banner_image_url, Images[collection.name]];
 
   return (
-    <div className=" flex flex-col mt-5 mb-5">
+    <div className="flex flex-col mt-5 mb-5">
       <div className="w-full">
         <GameCarousel images={images} />
       </div>
-      <GameInfo />
+      <GameInfo collection={collection} description={description} />
     </div>
   );
 };

@@ -1,8 +1,6 @@
-// GameItems.tsx
+"use client";
 import useGameStore from "@/store/gameStore";
 import NftCard from "../nftcard";
-import useFetchGameData from "@/hooks/useFetchGameData";
-import { useState, useEffect } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -13,39 +11,17 @@ import {
 } from "@/components/ui/pagination";
 import { NftExtended } from "@/types/nft";
 
-const GameItems: React.FC = () => {
-  const { listings, updateListings } = useGameStore();
-  const { fetchMoreListings, loading } = useFetchGameData();
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 20;
+interface GameItemsProps {
+  currentPage: number;
+}
 
-  useEffect(() => {
-    const fetchMoreIfNeeded = async () => {
-      if (
-        listings.nfts.length - currentPage * itemsPerPage < itemsPerPage &&
-        listings.next &&
-        !loading
-      ) {
-        try {
-          const temp = await fetchMoreListings();
-          if (temp) {
-            updateListings(temp);
-          }
-        } catch (error) {
-          console.error("Error loading more listings:", error);
-        }
-      }
-    };
-    fetchMoreIfNeeded();
-  }, [currentPage, listings, updateListings, fetchMoreListings, loading]);
+const GameItems: React.FC<GameItemsProps> = ({ currentPage }) => {
+  const { listings } = useGameStore.getState();
+  const itemsPerPage = 20;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = listings.nfts.slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
 
   const totalPages = Math.ceil(listings.nfts.length / itemsPerPage);
   const pageNumbers = [1, 2];
@@ -63,7 +39,7 @@ const GameItems: React.FC = () => {
             <PaginationItem>
               <PaginationPrevious
                 href="#"
-                onClick={() => paginate(currentPage - 1)}
+                //onClick={() => onPageChange(currentPage - 1)}
               />
             </PaginationItem>
           )}
@@ -71,7 +47,7 @@ const GameItems: React.FC = () => {
             <PaginationItem key={number}>
               <PaginationLink
                 href="#"
-                onClick={() => paginate(number)}
+                //onClick={() => onPageChange(number)}
                 isActive={number === currentPage}
               >
                 {number}
@@ -82,7 +58,7 @@ const GameItems: React.FC = () => {
             <PaginationItem>
               <PaginationNext
                 href="#"
-                onClick={() => paginate(currentPage + 1)}
+                //onClick={() => onPageChange(currentPage + 1)}
               />
             </PaginationItem>
           )}

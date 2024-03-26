@@ -1,13 +1,12 @@
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import Image from "next/image";
 interface GameCardProps {
   banner: string; // URL to the game banner image
   name: string; // Name of the game
   rewardRate: string; // Expected reward rate
   activeWallets: number; // Number of active wallets
   activeUsers: number; // Number of active users
-  // onClick: () => void; // Function to execute on card click, for navigation
 }
 
 export const GameCard: React.FC<GameCardProps> = ({
@@ -15,7 +14,7 @@ export const GameCard: React.FC<GameCardProps> = ({
   name,
   rewardRate,
   activeWallets,
-  activeUsers
+  activeUsers,
 }) => {
   return (
     <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md cursor-pointer hover:bg-gray-100">

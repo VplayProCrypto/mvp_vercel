@@ -1,4 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+"use client";
+
+import React from "react";
 import {
   Users,
   DollarSign,
@@ -9,18 +11,22 @@ import {
   Activity,
   BookOpen,
 } from "lucide-react";
-import { Collection, CollectionStats } from "@/types/apiTypes";
 import { convertEthToUsd } from "@/utils/utils";
-import YouTube from "react-youtube";
 import { StatsCardData, StatsCard } from "./gameDescriptionStatsCard";
 import DescriptionCard from "./gameDescriptionCard";
 import useGameStore from "@/store/gameStore";
 import useEthPriceStore from "@/store/ethPriceStore";
 import NftSaleGraph from "./nftSaleGraph";
+import { CollectionStats } from "@/types/stats";
+import { Collection } from "@/types/collection";
 
-const Overview: React.FC = () => {
-  const { collection: game, collectionStats: stats } = useGameStore();
-  const { ethPrice } = useEthPriceStore();
+interface OverviewProps {
+  game: Collection;
+  stats: CollectionStats;
+  ethPrice: number;
+}
+
+const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
   if (!game || !stats) {
     return null;
   }
@@ -76,7 +82,7 @@ const Overview: React.FC = () => {
   return (
     <div className="flex flex-col mx-5 my-5 gap-5">
       <div className="w-full">
-        <DescriptionCard />
+        <DescriptionCard collection={game} />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {cardsData.map((card, index) => (

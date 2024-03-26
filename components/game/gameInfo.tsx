@@ -4,8 +4,10 @@ import { GameDescription } from "@/types/localTypes";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import useGameStore from "@/store/gameStore";
-import { gameDescription } from "@/utils/consts";
+
 import Link from "next/link";
+import { getCollectionMetadataByName } from "@/db/selects";
+import { Collection } from "@/types/collection";
 const renderStars = (stars: string) => {
   const totalStars = parseInt(stars, 10);
   let starElements = [];
@@ -15,10 +17,12 @@ const renderStars = (stars: string) => {
   return starElements;
 };
 
-const GameInfo: React.FC = () => {
-  const { collection } = useGameStore();
-  if (!collection) return <h1>ERROR NO INFO</h1>;
-  const description = gameDescription[collection?.name];
+interface GameInfoProps {
+  collection: Collection;
+  description: GameDescription;
+}
+
+const GameInfo: React.FC<GameInfoProps> = ({ collection, description }) => {
   return (
     <div className="flex flex-row items-center mt-5">
       <div className="flex-shrink-0">

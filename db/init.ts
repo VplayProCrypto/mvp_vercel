@@ -4,11 +4,17 @@ import { getCollectionEventsAll } from "@/app/api/opensea/utils";
 import { AssetEvent, Events } from "@/types/stats";
 import { insertAssetEvents } from "./inserts";
 
-export const initializeAssetEvents = async (collectionToAdd: string) => {
+export const initializeAssetEvents = async (
+  collectionToAdd: string,
+  nextOption?: string
+) => {
   const after = Math.floor(Date.now() / 1000) - 2592000;
   const before = Math.floor(Date.now() / 1000);
   let events: Events;
   let next = "";
+  if (nextOption) {
+    next = nextOption;
+  }
   let i = 0;
 
   events = await getCollectionEventsAll(collectionToAdd, before, after);

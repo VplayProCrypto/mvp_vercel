@@ -6,24 +6,16 @@ import {
   Gamepad2,
   Book,
 } from "lucide-react";
-import YouTube from "react-youtube";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Link from "next/link";
-import useGameStore from "@/store/gameStore";
-import { gameDescription } from "@/utils/consts";
-const DescriptionCard: React.FC = () => {
-  const { collection } = useGameStore();
-  if (!collection) return <h1>ERROR NO INFO</h1>;
-  const description = gameDescription[collection?.name];
-  const videoId = "3PTstAK-cH8";
-  const opts = {
-    height: "400",
-    width: "100%",
-    playerVars: {
-      autoplay: 0,
-    },
-  };
 
+import { Collection } from "@/types/collection";
+
+interface DescriptionCardProps {
+  collection: Collection;
+}
+
+const DescriptionCard: React.FC<DescriptionCardProps> = ({ collection }) => {
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -31,7 +23,6 @@ const DescriptionCard: React.FC = () => {
         <BookOpen className="w-6 h-6" />
       </CardHeader>
       <CardContent className="flex flex-col">
-        <YouTube videoId={videoId} opts={opts} />
         <p className="text-1xl font-medium tracking-tight mt-4">
           {collection.description}
         </p>

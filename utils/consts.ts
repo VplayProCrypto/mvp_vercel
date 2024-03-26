@@ -11,6 +11,9 @@ export const gameDescription: GameDescriptions = {
     rr: "272",
     genre: "Pets",
     friendly: "Beginner Friendly",
+    videoUrl: "https://www.youtube.com/watch?v=M6gD3afBmkc",
+    image:
+      "https://www.cryptokitties.co/images/blog/kitty-cup-2022/kitty-cup-2022.jpg",
   },
   "Mavia Land": {
     playNowButtonText: "Play Now",

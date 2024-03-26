@@ -1,4 +1,9 @@
-import { Collection, collections } from "@/types/collection";
+import {
+  Collection,
+  CollectionMetadata,
+  collectionMetadata,
+  collections,
+} from "@/types/collection";
 import { eq, sql } from "drizzle-orm";
 import { db } from "./database";
 import { getMultipleCollectionsOpensea } from "@/app/api/opensea/utils";
@@ -78,4 +83,40 @@ export async function getMultipleCollections(
   }
 
   return validCollections;
+}
+export async function getCollectionMetadataByName(
+  collectionName: string
+): Promise<CollectionMetadata | null> {
+  const database = await db();
+  const result = await database
+    .select()
+    .from(collectionMetadata) // Replace with the actual table name for collection metadata
+    .where(eq(collectionMetadata.collection, collectionName))
+    .limit(1);
+
+  if (result.length === 0) {
+    return null;
+  }
+
+  const metadata: CollectionMetadata = {
+    collection: result[0].collection ?? "",
+    genre: result[0].genre ?? "",
+    twitterSentiment: result[0].twitterSentiment ?? 0,
+    facebookSentiment: result[0].facebookSentiment ?? 0,
+    instagramSentiment: result[0].instagramSentiment ?? 0,
+    redditSentiment: result[0].redditSentiment ?? 0,
+    discordSentiment: result[0].discordSentiment ?? 0,
+    playNowButtonText: result[0].playNowButtonText ?? "",
+    itemsText: result[0].itemsText ?? "",
+    communityScore: result[0].communityScore ?? "",
+    playerCount: result[0].playerCount ?? "",
+    rewardsText: result[0].rewardsText ?? "",
+    stars: result[0].stars ?? "",
+    rr: result[0].rr ?? "",
+    friendly: result[0].friendly ?? "",
+    videoUrl: result[0].videoUrl ?? "",
+    image: result[0].image ?? "",
+  };
+
+  return metadata;
 }
