@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import {
   LineChart,
@@ -10,16 +9,20 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import useGameStore from "@/store/gameStore";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { convertEthToUsd, convertWeiToEth } from "@/utils/utils";
-import useEthPriceStore from "@/store/ethPriceStore";
 import { LineChartIcon } from "lucide-react";
+import { AssetEvent } from "@/types/stats";
 
-const NftSaleGraph: React.FC = () => {
-  const { collectionSaleEvents } = useGameStore();
-  const { ethPrice } = useEthPriceStore();
+interface NftSaleGraphProps {
+  collectionSaleEvents: AssetEvent[];
+  ethPrice: number | null;
+}
 
+const NftSaleGraph: React.FC<NftSaleGraphProps> = ({
+  collectionSaleEvents,
+  ethPrice,
+}) => {
   const data = collectionSaleEvents.map((event) => ({
     timestamp: new Date(event.event_timestamp * 1000).toLocaleString(),
     price: convertEthToUsd(

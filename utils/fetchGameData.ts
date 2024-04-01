@@ -5,9 +5,6 @@ import {
   getCollectionStats,
   getListingsByCollectionsMetadata,
 } from "@/app/api/opensea/utils";
-import { Collection } from "@/types/collection";
-import { NftListings } from "@/types/nft";
-import { CollectionStats, AssetEvent } from "@/types/stats";
 
 export async function fetchGameData(gameName: string) {
   try {

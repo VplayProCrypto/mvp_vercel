@@ -1,4 +1,3 @@
-"use client";
 import useGameStore from "@/store/gameStore";
 import NftCard from "../nftcard";
 import {
@@ -9,14 +8,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { NftExtended } from "@/types/nft";
+import { NftExtended, NftListings } from "@/types/nft";
 
 interface GameItemsProps {
+  listings: NftListings;
   currentPage: number;
 }
 
-const GameItems: React.FC<GameItemsProps> = ({ currentPage }) => {
-  const { listings } = useGameStore.getState();
+const GameItems: React.FC<GameItemsProps> = ({ currentPage, listings }) => {
   const itemsPerPage = 20;
 
   const indexOfLastItem = currentPage * itemsPerPage;

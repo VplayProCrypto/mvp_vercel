@@ -35,7 +35,6 @@ const GameCarousel: React.FC<CarouselProps> = ({ images }) => {
               key={index}
               src={image}
               alt={`image ${index + 1}`}
-              layout="responsive"
               width={500}
               height={300}
               className="rounded-md"

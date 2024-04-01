@@ -2,15 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Corrected from 'next/navigation' to 'next/router'
 import Head from "next/head";
-import Navbar from "../commonComponents/navbar";
-import Footer from "../commonComponents/footer";
-import Loading from "../commonComponents/loading";
-import { Button } from "../../@/components/ui/button";
+
 import Link from "next/link";
 import { fetchWithRetry } from "../../utils/utils";
 import FormattedText from "./components/formattedtext";
 import Modal from "./components/modal";
 import { JobPosting } from "../../types/localTypes";
+import Footer from "@/components/footer";
+import Loading from "@/components/loading";
+import Navbar from "@/components/navbar";
+import { Button } from "@/components/ui/button";
 
 const CareersPage: React.FC = () => {
   const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);

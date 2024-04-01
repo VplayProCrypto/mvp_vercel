@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Users,
@@ -12,21 +10,29 @@ import {
   BookOpen,
 } from "lucide-react";
 import { convertEthToUsd } from "@/utils/utils";
-import { StatsCardData, StatsCard } from "./gameDescriptionStatsCard";
+import { StatsCardData, StatsCard } from "./StatsCard";
 import DescriptionCard from "./gameDescriptionCard";
-import useGameStore from "@/store/gameStore";
-import useEthPriceStore from "@/store/ethPriceStore";
+
 import NftSaleGraph from "./nftSaleGraph";
-import { CollectionStats } from "@/types/stats";
+import { AssetEvent, CollectionStats } from "@/types/stats";
 import { Collection } from "@/types/collection";
 
 interface OverviewProps {
   game: Collection;
   stats: CollectionStats;
   ethPrice: number;
+  collectionSaleEvents: AssetEvent[];
 }
 
-const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
+const emptyValueCheck = (value: number, ethPrice: number) =>
+  value > 0 ? `$${convertEthToUsd(value, ethPrice)}` : "No data";
+
+const Overview: React.FC<OverviewProps> = ({
+  game,
+  stats,
+  ethPrice,
+  collectionSaleEvents,
+}) => {
   if (!game || !stats) {
     return null;
   }
@@ -47,25 +53,25 @@ const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
     {
       title: "Market Capitalization",
       Icon: <DollarSign />,
-      value: `$${convertEthToUsd(stats.total.market_cap, ethPrice)}`,
+      value: emptyValueCheck(stats.total.market_cap, ethPrice),
       change: "",
     },
     {
       title: "Floor Price",
       Icon: <BadgeDollarSign />,
-      value: `$${convertEthToUsd(stats.total.floor_price, ethPrice)}`,
+      value: emptyValueCheck(stats.total.floor_price, ethPrice),
       change: "",
     },
     {
       title: "Total Volume",
       Icon: <Activity />,
-      value: `$${convertEthToUsd(stats.total.volume, ethPrice)}`,
+      value: emptyValueCheck(stats.total.volume, ethPrice),
       change: `${stats.intervals[2].volume_change}% from last month`,
     },
     {
       title: "Total Sales",
       Icon: <CreditCard />,
-      value: `$${convertEthToUsd(stats.total.sales, ethPrice)}`,
+      value: emptyValueCheck(stats.total.sales, ethPrice),
       change: `${stats.intervals[2].sales_diff} difference from last month`,
     },
     {
@@ -95,7 +101,10 @@ const Overview: React.FC<OverviewProps> = ({ game, stats, ethPrice }) => {
           />
         ))}
       </div>
-      <NftSaleGraph />
+      <NftSaleGraph
+        collectionSaleEvents={collectionSaleEvents}
+        ethPrice={ethPrice}
+      />
     </div>
   );
 };
