@@ -1,6 +1,6 @@
 import { SKYMAVIS_URL, skymavisHeaders } from "./consts";
 
-interface MetadataOneResponse {
+export interface MetadataResponse {
   data: {
     axies: {
       total: number;
@@ -21,9 +21,8 @@ interface MetadataOneResponse {
   };
 }
 
-export async function fetchMetadataOne(): Promise<MetadataOneResponse> {
-  const query = `
-    query MetadataOne {
+const queryMetadata = `
+    query Metadata {
       axies {
         total
       }
@@ -43,6 +42,7 @@ export async function fetchMetadataOne(): Promise<MetadataOneResponse> {
     }
   `;
 
+const fetchSkymavis = async (query: string) => {
   const response = await fetch(SKYMAVIS_URL, {
     method: "POST",
     headers: skymavisHeaders,
@@ -54,6 +54,9 @@ export async function fetchMetadataOne(): Promise<MetadataOneResponse> {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  const data: MetadataOneResponse = await response.json();
-  return data;
+  return await response.json();
+};
+
+export async function fetchMetadataOne(): Promise<MetadataResponse> {
+  return fetchSkymavis(queryMetadata);
 }

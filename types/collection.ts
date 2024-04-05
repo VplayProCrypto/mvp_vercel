@@ -180,3 +180,14 @@ export const collectionMetadata = pgTable("collection_metadata", {
   videoUrl: varchar("video_url", { length: 255 }),
   image: varchar("image", { length: 255 }),
 });
+
+export const rarity = pgTable("rarity", {
+  id: serial("id").primaryKey(),
+  collection: varchar("collection", { length: 255 })
+    .notNull()
+    .references(() => collections.collection),
+  strategy_version: varchar("strategy_version", { length: 255 }),
+  calculated_at: varchar("calculated_at", { length: 255 }),
+  max_rank: integer("max_rank"),
+  total_supply: integer("total_supply"),
+});

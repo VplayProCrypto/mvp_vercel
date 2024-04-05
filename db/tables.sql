@@ -135,24 +135,28 @@ CREATE TABLE attributes (
 
 CREATE TABLE intervals (
   id SERIAL PRIMARY KEY,
+  collection VARCHAR(255) REFERENCES collections(collection),
   interval VARCHAR(255) NOT NULL,
   volume NUMERIC(10, 2) NOT NULL,
   volume_diff NUMERIC(10, 2) NOT NULL,
   volume_change NUMERIC(10, 2) NOT NULL,
   sales INTEGER NOT NULL,
   sales_diff INTEGER NOT NULL,
-  average_price NUMERIC(10, 2) NOT NULL
+  average_price NUMERIC(10, 2) NOT NULL,
+  timestamp TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE totals (
   id SERIAL PRIMARY KEY,
+  collection VARCHAR(255) REFERENCES collections(collection),
   volume NUMERIC(10, 2) NOT NULL,
   sales INTEGER NOT NULL,
   average_price NUMERIC(10, 2) NOT NULL,
   num_owners INTEGER NOT NULL,
   market_cap NUMERIC(10, 2) NOT NULL,
   floor_price NUMERIC(10, 2) NOT NULL,
-  floor_price_symbol VARCHAR(255) NOT NULL
+  floor_price_symbol VARCHAR(255) NOT NULL,
+  timestamp TIMESTAMP DEFAULT now()
 );
 
 CREATE TABLE asset_events (
@@ -213,4 +217,14 @@ CREATE TABLE monthly_unique_active_wallets (
   collection VARCHAR(255) REFERENCES collections(collection),
   player_count INTEGER NOT NULL,
   timestamp TIMESTAMP DEFAULT now()
+);
+
+CREATE TABLE rarity (
+    id SERIAL PRIMARY KEY,
+    collection VARCHAR(255) NOT NULL,
+    strategy_version VARCHAR(255),
+    calculated_at VARCHAR(255),
+    max_rank INTEGER,
+    total_supply INTEGER,
+    FOREIGN KEY (collection) REFERENCES collections(collection)
 );

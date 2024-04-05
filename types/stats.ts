@@ -18,22 +18,26 @@ export interface CollectionStats {
 
 export interface Interval {
   interval: string;
-  volume: number;
-  volume_diff: number;
-  volume_change: number;
+  collection: string;
+  volume: string;
+  volume_diff: string;
+  volume_change: string;
   sales: number;
   sales_diff: number;
-  average_price: number;
+  average_price: string;
+  timestamp: Date;
 }
 
 export interface Total {
-  volume: number;
+  volume: string;
+  collection: string;
   sales: number;
-  average_price: number;
+  average_price: string;
   num_owners: number;
-  market_cap: number;
-  floor_price: number;
+  market_cap: string;
+  floor_price: string;
   floor_price_symbol: string;
+  timestamp: Date;
 }
 
 export interface Events {
@@ -74,6 +78,7 @@ export type ApiResponse = {
 
 export const intervals = pgTable("intervals", {
   id: serial("id").primaryKey(),
+  collection: varchar("collection", { length: 255 }).notNull(),
   interval: varchar("interval", { length: 255 }).notNull(),
   volume: numeric("volume", { precision: 10, scale: 2 }).notNull(),
   volume_diff: numeric("volume_diff", { precision: 10, scale: 2 }).notNull(),
@@ -87,10 +92,12 @@ export const intervals = pgTable("intervals", {
     precision: 10,
     scale: 2,
   }).notNull(),
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
 });
 
 export const totals = pgTable("totals", {
   id: serial("id").primaryKey(),
+  collection: varchar("collection", { length: 255 }).notNull(),
   volume: numeric("volume", { precision: 10, scale: 2 }).notNull(),
   sales: integer("sales").notNull(),
   average_price: numeric("average_price", {
@@ -101,6 +108,7 @@ export const totals = pgTable("totals", {
   market_cap: numeric("market_cap", { precision: 10, scale: 2 }).notNull(),
   floor_price: numeric("floor_price", { precision: 10, scale: 2 }).notNull(),
   floor_price_symbol: varchar("floor_price_symbol", { length: 255 }).notNull(),
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
 });
 
 export const assetEvents = pgTable("asset_events", {

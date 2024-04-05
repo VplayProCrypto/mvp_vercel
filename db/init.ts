@@ -2,7 +2,7 @@
 
 import { getCollectionEventsAll } from "@/app/api/opensea/utils";
 import { AssetEvent, Events } from "@/types/stats";
-import { insertAssetEvents } from "./inserts";
+import { insertAssetEvents } from "./queries";
 
 export const initializeAssetEvents = async (
   collectionToAdd: string,

@@ -8,34 +8,8 @@ import { GameDescription, Tab } from "@/types/localTypes";
 import Overview from "@/components/game/gameOverview";
 import GameItems from "@/components/game/gameItems";
 
-import { getCollectionMetadataByName } from "@/db/selects";
 import { fetchGameData } from "@/utils/fetchGameData";
 import { fetchEthPrice } from "@/utils/fetchETHPrice";
-import useGameStore from "@/store/gameStore";
-
-async function fetchData(gameName: string) {
-  try {
-    const metadata = await getCollectionMetadataByName(gameName);
-    const gameData = await fetchGameData(gameName);
-    const ethPrice = await fetchEthPrice();
-
-    return {
-      metadata,
-      ...gameData,
-      ethPrice,
-    };
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return {
-      metadata: null,
-      collection: null,
-      listings: { nfts: [], next: "" },
-      collectionStats: null,
-      collectionSaleEvents: [],
-      ethPrice: null,
-    };
-  }
-}
 
 const Page: NextPage<{
   params: { name: string };
@@ -47,13 +21,14 @@ const Page: NextPage<{
     listings,
     collectionStats,
     collectionSaleEvents,
-    ethPrice,
-  } = await fetchData(gameName);
+  } = await fetchGameData(gameName);
+  const ethPrice = await fetchEthPrice();
 
   if (!collection || !collectionStats || !metadata) {
     return <Loading />;
   }
-
+  //const result = await fetchMetadataOne();
+  //console.log(result);
   const tabs: Tab[] = [
     {
       name: "Overview",
@@ -62,12 +37,13 @@ const Page: NextPage<{
           game={collection}
           stats={collectionStats}
           ethPrice={ethPrice}
+          collectionSaleEvents={collectionSaleEvents}
         />
       ),
     },
     {
       name: "In Game Items",
-      value: <GameItems currentPage={0} />,
+      value: <GameItems currentPage={1} listings={listings} />,
     },
     {
       name: "Stats",

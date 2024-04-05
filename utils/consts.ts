@@ -25,6 +25,8 @@ export const gameDescription: GameDescriptions = {
     rr: "143 days",
     genre: "MMO",
     friendly: "Friendly",
+    videoUrl: "",
+    image: "https://www.mavi.io/wp-content/uploads/2022/08/mavia-land.png",
   },
   Decentraland: {
     playNowButtonText: "Play Now",
@@ -36,6 +38,8 @@ export const gameDescription: GameDescriptions = {
     rr: "",
     genre: "MMO",
     friendly: "Friendly",
+    videoUrl: "",
+    image: "",
   },
   "Pixels - Farm Land": {
     playNowButtonText: "Play Now",
@@ -47,6 +51,8 @@ export const gameDescription: GameDescriptions = {
     rr: "238 days",
     genre: "Pixel Art",
     friendly: "Beginner Friendly",
+    videoUrl: "",
+    image: "",
   },
 };
 
@@ -58,3 +64,11 @@ export const headers: Headers = new Headers({
 });
 
 export const BASE_URL = "https://api.opensea.io/api/v2";
+export const SKYMAVIS_URL =
+  "https://api-gateway.skymavis.com/graphql/axie-marketplace";
+
+export const skymavisHeaders: Headers = new Headers({
+  accept: "application/json",
+  "x-api-key": process.env.SKYMAVIS || "no_api_key",
+  "Content-Type": "application/json", // Add this line
+});
