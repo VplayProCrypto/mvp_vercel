@@ -1,230 +1,233 @@
-CREATE TABLE contracts (
-  id SERIAL PRIMARY KEY,
-  address VARCHAR(255) NOT NULL
-);
 
-CREATE TABLE fees (
-  id SERIAL PRIMARY KEY,
-  fee NUMERIC(10, 2) NOT NULL,
-  recipient VARCHAR(255) NOT NULL,
-  required BOOLEAN NOT NULL
-);
-
-CREATE TABLE payment_tokens (
-  id SERIAL PRIMARY KEY,
-  symbol VARCHAR(255) NOT NULL,
-  address VARCHAR(255) NOT NULL,
-  chain VARCHAR(255) NOT NULL,
-  image VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  decimals INTEGER NOT NULL,
-  eth_price VARCHAR(255) NOT NULL,
-  usd_price VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE prices (
-  id SERIAL PRIMARY KEY,
-  currency VARCHAR(255) NOT NULL,
-  decimals INTEGER NOT NULL,
-  value VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE payments (
-  id SERIAL PRIMARY KEY,
-  quantity VARCHAR(255) NOT NULL,
-  token_address VARCHAR(255) NOT NULL,
-  decimals INTEGER NOT NULL,
-  symbol VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE collections (
-  collection VARCHAR(255) PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  description TEXT,
-  image_url VARCHAR(255),
-  banner_image_url VARCHAR(255),
-  owner VARCHAR(255) NOT NULL,
-  safelist_status VARCHAR(255),
-  category VARCHAR(255),
-  is_disabled BOOLEAN DEFAULT false,
-  is_nsfw BOOLEAN DEFAULT false,
-  trait_offers_enabled BOOLEAN DEFAULT false,
-  collection_offers_enabled BOOLEAN DEFAULT false,
-  opensea_url VARCHAR(255),
-  project_url VARCHAR(255),
-  wiki_url VARCHAR(255),
-  discord_url VARCHAR(255),
-  telegram_url VARCHAR(255),
-  twitter_username VARCHAR(255),
-  instagram_username VARCHAR(255),
-  total_supply INTEGER,
-  created_date TIMESTAMP DEFAULT now()
-);
-
-CREATE TABLE collection_contracts (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  contract_id INTEGER REFERENCES contracts(id)
-);
-
-CREATE TABLE collection_fees (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  fee_id INTEGER REFERENCES fees(id)
-);
-
-CREATE TABLE collection_payment_tokens (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  payment_token_id INTEGER REFERENCES payment_tokens(id)
-);
-CREATE TABLE nfts (
-  id SERIAL PRIMARY KEY,
-  identifier VARCHAR(255) NOT NULL,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  contract_id INTEGER REFERENCES contracts(id),
-  token_standard VARCHAR(255) NOT NULL,
-  name VARCHAR(255),
-  description TEXT,
-  image_url VARCHAR(255),
-  metadata_url VARCHAR(255),
-  opensea_url VARCHAR(255) NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
-  is_disabled BOOLEAN NOT NULL,
-  is_nsfw BOOLEAN NOT NULL
-);
-
-CREATE TABLE traits (
-  id SERIAL PRIMARY KEY,
-  nft_id INTEGER REFERENCES nfts(id),
-  trait_type VARCHAR(255) NOT NULL,
-  display_type VARCHAR(255),
-  max_value VARCHAR(255),
-  value VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE listings (
-  id SERIAL PRIMARY KEY,
-  nft_id INTEGER REFERENCES nfts(id),
-  order_hash VARCHAR(255) NOT NULL,
-  type VARCHAR(255) NOT NULL,
-  price_id INTEGER REFERENCES prices(id),
-  protocol_data JSONB NOT NULL,
-  protocol_address VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE offers (
-  id SERIAL PRIMARY KEY,
-  nft_id INTEGER REFERENCES nfts(id),
-  order_hash VARCHAR(255) NOT NULL,
-  chain VARCHAR(255) NOT NULL,
-  price_id INTEGER REFERENCES prices(id),
-  criteria JSONB NOT NULL,
-  protocol_data JSONB NOT NULL,
-  protocol_address VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE attributes (
-  id SERIAL PRIMARY KEY,
-  nft_id INTEGER REFERENCES nfts(id),
-  trait_type VARCHAR(255) NOT NULL,
-  value VARCHAR(255) NOT NULL,
-  display_type VARCHAR(255)
+CREATE TABLE IF NOT EXISTS public.collection
+(
+    opensea_slug character varying not null,
+    game_name character varying,
+    game_id character varying,
+    name character varying(50) not null,
+    description character varying not null,
+    owner character varying not null,
+    category character varying not null,
+    is_nsfw boolean not null default false,
+    opensea_url character varying,
+    project_url character varying,
+    wiki_url character varying,
+    discord_url character varying,
+    telegram_url character varying,
+    twitter_url character varying,
+    instagram_url character varying,
+    created_date timestamp with time zone not null default now(),
+    updated_at timestamp with time zone not null default now(),
+    CONSTRAINT collection_pkey primary key (opensea_slug)
 );
 
 
-CREATE TABLE intervals (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  interval VARCHAR(255) NOT NULL,
-  volume NUMERIC(10, 2) NOT NULL,
-  volume_diff NUMERIC(10, 2) NOT NULL,
-  volume_change NUMERIC(10, 2) NOT NULL,
-  sales INTEGER NOT NULL,
-  sales_diff INTEGER NOT NULL,
-  average_price NUMERIC(10, 2) NOT NULL,
-  timestamp TIMESTAMP DEFAULT now()
+CREATE TABLE IF NOT EXISTS public.collection_dynamic
+(
+    collection_slug character varying not null,
+    game_id character varying,
+    total_average_price double precision,
+    total_supply double precision,
+    total_volume double precision,
+    total_num_owners integer,
+    total_sales double precision,
+    total_market_cap double precision,
+    sales double precision,
+    volume double precision,
+    floor_price double precision,
+    floor_price_currency character varying,
+    average_price double precision,
+    daily_uaw bigint,
+    monthly_uaw bigint,
+    total_wallets bigint,
+    twitter_sentiment double precision,
+    facebook_sentiment double precision,
+    instagram_sentiment double precision,
+    reddit_sentiment double precision,
+    discord_sentiment double precision,
+    event_timestamp timestamp with time zone not null,
+    CONSTRAINT collection_dynamic_pkey primary key (collection_slug, event_timestamp),
+    CONSTRAINT collection_dynamic_collection_slug_fkey FOREIGN KEY (collection_slug)
+        REFERENCES public.collection (opensea_slug) match simple
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE totals (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  volume NUMERIC(10, 2) NOT NULL,
-  sales INTEGER NOT NULL,
-  average_price NUMERIC(10, 2) NOT NULL,
-  num_owners INTEGER NOT NULL,
-  market_cap NUMERIC(10, 2) NOT NULL,
-  floor_price NUMERIC(10, 2) NOT NULL,
-  floor_price_symbol VARCHAR(255) NOT NULL,
-  timestamp TIMESTAMP DEFAULT now()
+CREATE TABLE IF NOT EXISTS public.contract
+(
+    collection_slug character varying not null,
+    contract_address character varying not null,
+    chain character varying not null,
+    CONSTRAINT contract_pkey primary key (contract_address, chain),
+    CONSTRAINT contract_collection_slug_fkey FOREIGN KEY (collection_slug)
+        REFERENCES public.collection (opensea_slug) match simple
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE asset_events (
-  id SERIAL PRIMARY KEY,
-  event_type VARCHAR(255) NOT NULL,
-  order_hash VARCHAR(255),
-  maker VARCHAR(255),
-  event_timestamp INTEGER NOT NULL,
-  nft_id INTEGER REFERENCES nfts(id),
-  order_type JSONB,
-  protocol_address VARCHAR(255),
-  start_date INTEGER,
-  expiration_date INTEGER,
-  asset_id INTEGER REFERENCES nfts(id),
-  quantity INTEGER,
-  taker VARCHAR(255),
-  payment_id INTEGER REFERENCES payments(id),
-  criteria JSONB,
-  is_private_listing BOOLEAN,
-  closing_date INTEGER,
-  seller VARCHAR(255),
-  buyer VARCHAR(255),
-  transaction VARCHAR(255),
-  from_address VARCHAR(255),
-  to_address VARCHAR(255)
+
+CREATE TABLE IF NOT EXISTS public.erc20_transfers
+(
+    buyer character varying not null,
+    seller character varying not null,
+    contract_address character varying not null,
+    price double precision not null,
+    symbol character varying not null,
+    decimals integer not null,
+    transaction_hash character varying not null,
+    event_timestamp timestamp with time zone not null,
+    collection_slug text,
+    CONSTRAINT erc20_transfers_pkey primary key (transaction_hash, event_timestamp)
 );
 
-CREATE TABLE collection_metadata (
-    collection VARCHAR(255) PRIMARY KEY,
-    genre VARCHAR(255),
-    twitter_sentiment DOUBLE PRECISION,
-    facebook_sentiment DOUBLE PRECISION,
-    instagram_sentiment DOUBLE PRECISION,
-    reddit_sentiment DOUBLE PRECISION,
-    discord_sentiment DOUBLE PRECISION,
-    play_now_button_text VARCHAR(255),
-    items_text VARCHAR(255),
-    community_score VARCHAR(255),
-    player_count VARCHAR(255),
-    rewards_text VARCHAR(255),
-    stars VARCHAR(255),
-    rr VARCHAR(255),
-    friendly VARCHAR(255),
-    video_url VARCHAR(255),
-    image VARCHAR(255),
-    FOREIGN KEY (collection) REFERENCES collections(collection)
+
+CREATE TABLE IF NOT EXISTS public.fee
+(
+    collection_slug character varying not null,
+    fee double precision not null,
+    recipient character varying not null,
+    CONSTRAINT fee_pkey primary key (collection_slug, recipient),
+    CONSTRAINT fee_collection_slug_fkey FOREIGN KEY (collection_slug)
+        REFERENCES public.collection (opensea_slug) match simple
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE daily_unique_active_wallets (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  player_count INTEGER NOT NULL,
-  timestamp TIMESTAMP DEFAULT now()
+
+
+CREATE TABLE IF NOT EXISTS public.nft
+(
+    collection_slug character varying not null,
+    game_id character varying,
+    token_id character varying not null,
+    contract_address character varying not null,
+    token_standard character varying not null,
+    name character varying,
+    description character varying,
+    image_url character varying,
+    metadata_url character varying,
+    opensea_url character varying,
+    updated_at timestamp with time zone,
+    is_nsfw boolean not null default false,
+    is_disabled boolean not null default false,
+    traits jsonb,
+    CONSTRAINT nft_pkey primary key (token_id, contract_address),
+    CONSTRAINT nft_opensea_slug_fkey FOREIGN KEY (collection_slug)
+        REFERENCES public.collection (opensea_slug) match simple
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE monthly_unique_active_wallets (
-  id SERIAL PRIMARY KEY,
-  collection VARCHAR(255) REFERENCES collections(collection),
-  player_count INTEGER NOT NULL,
-  timestamp TIMESTAMP DEFAULT now()
+
+CREATE TABLE IF NOT EXISTS public.payment_tokens
+(
+    collection_slug character varying not null,
+    contract_address character varying not null,
+    symbol character varying,
+    decimals integer not null,
+    chain character varying not null,
+    CONSTRAINT payment_tokens_pkey primary key (collection_slug, contract_address),
+    CONSTRAINT payment_tokens_collection_slug_fkey FOREIGN KEY (collection_slug)
+        REFERENCES public.collection (opensea_slug) match simple
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
-CREATE TABLE rarity (
-    id SERIAL PRIMARY KEY,
-    collection VARCHAR(255) NOT NULL,
-    strategy_version VARCHAR(255),
-    calculated_at VARCHAR(255),
-    max_rank INTEGER,
-    total_supply INTEGER,
-    FOREIGN KEY (collection) REFERENCES collections(collection)
+CREATE TABLE IF NOT EXISTS public.nft_events
+(
+    transaction_hash character varying,
+    marketplace character varying,
+    marketplace_address character varying,
+    order_hash character varying,
+	event_type text,
+    token_id character varying not null,
+    contract_address character varying not null,
+    collection_slug character varying not null,
+    game_id character varying not null,
+    seller character varying not null,
+	buyer character varying,
+    quantity integer default 1,
+    price_val character varying,
+    price_currency character varying,
+    price_decimals character varying,
+    start_date timestamp with time zone,
+    expiration_date timestamp with time zone,
+    event_timestamp timestamp with time zone not null,
+    CONSTRAINT nft_listing_pkey primary key (contract_address, token_id, event_timestamp)
+);
+
+
+
+CREATE TABLE IF NOT EXISTS public.token_price
+(
+    contract_address character varying not null,
+    eth_price double precision not null,
+    usdt_price double precision not null,
+    usdt_conversion_price double precision,
+    eth_conversion_price double precision,
+    event_timestamp timestamp with time zone not null,
+    CONSTRAINT token_price_pkey primary key (contract_address, event_timestamp)
+);
+
+
+CREATE TABLE IF NOT EXISTS public.nft_ownership
+(
+    buyer character varying,
+    seller character varying not null,
+    token_id character varying not null,
+    contract_address character varying not null,
+    transaction_hash character varying not null,
+    buy_time timestamp with time zone not null,
+    -- token_standard character varying not null default 'erc721'::character varying,
+    quantity integer default 1,
+    sell_time timestamp with time zone,
+    collection_slug character varying not null,
+    game_id character varying not null,
+    CONSTRAINT nft_ownership_pkey primary key (contract_address, token_id, buy_time)
+);
+
+create table if not exists public.nft_dynamic
+(
+    collection_slug character varying not null,
+    token_id character varying not null,
+    contract_address character varying not null,
+    rr numeric,
+    event_timestamp timestamp with time zone not null default now(),
+    constraint nft_dynamic_pk primary key (contract_address, token_id, event_timestamp)
+);
+
+CREATE TABLE IF NOT EXISTS public.nft_offers
+(
+    order_hash character varying not null,
+	event_type text,
+    token_id character varying not null,
+    contract_address character varying not null,
+    collection_slug character varying not null,
+    game_id character varying not null,
+    seller character varying not null,
+    quantity integer default 1,
+    price_val character varying,
+    price_currency character varying,
+    price_decimals character varying,
+    start_date timestamp with time zone,
+    expiration_date timestamp with time zone,
+    event_timestamp timestamp with time zone not null,
+    CONSTRAINT nft_listing_pkey primary key (contract_address, token_id, event_timestamp)
+);
+
+CREATE TABLE IF NOT EXISTS public.nft_listings
+(
+    order_hash character varying not null,
+    token_id character varying not null,
+    contract_address character varying not null,
+    collection_slug character varying not null,
+    game_id character varying not null,
+    seller character varying not null,
+    price_val character varying,
+    price_currency character varying,
+    price_decimals character varying,
+    start_date timestamp with time zone,
+    expiration_date timestamp with time zone,
+    event_timestamp timestamp with time zone not null,
+    CONSTRAINT nft_listing_pkey primary key (contract_address, token_id, event_timestamp)
 );
