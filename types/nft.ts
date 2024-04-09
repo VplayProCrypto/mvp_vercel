@@ -1,12 +1,5 @@
-import {
-  Chain,
-  Contract,
-  Price,
-  TokenStandard,
-  contracts,
-  prices,
-} from "./blockchain";
-import { Collection, collections } from "./collection";
+import { Chain, Contract, Price, TokenStandard } from "./blockchain";
+import { Collection } from "./collection";
 import {
   pgTable,
   serial,
@@ -214,59 +207,3 @@ export interface Cryptokitty {
   attributes: Attribute[];
   mutable_attributes: Attribute[];
 }
-
-export const nfts = pgTable("nfts", {
-  id: serial("id").primaryKey(),
-  identifier: varchar("identifier", { length: 255 }).notNull(),
-  collection: varchar("collection", { length: 255 }).references(
-    () => collections.collection
-  ),
-  contract_id: integer("contract_id").references(() => contracts.id),
-  token_standard: varchar("token_standard", { length: 255 }).notNull(),
-  name: varchar("name", { length: 255 }),
-  description: text("description"),
-  image_url: varchar("image_url", { length: 255 }),
-  metadata_url: varchar("metadata_url", { length: 255 }),
-  opensea_url: varchar("opensea_url", { length: 255 }).notNull(),
-  updated_at: timestamp("updated_at").notNull(),
-  is_disabled: boolean("is_disabled").notNull(),
-  is_nsfw: boolean("is_nsfw").notNull(),
-});
-
-export const traits = pgTable("traits", {
-  id: serial("id").primaryKey(),
-  nft_id: integer("nft_id").references(() => nfts.id),
-  trait_type: varchar("trait_type", { length: 255 }).notNull(),
-  display_type: varchar("display_type", { length: 255 }),
-  max_value: varchar("max_value", { length: 255 }),
-  value: varchar("value", { length: 255 }).notNull(),
-});
-
-export const listings = pgTable("listings", {
-  id: serial("id").primaryKey(),
-  nft_id: integer("nft_id").references(() => nfts.id),
-  order_hash: varchar("order_hash", { length: 255 }).notNull(),
-  type: varchar("type", { length: 255 }).notNull(),
-  price_id: integer("price_id").references(() => prices.id),
-  protocol_data: jsonb("protocol_data").notNull(),
-  protocol_address: varchar("protocol_address", { length: 255 }).notNull(),
-});
-
-export const offers = pgTable("offers", {
-  id: serial("id").primaryKey(),
-  nft_id: integer("nft_id").references(() => nfts.id),
-  order_hash: varchar("order_hash", { length: 255 }).notNull(),
-  chain: varchar("chain", { length: 255 }).notNull(),
-  price_id: integer("price_id").references(() => prices.id),
-  criteria: jsonb("criteria").notNull(),
-  protocol_data: jsonb("protocol_data").notNull(),
-  protocol_address: varchar("protocol_address", { length: 255 }).notNull(),
-});
-
-export const attributes = pgTable("attributes", {
-  id: serial("id").primaryKey(),
-  nft_id: integer("nft_id").references(() => nfts.id),
-  trait_type: varchar("trait_type", { length: 255 }).notNull(),
-  value: varchar("value", { length: 255 }).notNull(),
-  display_type: varchar("display_type", { length: 255 }),
-});

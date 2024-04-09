@@ -5,7 +5,7 @@ import { Pool } from "pg";
 export const pool = new Pool({
   host: "127.0.0.1",
   port: 5432,
-  user: "saturn",
+  user: "postgres",
   password: "postgres",
   database: "mvp",
   max: 20, // Maximum number of clients in the pool
