@@ -2,8 +2,8 @@
 import DashboardHeroCarousel from "@/components/dashboard/dashboardHeroCarousel";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
-import { Collection, CollectionMetadata } from "@/types/collection";
-import { getCollections } from "../api/opensea/utils";
+import { Collection, CollectionMetadata } from "@/types/opensea/collection";
+import { getCollections } from "../../backend/apis/opensea/utils";
 import { insertCollectionWithMetadata } from "@/db/inserts";
 import { getMultipleCollections } from "@/db/selects";
 import { DashBoardCard } from "@/components/dashboard/dashboardCard";

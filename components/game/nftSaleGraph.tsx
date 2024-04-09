@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { convertEthToUsd, convertWeiToEth } from "@/utils/utils";
 import { LineChartIcon } from "lucide-react";
-import { AssetEvent } from "@/types/stats";
+import { AssetEvent } from "@/types/opensea/stats";
 
 interface NftSaleGraphProps {
   collectionSaleEvents: AssetEvent[];

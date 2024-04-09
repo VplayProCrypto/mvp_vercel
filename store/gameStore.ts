@@ -1,8 +1,8 @@
 // gameStore.ts
-import { Collection } from "@/types/collection";
-import { NftListings } from "@/types/nft";
-import { CollectionStats, AssetEvent } from "@/types/stats";
-import { GameDescription } from "@/types/localTypes";
+import { Collection } from "@/types/opensea/collection";
+import { NftListings } from "@/types/opensea/nft";
+import { CollectionStats, AssetEvent } from "@/types/opensea/stats";
+import { GameDescription } from "@/types/opensea/localTypes";
 import { create } from "zustand";
 
 interface GameStore {

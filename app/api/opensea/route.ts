@@ -9,10 +9,10 @@ import {
   getListingsByCollectionsMetadata,
   getNft,
   getNftsByCollection,
-} from "./utils";
-import { Collection } from "@/types/collection";
-import { Nfts, Nft, Listing, Offer, NftListings } from "@/types/nft";
-import { CollectionStats, AssetEvent } from "@/types/stats";
+} from "../../../backend/apis/opensea/utils";
+import { Collection } from "@/types/opensea/collection";
+import { Nfts, Nft, Listing, Offer, NftListings } from "@/types/opensea/nft";
+import { CollectionStats, AssetEvent } from "@/types/opensea/stats";
 
 export async function GET(nextRequest: NextRequest): Promise<NextResponse> {
   const url = new URL(nextRequest.url);

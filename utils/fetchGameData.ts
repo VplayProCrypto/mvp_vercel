@@ -4,8 +4,8 @@ import {
   getCollectionSaleEvents,
   getCollectionStats,
   getListingsByCollectionsMetadata,
-} from "@/app/api/opensea/utils";
-import { getCollectionMetadataByName } from "@/db/selects";
+} from "@/backend/apis/opensea/utils";
+import { getCollectionMetadataByName } from "@/db/queries";
 
 export async function fetchGameData(gameName: string) {
   try {

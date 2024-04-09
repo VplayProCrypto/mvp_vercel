@@ -1,7 +1,7 @@
 //Script to run manually to initialize the database
 
-import { getCollectionEventsAll } from "@/app/api/opensea/utils";
-import { AssetEvent, Events } from "@/types/stats";
+import { getCollectionEventsAll } from "@/backend/apis/opensea/utils";
+import { AssetEvent, Events } from "@/types/opensea/stats";
 import { insertAssetEvents } from "./queries";
 
 export const initializeAssetEvents = async (

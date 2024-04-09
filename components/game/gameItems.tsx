@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { NftExtended, NftListings } from "@/types/nft";
+import { NftExtended, NftListings } from "@/types/opensea/nft";
 
 interface GameItemsProps {
   listings: NftListings;

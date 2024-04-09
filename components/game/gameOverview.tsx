@@ -14,8 +14,8 @@ import { StatsCardData, StatsCard } from "./StatsCard";
 import DescriptionCard from "./gameDescriptionCard";
 
 import NftSaleGraph from "./nftSaleGraph";
-import { AssetEvent, CollectionStats } from "@/types/stats";
-import { Collection } from "@/types/collection";
+import { AssetEvent, CollectionStats } from "@/types/opensea/stats";
+import { Collection } from "@/types/opensea/collection";
 
 interface OverviewProps {
   game: Collection;

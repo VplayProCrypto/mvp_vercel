@@ -1,13 +1,13 @@
 import { Gamepad2, Users, Star } from "lucide-react";
 import Image from "next/image";
-import { GameDescription } from "@/types/localTypes";
+import { GameDescription } from "@/types/opensea/localTypes";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import useGameStore from "@/store/gameStore";
 
 import Link from "next/link";
 import { getCollectionMetadataByName } from "@/db/selects";
-import { Collection } from "@/types/collection";
+import { Collection } from "@/types/opensea/collection";
 const renderStars = (stars: string) => {
   const totalStars = parseInt(stars, 10);
   let starElements = [];

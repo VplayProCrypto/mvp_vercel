@@ -2,10 +2,10 @@
 
 import React from "react";
 import GameCarousel from "./gameCarousel";
-import { GameDescription, Images } from "@/types/localTypes";
+import { GameDescription, Images } from "@/types/opensea/localTypes";
 import GameInfo from "./gameInfo";
 import useGameStore from "@/store/gameStore";
-import { Collection } from "@/types/collection";
+import { Collection } from "@/types/opensea/collection";
 
 interface GameHeroProps {
   collection: Collection;

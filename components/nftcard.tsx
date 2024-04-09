@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { NftExtended } from "@/types/nft";
+import { NftExtended } from "@/types/opensea/nft";
 
 interface NftCardProps {
   nft: NftExtended;

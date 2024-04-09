@@ -1,11 +1,12 @@
-import { fetchMetadataOne } from "../utils/fetchAxieData";
-import { getCollectionByName } from "../db/queries";
+import { pool } from "../db/database";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { collections } from "../db/tables";
 console.log("Hello via Bun!");
-//console.log(await fetchMetadataOne());
-//const axieMetadataOne = await fetchMetadataOne();
 
-// update collection total supply with axies total
+const client = await pool.connect();
+const drizzleClient = drizzle(client);
 
-// insert into totals table
+const result = await drizzleClient.select().from(collections).limit(1);
 
-console.log(await getCollectionByName("cryptokitties"));
+console.log(result);
+client.release();

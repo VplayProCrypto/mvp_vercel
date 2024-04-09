@@ -1,4 +1,4 @@
-import { Collection } from "@/types/collection";
+import { Collection } from "@/types/opensea/collection";
 import {
   Card,
   CardHeader,

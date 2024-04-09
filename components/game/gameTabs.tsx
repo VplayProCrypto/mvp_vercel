@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tab } from "@/types/localTypes";
+import { Tab } from "@/types/opensea/localTypes";
 import { ReactNode } from "react";
 
 interface GameTabsProps {

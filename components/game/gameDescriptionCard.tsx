@@ -9,7 +9,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import Link from "next/link";
 
-import { Collection } from "@/types/collection";
+import { Collection } from "@/types/opensea/collection";
 
 interface DescriptionCardProps {
   collection: Collection;

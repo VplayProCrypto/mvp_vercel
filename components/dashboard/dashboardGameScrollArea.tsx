@@ -1,7 +1,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Collection } from "@/types/collection";
+import { Collection } from "@/types/opensea/collection";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import Link from "next/link";
