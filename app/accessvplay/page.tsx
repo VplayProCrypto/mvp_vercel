@@ -59,7 +59,7 @@ export default function AccessVplaypPage() {
   return (
     <>
       <Head>
-        <title>Join VPLAY Community</title>
+        <title>Join the VPLAY Gamers Insights Network</title>
       </Head>
       <Navbar user={undefined} gasFee={''} />
       <div className="flex flex-col items-center justify-center mt-16 min-h-screen py-2 bg-gradient-to-r from-gray-900 to-stone-800 text-white px-4 lg:px-0">
@@ -71,13 +71,10 @@ export default function AccessVplaypPage() {
           className="mx-auto mb-8"
         />
         <h1 className="text-4xl mt-10 font-bold mb-6 text-center">
-          Join the VPLAY Community and Beta Testing
+          Unlock Exclusive Access: Join the VPLAY Gamers Insights Network
         </h1>
         <p className="max-w-lg mb-8 text-lg text-center">
-          VPLAY is rolling out activities for gamers and NFT enthusiasts like
-          you. Join our community, get updates and early access to the VPLAY
-          platform, contribute by letting us know what you think and help shape
-          the future of online and offline gaming.
+          VPLAY is igniting excitement among GameFI enthusiasts just like you! Dive into our vibrant community and gain access to a world of perks. Stay ahead of the curve with exclusive updates, early platform access and user testing. Share your insights, shape the gaming landscape, and be part of a community driving innovation in online and offline gaming. Join us today and contribute to the exciting web3 gaming evolution! 
         </p>
         <form
           onSubmit={handleSubmit}
