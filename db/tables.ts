@@ -58,6 +58,7 @@ export const collectionDynamic = pgTable(
     instagram_sentiment: doublePrecision("instagram_sentiment"),
     reddit_sentiment: doublePrecision("reddit_sentiment"),
     discord_sentiment: doublePrecision("discord_sentiment"),
+    telegram_sentiment: doublePrecision("telegram_sentiment"),
     event_timestamp: timestamp("event_timestamp").notNull(),
   },
   (table) => ({

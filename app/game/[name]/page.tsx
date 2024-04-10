@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar";
 import Loading from "@/components/loading";
 import GameHero from "@/components/game/gameHero";
 import GameTabs from "@/components/game/gameTabs";
-import { GameDescription, Tab } from "@/types/vplay/localTypes";
+import { GameDescription, Tab } from "@/types/vplayTypes";
 import Overview from "@/components/game/gameOverview";
 import GameItems from "@/components/game/gameItems";
 

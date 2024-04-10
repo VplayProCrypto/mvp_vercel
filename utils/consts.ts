@@ -1,4 +1,4 @@
-import { GameDescriptions } from "../types/vplay/localTypes";
+import { GameDescriptions } from "../types/vplayTypes";
 //This is a temporary hack
 export const gameDescription: GameDescriptions = {
   CryptoKitties: {

@@ -2,7 +2,7 @@
 import { Collection } from "@/types/opensea/collection";
 import { NftListings } from "@/types/opensea/nft";
 import { CollectionStats, AssetEvent } from "@/types/opensea/stats";
-import { GameDescription } from "@/types/vplay/localTypes";
+import { GameDescription } from "@/types/vplayTypes";
 import { create } from "zustand";
 
 interface GameStore {

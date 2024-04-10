@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Tab } from "@/types/vplay/localTypes";
+import { Tab } from "@/types/vplayTypes";
 import { ReactNode } from "react";
 
 interface GameTabsProps {
