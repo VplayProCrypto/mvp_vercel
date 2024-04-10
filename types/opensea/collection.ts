@@ -1,27 +1,13 @@
-import {
-  pgTable,
-  serial,
-  text,
-  varchar,
-  boolean,
-  integer,
-  jsonb,
-  timestamp,
-  PgTable,
-  doublePrecision,
-  primaryKey,
-} from "drizzle-orm/pg-core";
+import { OpenseaContract, OpenseaFee, OpenseaPaymentToken } from "./blockchain";
 
-import { Contract, Fee, PaymentToken } from "./blockchain";
-
-export interface Rarity {
+export interface OpenseaRarity {
   strategy_version: string;
   calculated_at: string;
   max_rank: number;
   total_supply: number;
 }
 
-export type Collection = {
+export type OpenseaCollection = {
   collection: string;
   name: string;
   description: string;
@@ -41,36 +27,16 @@ export type Collection = {
   telegram_url: string;
   twitter_username: string;
   instagram_username: string;
-  contracts: Contract[];
+  contracts: OpenseaContract[];
   editors: string[];
-  fees: Fee[];
-  rarity: Rarity;
-  payment_tokens: PaymentToken[];
+  fees: OpenseaFee[];
+  rarity: OpenseaRarity;
+  payment_tokens: OpenseaPaymentToken[];
   total_supply: number;
   created_date: Date;
 };
 
-export type Collections = {
-  collections: Collection[];
+export type OpenseaCollections = {
+  collections: OpenseaCollection[];
   next: string;
-};
-
-export type CollectionMetadata = {
-  collection: string;
-  genre: string;
-  twitterSentiment: number;
-  facebookSentiment: number;
-  instagramSentiment: number;
-  redditSentiment: number;
-  discordSentiment: number;
-  playNowButtonText: string;
-  itemsText: string;
-  communityScore: string;
-  playerCount: string;
-  rewardsText: string;
-  stars: string;
-  rr: string;
-  friendly: string;
-  videoUrl: string;
-  image: string;
 };

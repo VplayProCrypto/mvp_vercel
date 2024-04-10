@@ -1,6 +1,6 @@
 //Script to run manually to initialize the database
 
-import { getCollectionEventsAll } from "@/backend/apis/opensea/utils";
+import { getCollectionEventsAll } from "@/backend/apis/opensea";
 import { AssetEvent, Events } from "@/types/opensea/stats";
 import { insertAssetEvents } from "./queries";
 

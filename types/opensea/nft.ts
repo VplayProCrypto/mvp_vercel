@@ -1,26 +1,21 @@
-import { Chain, Contract, Price, TokenStandard } from "./blockchain";
-import { Collection } from "./collection";
 import {
-  pgTable,
-  serial,
-  varchar,
-  boolean,
-  integer,
-  timestamp,
-  text,
-  jsonb,
-} from "drizzle-orm/pg-core";
+  OpenseaContract,
+  OpenseaPrice,
+  OpenseaTokenStandard,
+  OpenseaChain,
+} from "./blockchain";
+import { OpenseaCollection } from "./collection";
 
-export interface Nfts {
-  nfts: Nft[];
+export interface OpenseaNfts {
+  nfts: OpenseaNft[];
   next: string;
 }
 
-export interface Nft {
+export interface OpenseaNft {
   identifier: string;
   collection: string;
-  contract: Contract;
-  token_standard: TokenStandard;
+  contract: OpenseaContract;
+  token_standard: OpenseaTokenStandard;
   name: null | string;
   description: null | string;
   image_url: null | string;
@@ -31,45 +26,45 @@ export interface Nft {
   is_nsfw: boolean;
 }
 
-export interface Trait {
+export interface OpenseaTrait {
   trait_type: string;
   display_type: null | string;
   max_value: null | string;
   value: string;
 }
 
-export interface NftExtended extends Nft {
-  current_price: CurrentListingPrice | null;
+export interface OpenseaNftExtended extends OpenseaNft {
+  current_price: OpenseaCurrentListingPrice | null;
   owner: string | null;
   animation_url: null | string;
   is_suspicious: boolean;
   creator: string;
-  traits: Trait[];
+  traits: OpenseaTrait[];
 }
 
-export interface NftResponse {
-  nft: NftExtended;
+export interface OpenseaNftResponse {
+  nft: OpenseaNftExtended;
 }
 
-export interface NftListings {
-  nfts: NftExtended[];
+export interface OpenseaNftListings {
+  nfts: OpenseaNftExtended[];
   next: string;
 }
 
-export interface CurrentListingPrice {
+export interface OpenseaCurrentListingPrice {
   currency: string;
   decimals: number;
   value: string;
 }
 
-export interface ListingPrice {
-  current: CurrentListingPrice;
+export interface OpenseaListingPrice {
+  current: OpenseaCurrentListingPrice;
 }
 
-export interface ProtocolParameters {
+export interface OpenseaProtocolParameters {
   offerer: string;
-  offer: Offer[];
-  consideration: ConsiderationItem[];
+  offer: OpenseaOffer[];
+  consideration: OpenseaConsiderationItem[];
   startTime: string;
   endTime: string;
   orderType: 0;
@@ -81,51 +76,51 @@ export interface ProtocolParameters {
   counter: 0;
 }
 
-export interface ProtocolData {
-  parameters: ProtocolParameters;
+export interface OpenseaProtocolData {
+  parameters: OpenseaProtocolParameters;
   signature: string;
 }
 
-export interface Listing {
+export interface OpenseaListing {
   order_hash: string;
   type: string;
-  price: ListingPrice;
-  protocol_data: ProtocolData;
+  price: OpenseaListingPrice;
+  protocol_data: OpenseaProtocolData;
   protocol_address: string;
 }
 
-export interface Listings {
-  listings: Listing[];
+export interface OpenseaListings {
+  listings: OpenseaListing[];
   next: string;
 }
 
-export interface Offers {
-  offers: Offer[];
+export interface OpenseaOffers {
+  offers: OpenseaOffer[];
   next: string;
 }
 
-export interface Offer {
+export interface OpenseaOffer {
   order_hash: string;
-  chain: Chain;
-  price: Price;
-  criteria: Criteria;
-  protocol_data: ProtocolData;
+  chain: OpenseaChain;
+  price: OpenseaPrice;
+  criteria: OpenseaCriteria;
+  protocol_data: OpenseaProtocolData;
   protocol_address: string;
 }
 
-export interface Criteria {
-  collection: Collection;
-  contract: Contract;
-  trait: Trait;
+export interface OpenseaCriteria {
+  collection: OpenseaCollection;
+  contract: OpenseaContract;
+  trait: OpenseaTrait;
   encoded_token_ids: string;
 }
 
-export interface Trait {
+export interface OpenseaTrait {
   type: string;
   value: string;
 }
 
-export interface Offer {
+export interface OpenseaOffer {
   itemType: number;
   token: string; // contract_address
   identifierOrCriteria: string; // token_id
@@ -133,7 +128,7 @@ export interface Offer {
   endAmount: string;
 }
 
-export interface ConsiderationItem {
+export interface OpenseaConsiderationItem {
   itemType: number;
   token: string;
   identifierOrCriteria: string;
@@ -142,10 +137,10 @@ export interface ConsiderationItem {
   recipient: string;
 }
 
-export interface Parameters {
+export interface OpenseaParameters {
   offerer: string;
-  offer: Consideration[];
-  consideration: Consideration[];
+  offer: OpenseaConsideration[];
+  consideration: OpenseaConsideration[];
   startTime: string;
   endTime: string;
   orderType: number;
@@ -157,7 +152,7 @@ export interface Parameters {
   counter: number;
 }
 
-export interface Consideration {
+export interface OpenseaConsideration {
   itemType: number;
   token: string;
   identifierOrCriteria: string;
@@ -166,7 +161,7 @@ export interface Consideration {
   recipient?: string;
 }
 
-export interface Asset {
+export interface OpenseaAsset {
   identifier: string;
   collection: string;
   contract: string;
@@ -181,29 +176,13 @@ export interface Asset {
   is_nsfw: boolean;
 }
 
-export interface Trait {
+export interface OpenseaTrait {
   type: string;
   value: string;
 }
 
-export interface Attribute {
+export interface OpenseaAttribute {
   trait_type: string;
   value: number | string;
   display_type?: string;
-}
-
-export interface Cryptokitty {
-  id: number;
-  tokenId: number;
-  created_at: Date;
-  name: string;
-  background_color: string;
-  image: string;
-  external_url: string;
-  genes: string;
-  fetched_at: number;
-  nickname: string;
-  description: string;
-  attributes: Attribute[];
-  mutable_attributes: Attribute[];
 }

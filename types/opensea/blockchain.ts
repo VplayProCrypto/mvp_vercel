@@ -1,26 +1,14 @@
-import {
-  pgTable,
-  serial,
-  varchar,
-  numeric,
-  boolean,
-  integer,
-  doublePrecision,
-  timestamp,
-  primaryKey,
-} from "drizzle-orm/pg-core";
-
-export interface Contract {
+export interface OpenseaContract {
   address: string;
 }
 
-export interface Fee {
+export interface OpenseaFee {
   fee: number;
   recipient: string;
   required: boolean;
 }
 
-export interface PaymentToken {
+export interface OpenseaPaymentToken {
   symbol: string;
   address: string;
   chain: string;
@@ -31,21 +19,21 @@ export interface PaymentToken {
   usd_price: string;
 }
 
-export enum TokenStandard {
+export enum OpenseaTokenStandard {
   Erc721 = "erc721",
 }
 
-export interface Chain {}
-
-export interface Price {
+export interface OpenseaPrice {
   currency: string;
   decimals: number;
   value: string;
 }
 
-export interface Payment {
+export interface OpenseaPayment {
   quantity: string;
   token_address: string;
   decimals: number;
   symbol: string;
 }
+
+export interface OpenseaChain {}

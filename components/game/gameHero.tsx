@@ -2,7 +2,7 @@
 
 import React from "react";
 import GameCarousel from "./gameCarousel";
-import { GameDescription, Images } from "@/types/opensea/localTypes";
+import { GameDescription, Images } from "@/types/vplay/localTypes";
 import GameInfo from "./gameInfo";
 import useGameStore from "@/store/gameStore";
 import { Collection } from "@/types/opensea/collection";

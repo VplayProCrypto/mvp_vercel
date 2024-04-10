@@ -1,22 +1,12 @@
-import { Payment } from "./blockchain";
-import { Asset, Criteria } from "./nft";
-import {
-  pgTable,
-  serial,
-  varchar,
-  integer,
-  numeric,
-  jsonb,
-  boolean,
-  primaryKey,
-  timestamp,
-} from "drizzle-orm/pg-core";
-export interface CollectionStats {
-  total: Total;
-  intervals: Interval[];
+import { OpenseaPayment } from "./blockchain";
+import { OpenseaAsset, OpenseaCriteria } from "./nft";
+
+export interface OpenseaCollectionStats {
+  total: OpenseaTotal;
+  intervals: OpenseaInterval[];
 }
 
-export interface Interval {
+export interface OpenseaInterval {
   interval: string;
   collection: string;
   volume: string;
@@ -28,7 +18,7 @@ export interface Interval {
   timestamp: Date;
 }
 
-export interface Total {
+export interface OpenseaTotal {
   volume: string;
   collection: string;
   sales: number;
@@ -40,26 +30,26 @@ export interface Total {
   timestamp: Date;
 }
 
-export interface Events {
-  asset_events: AssetEvent[];
+export interface OpenseaEvents {
+  asset_events: OpenseaAssetEvent[];
   next: string;
 }
 
-export interface AssetEvent {
+export interface OpenseaAssetEvent {
   event_type: string;
   order_hash?: string;
   maker?: string;
   event_timestamp: number;
-  nft?: Asset;
-  order_type?: OrderType;
+  nft?: OpenseaAsset;
+  order_type?: OpenseaOrderType;
   protocol_address?: string;
   start_date?: number;
   expiration_date?: number;
-  asset?: Asset;
+  asset?: OpenseaAsset;
   quantity?: number;
   taker?: string;
-  payment?: Payment;
-  criteria?: Criteria;
+  payment?: OpenseaPayment;
+  criteria?: OpenseaCriteria;
   is_private_listing?: boolean;
   closing_date?: number;
   seller?: string;
@@ -69,9 +59,4 @@ export interface AssetEvent {
   to_address?: string;
 }
 
-export interface OrderType {}
-
-export type ApiResponse = {
-  message?: string;
-  [key: string]: any;
-};
+export interface OpenseaOrderType {}

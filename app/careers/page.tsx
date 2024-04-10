@@ -7,7 +7,7 @@ import Link from "next/link";
 import { fetchWithRetry } from "../../utils/utils";
 import FormattedText from "./components/formattedtext";
 import Modal from "./components/modal";
-import { JobPosting } from "../../types/opensea/localTypes";
+import { JobPosting } from "../../types/vplay/localTypes";
 import Footer from "@/components/footer";
 import Loading from "@/components/loading";
 import Navbar from "@/components/navbar";

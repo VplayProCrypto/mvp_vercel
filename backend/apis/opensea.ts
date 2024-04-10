@@ -1,20 +1,8 @@
-import { fetchApi } from "@/utils/utils";
-
-import { BASE_URL } from "../../../utils/consts";
-import { Collection, Collections } from "@/types/opensea/collection";
-import {
-  Nfts,
-  NftExtended,
-  NftResponse,
-  Listing,
-  Listings,
-  Offer,
-  Offers,
-  NftListings,
-} from "@/types/opensea/nft";
-import { CollectionStats, AssetEvent, Events } from "@/types/opensea/stats";
-
-export const getCollection = (collectionName: string): Promise<Collection> =>
+import { BASE_URL } from "../../utils/consts";
+import { fetchApi } from "../../utils/utils";
+export const getCollection = (
+  collectionName: string
+): Promise<OpenseaCollection> =>
   fetchApi(`${BASE_URL}/collections/${collectionName}`);
 
 export const getNftsByCollection = (
