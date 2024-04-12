@@ -99,15 +99,6 @@ export interface OpenseaOffers {
   next: string
 }
 
-export interface OpenseaOffer {
-  order_hash: string
-  chain: OpenseaChain
-  price: OpenseaPrice
-  criteria: OpenseaCriteria
-  protocol_data: OpenseaProtocolData
-  protocol_address: string
-}
-
 export interface OpenseaCriteria {
   collection: OpenseaCollection
   contract: OpenseaContract
@@ -121,6 +112,12 @@ export interface OpenseaTrait {
 }
 
 export interface OpenseaOffer {
+  order_hash: string
+  chain: OpenseaChain
+  price: OpenseaPrice
+  criteria: OpenseaCriteria
+  protocol_data: OpenseaProtocolData
+  protocol_address: string
   itemType: number
   token: string // contract_address
   identifierOrCriteria: string // token_id

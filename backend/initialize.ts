@@ -6,6 +6,7 @@ import type {
   NFT,
   NFTDynamic,
   NFTListing,
+  NFTOffer,
   OpenseaCollection,
   OpenseaCollectionStats,
   OpenseaContract,
@@ -17,6 +18,7 @@ import type {
   TokenPrice,
 } from '@types'
 import {
+  getOpenseaBestOfferForNft,
   getOpenseaCollection,
   getOpenseaCollectionEventsAll,
   getOpenseaCollectionStats,
@@ -228,7 +230,37 @@ const createNFTListingRecords = (
   })
 }
 
-const createNFTEvenRecords = getOpenseaCollectionEventsAll
+const createNFTOfferRecords = async (
+  collectionName: string,
+  openseaNftListings: OpenseaNftListings
+): Promise<NFTOffer[]> => {
+  const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
+  const offerPromises = openseaNftsExtended.map(async openseaNftExtended => {
+    const offer = await getOpenseaBestOfferForNft(
+      openseaNftExtended.identifier,
+      collectionName
+    )
+    return {
+      order_hash: offer.order_hash,
+      event_type: 'offer',
+      token_id: offer.identifierOrCriteria,
+      contract_address: openseaNftExtended.contract.address,
+      game_id: openseaNftExtended.collection,
+      collection_slug: openseaNftExtended.collection,
+      price_val: offer.price.value,
+      price_currency: offer.price.currency,
+      price_decimals: String(offer.price.decimals),
+      event_timestamp: new Date(),
+      offerer: offer.protocol_data.parameters.offerer,
+      start_date: new Date(offer.protocol_data.parameters.startTime),
+      expiration_date: new Date(offer.protocol_data.parameters.endTime),
+      quantity: Number(offer.endAmount),
+    }
+  })
+
+  const nftOffers = await Promise.all(offerPromises)
+  return nftOffers
+}
 
 export const initializeNewGame = async (collectionName: string) => {
   console.log('Initializing new game' + collectionName)

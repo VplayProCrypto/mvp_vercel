@@ -220,7 +220,7 @@ export interface NFTOffer {
   contract_address: string
   collection_slug: string
   game_id: string
-  seller: string
+  offerer: string
   quantity: number
   price_val?: string
   price_currency?: string

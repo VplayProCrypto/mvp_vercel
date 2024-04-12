@@ -260,7 +260,7 @@ export const nftOffers = pgTable(
       .references(() => collections.opensea_slug)
       .notNull(),
     game_id: varchar('game_id').notNull(),
-    seller: varchar('seller').notNull(),
+    offerer: varchar('offerer').notNull(),
     quantity: integer('quantity').default(1),
     price_val: varchar('price_val'),
     price_currency: varchar('price_currency'),
