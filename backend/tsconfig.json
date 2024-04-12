@@ -9,7 +9,8 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@types": ["../types"]
+      "@types": ["../types"],
+      "@db": ["../db"]
     },
     // Bundler mode
     "moduleResolution": "bundler",
