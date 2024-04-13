@@ -244,3 +244,33 @@ export interface NFTListing {
   expiration_date?: Date
   event_timestamp: Date
 }
+
+export interface BlockResponse {
+  result: string
+}
+
+export interface ERC20Transfer {
+  blockNumber: string
+  timeStamp: string
+  hash: string
+  nonce: string
+  blockHash: string
+  from: string
+  contractAddress: string
+  to: string
+  value: string
+  tokenName: string
+  tokenSymbol: string
+  tokenDecimal: string
+  transactionIndex: string
+  gas: string
+  gasPrice: string
+  gasUsed: string
+  cumulativeGasUsed: string
+  input: string
+  confirmations: string
+}
+
+export interface ERC20TransferResponse {
+  result: ERC20Transfer[]
+}
