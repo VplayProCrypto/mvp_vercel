@@ -109,13 +109,14 @@ export const createTokenPriceRecord = (
 
 export const createNFTRecords = (
   collectionName: string,
+  project_url: string,
   openseaNftListings: OpenseaNftListings
 ): NFT[] => {
   const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
   return openseaNftsExtended.map(openseaNftExtended => {
     return {
       collection_slug: collectionName,
-      game_id: openseaNftExtended.collection,
+      game_id: project_url,
       token_id: openseaNftExtended.identifier,
       contract_address: openseaNftExtended.contract.address,
       token_standard: openseaNftExtended.token_standard,
@@ -142,6 +143,7 @@ export const createNFTRecords = (
 }
 
 export const createNFTDynamicRecords = (
+  project_url: string,
   openseaNftListings: OpenseaNftListings
 ): NFTDynamic[] => {
   const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
@@ -151,13 +153,14 @@ export const createNFTDynamicRecords = (
       token_id: openseaNftExtended.identifier,
       contract_address: openseaNftExtended.contract.address,
       collection_slug: openseaNftExtended.collection,
-      game_id: openseaNftExtended.collection,
+      game_id: project_url,
       event_timestamp: new Date(),
     }
   })
 }
 
 export const createNFTListingRecords = (
+  project_url: string,
   openseaNftListings: OpenseaNftListings
 ): NFTListing[] => {
   const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
@@ -167,7 +170,7 @@ export const createNFTListingRecords = (
       token_id: openseaNftExtended.identifier,
       contract_address: openseaNftExtended.contract.address,
       collection_slug: openseaNftExtended.collection,
-      game_id: openseaNftExtended.collection,
+      game_id: project_url,
       seller: openseaNftExtended.owner || '',
       price_val: openseaNftExtended.current_price?.value || '0',
       price_currency: openseaNftExtended.current_price?.currency || '',
@@ -187,6 +190,7 @@ export const createNFTListingRecords = (
 
 export const createNFTOfferRecords = async (
   collectionName: string,
+  project_url: string,
   openseaNftListings: OpenseaNftListings
 ): Promise<NFTOffer[]> => {
   const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
@@ -200,7 +204,7 @@ export const createNFTOfferRecords = async (
       event_type: 'offer',
       token_id: offer.identifierOrCriteria,
       contract_address: openseaNftExtended.contract.address,
-      game_id: openseaNftExtended.collection,
+      game_id: project_url,
       collection_slug: openseaNftExtended.collection,
       price_val: offer.price.value,
       price_currency: offer.price.currency,
@@ -218,7 +222,7 @@ export const createNFTOfferRecords = async (
 }
 
 export const createNFTEventsRecords = (
-  game_url: string,
+  project_url: string,
   collectionName: string,
   openseaAssetEvents: OpenseaAssetEvent[]
 ): NFTEvent[] => {
@@ -236,7 +240,7 @@ export const createNFTEventsRecords = (
       token_id: openseaAssetEvent.nft!.identifier,
       contract_address: openseaAssetEvent.nft!.contract || '',
       collection_slug: collectionName,
-      game_id: game_url,
+      game_id: project_url,
       seller: openseaAssetEvent.seller || '',
       buyer: openseaAssetEvent.buyer || '',
       quantity: openseaAssetEvent.quantity || 0,
