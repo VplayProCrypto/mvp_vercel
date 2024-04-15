@@ -5,8 +5,10 @@ import type {
   Fee,
   NFT,
   NFTDynamic,
+  NFTEvent,
   NFTListing,
   NFTOffer,
+  OpenseaAssetEvent,
   OpenseaCollection,
   OpenseaCollectionStats,
   OpenseaContract,
@@ -18,6 +20,7 @@ import type {
   TokenPrice,
 } from '@types'
 import { getOpenseaBestOfferForNft } from 'apis/opensea'
+import { env } from 'bun'
 
 export const createCollectionRecord = (
   openseaCollection: OpenseaCollection
@@ -139,7 +142,6 @@ export const createNFTRecords = (
 }
 
 export const createNFTDynamicRecords = (
-  collectionName: string,
   openseaNftListings: OpenseaNftListings
 ): NFTDynamic[] => {
   const openseaNftsExtended: OpenseaNftExtended[] = openseaNftListings.nfts
@@ -213,4 +215,39 @@ export const createNFTOfferRecords = async (
 
   const nftOffers = await Promise.all(offerPromises)
   return nftOffers
+}
+
+export const createNFTEventsRecords = (
+  game_url: string,
+  collectionName: string,
+  openseaAssetEvents: OpenseaAssetEvent[]
+): NFTEvent[] => {
+  const validEvents = openseaAssetEvents.filter(
+    event => event.nft !== undefined
+  )
+
+  return validEvents.map(openseaAssetEvent => {
+    return {
+      transaction_hash: openseaAssetEvent.transaction || '',
+      marketplace: env.OPENSEA_MARKETPLACE || '',
+      marketplace_address: env.OPENSEA_MARKETPLACE_ADDRESS || '',
+      order_hash: openseaAssetEvent.order_hash || '',
+      event_type: openseaAssetEvent.event_type,
+      token_id: openseaAssetEvent.nft!.identifier,
+      contract_address: openseaAssetEvent.nft!.contract || '',
+      collection_slug: collectionName,
+      game_id: game_url,
+      seller: openseaAssetEvent.seller || '',
+      buyer: openseaAssetEvent.buyer || '',
+      quantity: openseaAssetEvent.quantity || 0,
+      price_val: String(openseaAssetEvent.payment?.quantity) || '0',
+      price_currency: openseaAssetEvent.payment?.symbol || '',
+      price_decimals: String(openseaAssetEvent.payment?.decimals || 0),
+      start_date: new Date(openseaAssetEvent.start_date || ''),
+      expiration_date: new Date(openseaAssetEvent.expiration_date || ''),
+      event_timestamp: openseaAssetEvent.event_timestamp
+        ? new Date(openseaAssetEvent.event_timestamp)
+        : new Date(),
+    }
+  })
 }
