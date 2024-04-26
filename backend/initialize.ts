@@ -109,8 +109,18 @@ export const initializeNewGame = async (collectionName: string) => {
           .values(createTokenPriceRecord(openseaPaymentToken))
       }),
     ])
+
+    return {
+      collectionName: collectionName,
+      game_id: openseaCollection.project_url,
+    }
   } catch (error) {
     console.error('Error inserting data into the database')
     console.error(error)
+  }
+
+  return {
+    collectionName: collectionName,
+    game_id: '',
   }
 }

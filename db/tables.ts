@@ -80,24 +80,6 @@ export const contracts = pgTable(
   })
 )
 
-export const erc20Transfers = pgTable(
-  'erc20_transfers',
-  {
-    buyer: varchar('buyer').notNull(),
-    seller: varchar('seller').notNull(),
-    contract_address: varchar('contract_address').notNull(),
-    price: doublePrecision('price').notNull(),
-    symbol: varchar('symbol').notNull(),
-    decimals: integer('decimals').notNull(),
-    transaction_hash: varchar('transaction_hash').notNull(),
-    event_timestamp: timestamp('event_timestamp').notNull(),
-    collection_slug: text('collection_slug'),
-  },
-  table => ({
-    pk: primaryKey(table.transaction_hash, table.event_timestamp),
-  })
-)
-
 export const fees = pgTable(
   'fee',
   {
@@ -165,63 +147,6 @@ export const nfts = pgTable(
   },
   table => ({
     pk: primaryKey(table.token_id, table.contract_address),
-  })
-)
-export const nftEvents = pgTable(
-  'nft_events',
-  {
-    transaction_hash: varchar('transaction_hash'),
-    marketplace: varchar('marketplace'),
-    marketplace_address: varchar('marketplace_address'),
-    order_hash: varchar('order_hash'),
-    event_type: text('event_type'),
-    token_id: varchar('token_id').references(() => nfts.token_id),
-    contract_address: varchar('contract_address').references(
-      () => nfts.contract_address
-    ),
-    collection_slug: varchar('collection_slug')
-      .references(() => collections.opensea_slug)
-      .notNull(),
-    game_id: varchar('game_id').notNull(),
-    seller: varchar('seller').notNull(),
-    buyer: varchar('buyer'),
-    quantity: integer('quantity').default(1),
-    price_val: varchar('price_val'),
-    price_currency: varchar('price_currency'),
-    price_decimals: varchar('price_decimals'),
-    start_date: timestamp('start_date'),
-    expiration_date: timestamp('expiration_date'),
-    event_timestamp: timestamp('event_timestamp').notNull(),
-  },
-  table => ({
-    pk: primaryKey(
-      table.contract_address,
-      table.token_id,
-      table.event_timestamp
-    ),
-  })
-)
-
-export const nftOwnership = pgTable(
-  'nft_ownership',
-  {
-    buyer: varchar('buyer'),
-    seller: varchar('seller').notNull(),
-    token_id: varchar('token_id').references(() => nfts.token_id),
-    contract_address: varchar('contract_address').references(
-      () => nfts.contract_address
-    ),
-    transaction_hash: varchar('transaction_hash').notNull(),
-    buy_time: timestamp('buy_time').notNull(),
-    quantity: integer('quantity').default(1),
-    sell_time: timestamp('sell_time'),
-    collection_slug: varchar('collection_slug')
-      .references(() => collections.opensea_slug)
-      .notNull(),
-    game_id: varchar('game_id').notNull(),
-  },
-  table => ({
-    pk: primaryKey(table.contract_address, table.token_id, table.buy_time),
   })
 )
 
@@ -304,5 +229,81 @@ export const nftListings = pgTable(
       table.token_id,
       table.event_timestamp
     ),
+  })
+)
+
+export const nftOwnership = pgTable(
+  'nft_ownership',
+  {
+    buyer: varchar('buyer'),
+    seller: varchar('seller').notNull(),
+    token_id: varchar('token_id').references(() => nfts.token_id),
+    contract_address: varchar('contract_address').references(
+      () => nfts.contract_address
+    ),
+    transaction_hash: varchar('transaction_hash').notNull(),
+    buy_time: timestamp('buy_time').notNull(),
+    quantity: integer('quantity').default(1),
+    sell_time: timestamp('sell_time'),
+    collection_slug: varchar('collection_slug')
+      .references(() => collections.opensea_slug)
+      .notNull(),
+    game_id: varchar('game_id').notNull(),
+  },
+  table => ({
+    pk: primaryKey(table.contract_address, table.token_id, table.buy_time),
+  })
+)
+
+export const nftEvents = pgTable(
+  'nft_events',
+  {
+    transaction_hash: varchar('transaction_hash'),
+    marketplace: varchar('marketplace'),
+    marketplace_address: varchar('marketplace_address'),
+    order_hash: varchar('order_hash'),
+    event_type: text('event_type'),
+    token_id: varchar('token_id').references(() => nfts.token_id),
+    contract_address: varchar('contract_address').references(
+      () => nfts.contract_address
+    ),
+    collection_slug: varchar('collection_slug')
+      .references(() => collections.opensea_slug)
+      .notNull(),
+    game_id: varchar('game_id').notNull(),
+    seller: varchar('seller').notNull(),
+    buyer: varchar('buyer'),
+    quantity: integer('quantity').default(1),
+    price_val: varchar('price_val'),
+    price_currency: varchar('price_currency'),
+    price_decimals: varchar('price_decimals'),
+    start_date: timestamp('start_date'),
+    expiration_date: timestamp('expiration_date'),
+    event_timestamp: timestamp('event_timestamp').notNull(),
+  },
+  table => ({
+    pk: primaryKey(
+      table.contract_address,
+      table.token_id,
+      table.event_timestamp
+    ),
+  })
+)
+
+export const erc20Transfers = pgTable(
+  'erc20_transfers',
+  {
+    buyer: varchar('buyer').notNull(),
+    seller: varchar('seller').notNull(),
+    contract_address: varchar('contract_address').notNull(),
+    price: doublePrecision('price').notNull(),
+    symbol: varchar('symbol').notNull(),
+    decimals: integer('decimals').notNull(),
+    transaction_hash: varchar('transaction_hash').notNull(),
+    event_timestamp: timestamp('event_timestamp').notNull(),
+    collection_slug: text('collection_slug'),
+  },
+  table => ({
+    pk: primaryKey(table.transaction_hash, table.event_timestamp),
   })
 )
