@@ -1,73 +1,104 @@
-// Rename the file to LandingFooter.tsx or a similar name with a .tsx extension
-
-import { Book, Linkedin, Send, Twitter } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-
+import Image from 'next/image'
+import Link from 'next/link'
+import SocialIcon from './socialicon'
+import NewsletterSignup from './newslettersignup'
 const Footer: React.FC = () => {
   return (
-    <footer className=" text-white p-10">
-      <div className="max-w-6xl mx-auto flex justify-between">
-        <div className="flex flex-col">
-          <Image
-            src={"/images/logo.png"}
-            alt="VPLAY Logo"
-            width={50}
-            height={25}
-          />
-          <span className="font-bold text-xl mt-6 mb-2">EXPLORE</span>
-          <Link
-            href="mailto:support@vplay.pro"
-            className="text-gray-400 hover:text-gray-300 mb-1"
-          >
-            Contact Us
-          </Link>
-          <Link href="/careers" className="text-gray-400 hover:text-gray-300">
-            Contribute
-          </Link>
+    <div className="Footer w-full px-28 pt-28 pb-14 bg-black flex-col justify-center items-center gap-28 inline-flex">
+      <div className="Frame427321246 self-stretch justify-between items-start inline-flex">
+        {/* Logo Column */}
+        <div className="LogoColumn flex-col justify-start items-center gap-2.5 inline-flex">
+          <button className="LogoButton w-40 h-40 rounded-full flex items-center justify-center">
+            <Link
+              className="home_button"
+              href="/">
+              <Image
+                src={'/images/logo.png'}
+                alt="image"
+                width={100}
+                height={100}
+              />
+            </Link>
+          </button>
         </div>
-        <div className="flex flex-col">
-          <span className="font-bold text-xl mb-2">SOCIAL</span>
-          <Link
-            href="https://twitter.com/VPLAY_PRO"
-            className="text-gray-400 hover:text-gray-300 mb-1"
-          >
-            <div className="flex items-center space-between">
-              <Twitter className="w-4 h-4 mr-2" /> Twitter
-            </div>
-          </Link>
-          <Link
-            href="https://medium.com/@vplaypro"
-            className="text-gray-400 hover:text-gray-300 mb-1"
-          >
-            <div className="flex items-center space-between">
-              <Book className="w-4 h-4 mr-2" /> Medium
-            </div>
-          </Link>
-          <Link
-            href="https://www.linkedin.com/company/vplaypro/"
-            className="text-gray-400 hover:text-gray-300 mb-1"
-          >
-            <div className="flex items-center space-between">
-              <Linkedin className="w-4 h-4 mr-2" /> Linkedin
-            </div>
-          </Link>
 
-          <Link
-            href="https://t.me/VPLAY_ProPlatform"
-            className="text-gray-400 hover:text-gray-300 mb-1"
-          >
-            <div className="flex items-center space-between">
-              <Send className="w-4 h-4 mr-2" /> Telegram
-            </div>
-          </Link>
+        {/* Explore Column */}
+        <div className="ExploreColumn flex-col justify-start items-start gap-5 inline-flex">
+          <div className="Explore text-white text-lg font-normal font-['Satoshi Variable'] uppercase leading-normal tracking-wide">
+            EXPLORE
+          </div>
+          <div className="SocialIcons grid grid-cols-3 gap-4">
+            <SocialIcon
+              href="https://discord.com/invite/B2dF36Kstz"
+              src="/images/discordnegative.png"
+            />
+            <SocialIcon
+              href="https://www.linkedin.com/company/vplaypro/"
+              src="/images/linkedinnegative.png"
+            />
+            <SocialIcon
+              href="https://medium.com/@vplaypro"
+              src="/images/mediumnegative.png"
+            />
+            <SocialIcon
+              href="https://twitter.com/VPLAY_PRO"
+              src="/images/twitternegative.png"
+            />
+            <SocialIcon
+              href="https://t.me/VPLAY_ProPlatform"
+              src="/images/telegramnegative.png"
+            />
+            <SocialIcon
+              href="https://github.com/VplayProCrypto"
+              src="/images/githubnegative.png"
+            />
+          </div>
+        </div>
+
+        {/* Contact Column */}
+        <div className="ContactColumn flex-col justify-start items-start gap-5 inline-flex">
+          <div className="Contact text-white text-lg font-normal font-['Satoshi Variable'] uppercase leading-normal tracking-wide">
+            CONTACT
+          </div>
+          <div className="NavLinks flex-col justify-start items-start gap-2 flex">
+            <button className="text-left w-full">
+              <Link
+                href="mailto:support@vplay.pro"
+                className="Partnerships w-60 text-white text-base font-normal font-['Satoshi Variable'] leading-tight tracking-wide hover:underline">
+                Partnerships
+              </Link>
+            </button>
+            <button className="text-left w-full">
+              <Link
+                href="mailto:support@vplay.pro"
+                className="Support w-60 text-white text-base font-normal font-['Satoshi Variable'] leading-tight tracking-wide hover:underline">
+                Support
+              </Link>
+            </button>
+          </div>
+        </div>
+
+        {/* Newsletter Column */}
+        <NewsletterSignup />
+      </div>
+
+      <div className="w-full">
+        <Image
+          src={'/images/vplayfooter.png'}
+          alt="image"
+          width={1100}
+          height={1000}
+          className="w-full"
+        />
+      </div>
+
+      <div className="w-full text-right">
+        <div className="Copyright inline-block text-white text-xl font-normal font-['Satoshi Variable'] leading-normal tracking-tight mt-8">
+          Copyright © 2024 VPLAY. All rights reserved.
         </div>
       </div>
-      <div className="text-center text-gray-500 text-sm mt-10">
-        Copyright © 2024 VPLAY. All rights reserved.
-      </div>
-    </footer>
-  );
-};
+    </div>
+  )
+}
 
-export default Footer;
+export default Footer

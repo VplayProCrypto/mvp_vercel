@@ -1,52 +1,168 @@
-// app/dashboard/page.tsx
-import DashboardHeroCarousel from "@/components/dashboard/dashboardHeroCarousel";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import { Collection, CollectionMetadata } from "@/types/opensea/collection";
-import { getCollections } from "../../backend/apis/opensea";
-import { insertCollectionWithMetadata } from "@/db/inserts";
-import { getMultipleCollections } from "@/db/selects";
-import { DashBoardCard } from "@/components/dashboard/dashboardCard";
-import DashboardGameScrollArea from "@/components/dashboard/dashboardGameScrollArea";
-import { initializeAssetEvents } from "@/db/init";
+import CategoryCarousel from '@/components/dashboard/categorycarousel'
+import HeroCarousel from '@/components/dashboard/herocarousel'
+import Footer from '@/components/footer'
+import { GameCard, GameCardProps } from '@/components/gamecard'
+import Navbar from '@/components/navbar'
 
 interface DashboardPageProps {
-  images: string[];
+  images: string[]
 }
 
 const collectionNames = [
-  "decentraland",
-  "mavia-land",
-  "pixels-farm",
-  "sandbox",
-  "the-sandbox",
-  "axie",
-  "cryptokitties",
-  "spider-tanks",
-  "mirandus",
-];
+  'decentraland',
+  'mavia-land',
+  'pixels-farm',
+  'sandbox',
+  'the-sandbox',
+  'axie',
+  'cryptokitties',
+  'spider-tanks',
+  'mirandus',
+]
 
 const DashboardPage = async () => {
-  // const collections: Collection[] = await getMultipleCollections(
-  //   collectionNames
-  // );
-
-  // const images = collections.map((collection: Collection) => {
-  //   return collection.banner_image_url;
-  // });
-
   const next =
-    "LWV2ZW50X3RpbWVzdGFtcD0yMDI0LTAzLTEyKzIyJTNBNTYlM0ExOS4xNjQyNTYmLWV2ZW50X3R5cGU9YmlkX2VudGVyZWQmLXBrPTIwODg0MzA4Njk5";
+    'LWV2ZW50X3RpbWVzdGFtcD0yMDI0LTAzLTEyKzIyJTNBNTYlM0ExOS4xNjQyNTYmLWV2ZW50X3R5cGU9YmlkX2VudGVyZWQmLXBrPTIwODg0MzA4Njk5'
+  const games: GameCardProps[] = [
+    {
+      banner: 'https://via.placeholder.com/226x282',
+      name: 'Gods Unchained',
+      rewardRate: '90',
+      categories: ['PLAY TO EARN', 'SCI-FI'],
+      inGamePrice: '$ 100.00 USD',
+      entryCost: 'FREE',
+      riskRate: {
+        text: 'Low',
+        percentage: 30,
+      },
+    },
+    {
+      banner: 'https://via.placeholder.com/226x282',
+      name: 'Gods Unchained',
+      rewardRate: '90',
 
-  //initializeAssetEvents("cryptokitties", next);
+      categories: ['PLAY TO EARN', 'SCI-FI'],
+      inGamePrice: '$ 100.00 USD',
+      entryCost: 'FREE',
+      riskRate: {
+        text: 'Low',
+        percentage: 30,
+      },
+    },
+    {
+      banner: 'https://via.placeholder.com/226x282',
+      name: 'Gods Unchained',
+      rewardRate: '90',
+
+      categories: ['PLAY TO EARN', 'SCI-FI'],
+      inGamePrice: '$ 100.00 USD',
+      entryCost: 'FREE',
+      riskRate: {
+        text: 'Low',
+        percentage: 30,
+      },
+    },
+    {
+      banner: 'https://via.placeholder.com/226x282',
+      name: 'Gods Unchained',
+      rewardRate: '90',
+
+      categories: ['PLAY TO EARN', 'SCI-FI'],
+      inGamePrice: '$ 100.00 USD',
+      entryCost: 'FREE',
+      riskRate: {
+        text: 'Low',
+        percentage: 30,
+      },
+    },
+    {
+      banner: 'https://via.placeholder.com/226x282',
+      name: 'Gods Unchained',
+      rewardRate: '90',
+
+      categories: ['PLAY TO EARN', 'SCI-FI'],
+      inGamePrice: '$ 100.00 USD',
+      entryCost: 'FREE',
+      riskRate: {
+        text: 'Low',
+        percentage: 30,
+      },
+    },
+  ]
+
+  function onGameClick(index: number) {
+    throw new Error('Function not implemented.')
+  }
+
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       <title>VPLAY</title>
-      <Navbar user={undefined} gasFee={""} />
+      <Navbar />
+      <HeroCarousel images={['1', '2', '3']} />
+      <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
+        <div className="HighestRewardGames pb-5 text-white text-xl font-bold font-['Be Vietnam Pro'] leading-relaxed tracking-wide">
+          HIGHEST REWARD GAMES
+        </div>
+        <div className="flex flex-row min-w-screen">
+          {games.map((game, index) => (
+            <div
+              key={index}
+              className="flex justify-center">
+              <GameCard {...game} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
+        <div className="HighestRewardGames pb-5 text-white text-xl font-bold font-['Be Vietnam Pro'] leading-relaxed tracking-wide">
+          TOP GAMEFI
+        </div>
+        <div className="flex flex-row min-w-screen">
+          {games.map((game, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-start">
+              <div className="text-[#b3b3b3] text-8xl font-bold font-['Be Vietnam Pro'] leading-none mb-2">
+                {index + 1}
+              </div>
+              <GameCard {...game} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
+        <div className="HighestRewardGames pb-10 text-white text-xl font-bold font-['Be Vietnam Pro'] leading-relaxed tracking-wide">
+          CATEGORIES
+        </div>
+        <CategoryCarousel
+          categoryTitles={[
+            'RACING',
+            'ADVENTURE',
+            'SPACESHIP BATTLES',
+            'STRATEGY',
+            'MYSTERY',
+            'SIMULATION',
+            'CARD TRADING',
+            'RPG',
+            'MOBA',
+          ]}
+          images={[
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+            '/images/logo.png',
+          ]}
+        />
+      </div>
 
       <Footer />
     </main>
-  );
-};
+  )
+}
 
-export default DashboardPage;
+export default DashboardPage
