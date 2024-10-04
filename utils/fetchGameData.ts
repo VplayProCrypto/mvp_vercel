@@ -1,11 +1,11 @@
 // fetchGameData.ts
 import {
-  getCollection,
-  getCollectionSaleEvents,
-  getCollectionStats,
-  getListingsByCollectionsMetadata,
-} from "@/backend/apis/opensea";
-import { getCollectionMetadataByName } from "@/db/queries";
+  getOpenseaCollection,
+  getOpenseaCollectionSaleEvents,
+  getOpenseaCollectionStats,
+  getOpenseaListingsByCollectionsMetadata,
+} from '@/backend/apis/opensea'
+import { getCollectionMetadataByName } from '@/db/queries'
 
 export async function fetchGameData(gameName: string) {
   try {
@@ -16,12 +16,12 @@ export async function fetchGameData(gameName: string) {
       eventsResponse,
       metadataResponse,
     ] = await Promise.all([
-      getCollection(gameName),
-      getListingsByCollectionsMetadata(gameName, "50"),
-      getCollectionStats(gameName),
-      getCollectionSaleEvents(gameName, "50"),
+      getOpenseaCollection(gameName),
+      getOpenseaListingsByCollectionsMetadata(gameName, '50'),
+      getOpenseaCollectionStats(gameName),
+      getOpenseaCollectionSaleEvents(gameName, '50'),
       getCollectionMetadataByName(gameName),
-    ]);
+    ])
 
     const [
       collection,
@@ -35,7 +35,7 @@ export async function fetchGameData(gameName: string) {
       statsResponse,
       eventsResponse,
       metadataResponse,
-    ]);
+    ])
 
     return {
       collection,
@@ -43,14 +43,14 @@ export async function fetchGameData(gameName: string) {
       collectionStats,
       collectionSaleEvents: collectionSaleEvents,
       metadata: metadata,
-    };
+    }
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error('Error fetching data:', error)
     return {
       collection: null,
-      listings: { nfts: [], next: "" },
+      listings: { nfts: [], next: '' },
       collectionStats: null,
       collectionSaleEvents: [],
-    };
+    }
   }
 }

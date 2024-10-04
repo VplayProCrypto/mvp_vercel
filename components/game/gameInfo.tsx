@@ -1,25 +1,25 @@
-import { Gamepad2, Users, Star } from "lucide-react";
-import Image from "next/image";
-import { GameDescription } from "@/types/vplayTypes";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import useGameStore from "@/store/gameStore";
+import { Gamepad2, Users, Star } from 'lucide-react'
+import Image from 'next/image'
+import { GameDescription } from '@/types/vplayTypes'
+import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
+import useGameStore from '@/store/gameStore'
 
-import Link from "next/link";
-import { getCollectionMetadataByName } from "@/db/selects";
-import { Collection } from "@/types/opensea/collection";
+import Link from 'next/link'
+
+import { OpenseaCollection } from '@/types/opensea/collection'
 const renderStars = (stars: string) => {
-  const totalStars = parseInt(stars, 10);
-  let starElements = [];
+  const totalStars = parseInt(stars, 10)
+  let starElements = []
   for (let i = 0; i < totalStars; i++) {
-    starElements.push(<Star key={i} />);
+    starElements.push(<Star key={i} />)
   }
-  return starElements;
-};
+  return starElements
+}
 
 interface GameInfoProps {
-  collection: Collection;
-  description: GameDescription;
+  collection: OpenseaCollection
+  description: GameDescription
 }
 
 const GameInfo: React.FC<GameInfoProps> = ({ collection, description }) => {
@@ -35,10 +35,14 @@ const GameInfo: React.FC<GameInfoProps> = ({ collection, description }) => {
       </div>
       <div className="flex flex-col ml-5">
         <div className="flex flex-row items-center mb-2">
-          <Badge variant="secondary" className="mr-4">
+          <Badge
+            variant="secondary"
+            className="mr-4">
             {description.genre}
           </Badge>
-          <Badge variant="secondary" className="mr-4">
+          <Badge
+            variant="secondary"
+            className="mr-4">
             {description.rewardsText}
           </Badge>
           <Badge variant="secondary">{description.friendly}</Badge>
@@ -57,17 +61,17 @@ const GameInfo: React.FC<GameInfoProps> = ({ collection, description }) => {
       <div className="flex-grow"></div>
       <div className="flex flex-col items-center">
         <Link href={collection.project_url}>
-          <Button variant="default" className="mb-2">
+          <Button
+            variant="default"
+            className="mb-2">
             <Gamepad2 />
             Play Now
-          </Button>{" "}
+          </Button>{' '}
         </Link>
-        <span className="text-sm">
-          {description.playerCount.toLocaleString()} players
-        </span>
+        <span className="text-sm">{description.playerCount} players</span>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default GameInfo;
+export default GameInfo

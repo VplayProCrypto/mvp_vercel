@@ -1,5 +1,8 @@
 import CategoryCarousel from '@/components/dashboard/categorycarousel'
+import Chatbot from '@/components/dashboard/chatbot'
+import { GameOfDay } from '@/components/dashboard/gameofday'
 import HeroCarousel from '@/components/dashboard/herocarousel'
+import Nodes from '@/components/dashboard/nodes'
 import Footer from '@/components/footer'
 import { GameCard, GameCardProps } from '@/components/gamecard'
 import Navbar from '@/components/navbar'
@@ -18,6 +21,14 @@ const collectionNames = [
   'cryptokitties',
   'spider-tanks',
   'mirandus',
+]
+
+const images = [
+  'https://via.placeholder.com/162x96',
+  'https://via.placeholder.com/162x96',
+  'https://via.placeholder.com/162x96',
+  'https://via.placeholder.com/162x96',
+  'https://via.placeholder.com/162x96',
 ]
 
 const DashboardPage = async () => {
@@ -131,6 +142,11 @@ const DashboardPage = async () => {
         </div>
       </div>
       <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
+        <div className="w-full flex flex-row min-h-screen">
+          <GameOfDay images={images} />
+        </div>
+      </div>
+      <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
         <div className="HighestRewardGames pb-10 text-white text-xl font-bold font-['Be Vietnam Pro'] leading-relaxed tracking-wide">
           CATEGORIES
         </div>
@@ -159,7 +175,8 @@ const DashboardPage = async () => {
           ]}
         />
       </div>
-
+      <Chatbot />
+      <Nodes />
       <Footer />
     </main>
   )
