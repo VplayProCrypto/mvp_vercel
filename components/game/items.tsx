@@ -1,5 +1,5 @@
-import useGameStore from "@/store/gameStore";
-import NftCard from "../nftcard";
+import useGameStore from '@/store/gameStore'
+import NftCard from '../nftcard'
 import {
   Pagination,
   PaginationContent,
@@ -7,32 +7,36 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
-import { NftExtended, NftListings } from "@/types/opensea/nft";
+} from '@/components/ui/pagination'
+import { OpenseaNftExtended, OpenseaNftListings } from '@/types/opensea/nft'
 
 interface GameItemsProps {
-  listings: NftListings;
-  currentPage: number;
+  listings: OpenseaNftListings
+  currentPage: number
 }
 
-const GameItems: React.FC<GameItemsProps> = ({ currentPage, listings }) => {
-  const itemsPerPage = 20;
+const Items: React.FC<GameItemsProps> = ({ currentPage, listings }) => {
+  const itemsPerPage = 20
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = listings.nfts.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
+  const currentItems = listings.nfts.slice(indexOfFirstItem, indexOfLastItem)
 
-  const totalPages = Math.ceil(listings.nfts.length / itemsPerPage);
-  const pageNumbers = [1, 2];
+  const totalPages = Math.ceil(listings.nfts.length / itemsPerPage)
+  const pageNumbers = [1, 2]
 
   return (
-    <div>
+    <div className="bg-black text-white font-sans p-8">
+      <h2 className="text-xl font-bold mb-4">TOP LISTINGS</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {currentItems.map((nft: NftExtended) => (
-          <NftCard key={nft.identifier} nft={nft} />
+        {currentItems.map((nft: OpenseaNftExtended) => (
+          <NftCard
+            key={nft.identifier}
+            nft={nft}
+          />
         ))}
       </div>
-      <Pagination>
+      {/* <Pagination>
         <PaginationContent>
           {currentPage !== 1 && (
             <PaginationItem>
@@ -42,13 +46,12 @@ const GameItems: React.FC<GameItemsProps> = ({ currentPage, listings }) => {
               />
             </PaginationItem>
           )}
-          {pageNumbers.map((number) => (
+          {pageNumbers.map(number => (
             <PaginationItem key={number}>
               <PaginationLink
                 href="#"
                 //onClick={() => onPageChange(number)}
-                isActive={number === currentPage}
-              >
+                isActive={number === currentPage}>
                 {number}
               </PaginationLink>
             </PaginationItem>
@@ -62,9 +65,9 @@ const GameItems: React.FC<GameItemsProps> = ({ currentPage, listings }) => {
             </PaginationItem>
           )}
         </PaginationContent>
-      </Pagination>
+      </Pagination> */}
     </div>
-  );
-};
+  )
+}
 
-export default GameItems;
+export default Items

@@ -1,7 +1,7 @@
 import CategoryCarousel from '@/components/dashboard/categorycarousel'
 import Chatbot from '@/components/dashboard/chatbot'
 import { GameOfDay } from '@/components/dashboard/gameofday'
-import HeroCarousel from '@/components/dashboard/herocarousel'
+import HeroCarousel from '@/components/herocarousel'
 import Nodes from '@/components/dashboard/nodes'
 import Footer from '@/components/footer'
 import { GameCard, GameCardProps } from '@/components/gamecard'
@@ -109,7 +109,34 @@ const DashboardPage = async () => {
     <main className="flex flex-col min-h-screen">
       <title>VPLAY</title>
       <Navbar />
-      <HeroCarousel images={['1', '2', '3']} />
+      <HeroCarousel
+        images={['1', '2', '3']}
+        gameTitle="Awesome Game"
+        gameLogoUrl="https://example.com/game-logo.png"
+        tagline="Join the fight for ETH"
+        starRating={4}
+        categories={['STRATEGY', 'FREE TO PLAY', '#7']}
+        description="Leveraging the power of Blockchain Technology, this game gives you complete ownership over your in-game assets."
+        gameDetails={{
+          costOfEntry: 'FREE',
+          rewardRate: { days: 16, estimated: true },
+          inGamePrice: '$ 190 USD',
+          riskRate: { text: 'LOW RISK', percentage: 9 },
+        }}
+        games={[
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+          'https://via.placeholder.com/162x96',
+        ]}
+        backgroundImage="https://example.com/main-background-image.jpg"
+        buttonURL={`game/` + games[0].name}
+        buttonText="SEE DETAILS"
+      />
       <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
         <div className="HighestRewardGames pb-5 text-white text-xl font-bold font-['Be Vietnam Pro'] leading-relaxed tracking-wide">
           HIGHEST REWARD GAMES

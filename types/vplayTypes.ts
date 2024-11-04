@@ -24,8 +24,6 @@ export interface JobPosting {
 }
 
 export interface GameDescription {
-  playNowButtonText: string
-  itemsText: string
   communityScore: string
   playerCount: string
   rewardsText: string
@@ -87,6 +85,8 @@ export interface Collection {
 }
 
 export interface CollectionDynamic {
+  rr_val: number
+  rr_symbol: string
   collection_slug: string
   game_id?: string
   total_average_price?: number

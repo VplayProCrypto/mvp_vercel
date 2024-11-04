@@ -1,59 +1,99 @@
-"use client";
-import React from "react";
+'use client'
+import React from 'react'
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { convertEthToUsd, convertWeiToEth } from "@/utils/utils";
-import { LineChartIcon } from "lucide-react";
-import { AssetEvent } from "@/types/opensea/stats";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../ui/card'
+
+import { OpenseaAssetEvent } from '@/types'
+import { convertEthToUsd, convertWeiToEth } from '@/utils/utils'
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '../ui/chart'
 
 interface NftSaleGraphProps {
-  collectionSaleEvents: AssetEvent[];
-  ethPrice: number | null;
+  collectionSaleEvents: OpenseaAssetEvent[]
+  ethPrice: number | null
 }
+
+const chartConfig = {
+  price: {
+    label: 'Price',
+    color: '#2563eb',
+  },
+} satisfies ChartConfig
 
 const NftSaleGraph: React.FC<NftSaleGraphProps> = ({
   collectionSaleEvents,
   ethPrice,
 }) => {
-  const data = collectionSaleEvents.map((event) => ({
+  const data = collectionSaleEvents.map(event => ({
     timestamp: new Date(event.event_timestamp * 1000).toLocaleString(),
-    price: convertEthToUsd(
-      parseFloat(convertWeiToEth("ETH", 18, event.payment?.quantity || "0")),
-      ethPrice
+    price: Math.floor(
+      convertEthToUsd(
+        parseFloat(convertWeiToEth('ETH', 18, event.payment?.quantity || '0')),
+        ethPrice
+      )
     ),
-  }));
+  }))
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle>In Game Item Sales $USD</CardTitle>
-        <LineChartIcon />
-      </CardHeader>
-      <CardContent>
-        <LineChart width={1200} height={400} data={data}>
-          <XAxis dataKey="timestamp" />
-          <YAxis dataKey="price" />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
-      </CardContent>
-    </Card>
-  );
-};
+    <ChartContainer config={chartConfig}>
+      <LineChart
+        width={400}
+        height={200}
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 30,
+          bottom: 20, // reduced bottom margin since we removed labels
+        }}>
+        <CartesianGrid
+          strokeDasharray="3 3"
+          horizontal={true}
+          vertical={false}
+          stroke="#e5e5e5"
+        />
+        <XAxis
+          dataKey="timestamp"
+          hide={true} // hides the x-axis completely
+        />
+        <YAxis
+          dataKey="price"
+          tickFormatter={value => `$${value}`}
+          tickLine={false}
+          axisLine={false}
+          stroke="#64748b"
+        />
+        <ChartTooltip
+          cursor={false}
+          content={<ChartTooltipContent />}
+        />
+        <Line
+          type="natural"
+          dataKey="price"
+          stroke="#2563eb"
+          strokeWidth={2}
+          dot={false}
+          activeDot={{
+            r: 4,
+            fill: '#2563eb',
+            stroke: '#fff',
+            strokeWidth: 2,
+          }}
+        />
+      </LineChart>
+    </ChartContainer>
+  )
+}
 
-export default NftSaleGraph;
+export default NftSaleGraph

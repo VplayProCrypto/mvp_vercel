@@ -1,8 +1,9 @@
 import React from 'react'
-import { Card, CardContent } from '../ui/card'
-import { CarouselItem, CarouselNext, CarouselPrevious } from '../ui/carousel'
+import { Card, CardContent } from './ui/card'
+import { CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
 import Image from 'next/image'
-import GameDetails from './gamedetails'
+import GameDetails from './dashboard/gamedetails'
+import Link from 'next/link'
 interface GameDetails {
   costOfEntry: string
   rewardRate: { days: number; estimated: boolean }
@@ -21,6 +22,8 @@ interface HeroCardProps {
   games: string[]
   highlightedGameIndex?: number
   backgroundImage: string
+  buttonText: string
+  buttonURL: string
   onGameClick: (index: number) => void
 }
 
@@ -35,14 +38,21 @@ const HeroCard: React.FC<HeroCardProps> = ({
   games,
   highlightedGameIndex = -1,
   backgroundImage,
+  buttonText,
+  buttonURL,
   onGameClick,
 }) => {
   return (
     <Card className="w-full">
       <CardContent className="p-0">
-        <div
-          className="Featured w-full h-[36rem] flex flex-col justify-between items-center bg-cover bg-center text-white relative"
-          style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <div className="Featured w-full h-[36rem] flex flex-col justify-between items-center text-white relative">
+          <Image
+            src={backgroundImage}
+            alt="Background"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+          />
           <div className="absolute inset-0 bg-black bg-opacity-50" />{' '}
           {/* Overlay for better text readability */}
           <div className="Title w-full flex-grow px-[10%] py-8% flex justify-between items-end relative z-10">
@@ -86,9 +96,11 @@ const HeroCard: React.FC<HeroCardProps> = ({
             </div>
             <GameDetails gameDetails={gameDetails} />
             <div className="w-[30%] flex justify-end items-end">
-              <button className="w-64 h-14 py-2 bg-white rounded-full border border-white text-center text-[#242424] text-base font-semibold font-['Be Vietnam Pro'] capitalize leading-snug">
-                SEE DETAILS
-              </button>
+              <Link href={buttonURL}>
+                <button className="w-64 h-14 py-2 bg-white rounded-full border border-white text-center text-[#242424] text-base font-semibold font-['Be Vietnam Pro'] capitalize leading-snug">
+                  {buttonText}
+                </button>
+              </Link>
             </div>
           </div>
           <div className="w-full px-[10%] py-4 bg-opacity-70 relative z-10">

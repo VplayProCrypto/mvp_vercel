@@ -1,8 +1,11 @@
 import { eq } from 'drizzle-orm'
 import { collectionDynamic, pool } from '.'
 import { drizzle } from 'drizzle-orm/node-postgres'
+import { CollectionDynamic } from '@/types'
 
-export async function getCollectionMetadataByName(collectionSlug: string) {
+export async function getCollectionMetadataByName(
+  collectionSlug: string
+): Promise<CollectionDynamic | null> {
   try {
     const db = await drizzle(pool)
     const result = await db
@@ -15,7 +18,7 @@ export async function getCollectionMetadataByName(collectionSlug: string) {
       return null
     }
 
-    return result[0]
+    return result[0] as CollectionDynamic
   } catch (error) {
     console.error('Error fetching collection metadata:', error)
     throw error

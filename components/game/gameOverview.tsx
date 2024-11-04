@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 import {
   Users,
   DollarSign,
@@ -8,24 +8,24 @@ import {
   BadgeDollarSign,
   Activity,
   BookOpen,
-} from "lucide-react";
-import { convertEthToUsd } from "@/utils/utils";
-import { StatsCardData, StatsCard } from "./StatsCard";
-import DescriptionCard from "./gameDescriptionCard";
+} from 'lucide-react'
+import { convertEthToUsd } from '@/utils/utils'
+import { StatsCardData, StatsCard } from './StatsCard'
+import DescriptionCard from './gameDescriptionCard'
 
-import NftSaleGraph from "./nftSaleGraph";
-import { AssetEvent, CollectionStats } from "@/types/opensea/stats";
-import { Collection } from "@/types/opensea/collection";
+import NftSaleGraph from './nftSaleGraph'
+import { Collection, OpenseaAssetEvent, OpenseaCollectionStats } from '@/types'
+import { OpenseaCollection } from '@/types/opensea/collection'
 
 interface OverviewProps {
-  game: Collection;
-  stats: CollectionStats;
-  ethPrice: number;
-  collectionSaleEvents: AssetEvent[];
+  game: Collection
+  stats: OpenseaCollectionStats
+  ethPrice: number
+  collectionSaleEvents: OpenseaAssetEvent[]
 }
 
 const emptyValueCheck = (value: number, ethPrice: number) =>
-  value > 0 ? `$${convertEthToUsd(value, ethPrice)}` : "No data";
+  value > 0 ? `$${convertEthToUsd(value, ethPrice)}` : 'No data'
 
 const Overview: React.FC<OverviewProps> = ({
   game,
@@ -34,48 +34,48 @@ const Overview: React.FC<OverviewProps> = ({
   collectionSaleEvents,
 }) => {
   if (!game || !stats) {
-    return null;
+    return null
   }
 
   const cardsData: StatsCardData[] = [
     {
-      title: "Total Items",
+      title: 'Total Items',
       Icon: <ShoppingBag />,
       value: `${game.total_supply} items`,
-      change: "",
+      change: '',
     },
     {
-      title: "Owners",
+      title: 'Owners',
       Icon: <Users />,
       value: `${stats.total.num_owners}`,
-      change: "",
+      change: '',
     },
     {
-      title: "Market Capitalization",
+      title: 'Market Capitalization',
       Icon: <DollarSign />,
       value: emptyValueCheck(stats.total.market_cap, ethPrice),
-      change: "",
+      change: '',
     },
     {
-      title: "Floor Price",
+      title: 'Floor Price',
       Icon: <BadgeDollarSign />,
       value: emptyValueCheck(stats.total.floor_price, ethPrice),
-      change: "",
+      change: '',
     },
     {
-      title: "Total Volume",
+      title: 'Total Volume',
       Icon: <Activity />,
       value: emptyValueCheck(stats.total.volume, ethPrice),
       change: `${stats.intervals[2].volume_change}% from last month`,
     },
     {
-      title: "Total Sales",
+      title: 'Total Sales',
       Icon: <CreditCard />,
       value: emptyValueCheck(stats.total.sales, ethPrice),
       change: `${stats.intervals[2].sales_diff} difference from last month`,
     },
     {
-      title: "Average Price Last 30 Days",
+      title: 'Average Price Last 30 Days',
       Icon: <BadgeDollarSign />,
       value: `$${convertEthToUsd(stats.intervals[2].average_price, ethPrice)}`,
       change: `All time average: $${convertEthToUsd(
@@ -83,7 +83,7 @@ const Overview: React.FC<OverviewProps> = ({
         ethPrice
       )}`,
     },
-  ];
+  ]
 
   return (
     <div className="flex flex-col mx-5 my-5 gap-5">
@@ -106,7 +106,7 @@ const Overview: React.FC<OverviewProps> = ({
         ethPrice={ethPrice}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Overview;
+export default Overview

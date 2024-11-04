@@ -60,6 +60,8 @@ export const collectionDynamic = pgTable(
     discord_sentiment: doublePrecision('discord_sentiment'),
     telegram_sentiment: doublePrecision('telegram_sentiment'),
     event_timestamp: timestamp('event_timestamp').notNull(),
+    rr_val: doublePrecision('rr_val'),
+    rr_symbol: varchar('rr_symbol'),
   },
   table => ({
     pk: primaryKey(table.collection_slug, table.event_timestamp),
