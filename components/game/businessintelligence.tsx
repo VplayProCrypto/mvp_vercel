@@ -1,5 +1,4 @@
 import { OpenseaCollectionStats } from '@/types'
-import React from 'react'
 import VolumeSalesChart from './volumesaleschart'
 import TrafficByWebsite from './traffic'
 import Ratings from './ratings'
@@ -22,7 +21,7 @@ interface StatCardProps {
   title: string
   value: string
   change: string
-  isPositive: boolean
+  isPositive?: boolean
   bgColor?: string
 }
 
@@ -68,45 +67,29 @@ const StatCard: React.FC<StatCardProps> = ({
 interface BiComponentProps {
   statCards: StatCardProps[]
   collectionStats: OpenseaCollectionStats
-}
-const websiteData = [
-  { name: 'Google', traffic: 85 },
-  { name: 'YouTube', traffic: 75 },
-  { name: 'Twitch', traffic: 60 },
-  { name: 'Discord', traffic: 45 },
-  { name: 'Opensea', traffic: 30 },
-  { name: 'Official', traffic: 25 },
-]
 
-const data = {
-  metrics: {
-    playToEarnRate: 4,
-    freeToPlayRate: 3.5,
-    tokenomicsStability: 4,
-    rewardStreams: 3.5,
-  },
-  tokenDistribution: [
-    { name: 'publicSale', value: 11 },
-    { name: 'team', value: 21 },
-    { name: 'advisors', value: 7 },
-    { name: 'playToEarn', value: 20 },
-    { name: 'stakingRewards', value: 29 },
-    { name: 'ecosystemFund', value: 8 },
-  ],
-  platformRatings: [
-    { platform: 'linux', value: 20 },
-    { platform: 'mac', value: 40 },
-    { platform: 'ios', value: 30 },
-    { platform: 'windows', value: 60 },
-    { platform: 'android', value: 25 },
-    { platform: 'other', value: 45 },
-  ],
-  totalRating: 4.1,
-  totalRatingsCount: 11542,
+  ratingData: {
+    metrics: {
+      playToEarnRate: number
+      freeToPlayRate: number
+      tokenomicsStability: number
+      rewardStreams: number
+    }
+    tokenDistribution: {
+      name: string
+      value: number
+    }[]
+
+    totalRating: number
+    totalRatingsCount: number
+  }
 }
+
 const BusinessIntelligence: React.FC<BiComponentProps> = ({
   statCards,
   collectionStats,
+
+  ratingData,
 }) => {
   return (
     <div className="w-full flex flex-col gap-10 mt-10 mb-10">
@@ -114,8 +97,7 @@ const BusinessIntelligence: React.FC<BiComponentProps> = ({
         Business Intelligence
       </h2>
 
-      {/* Row 1: Stat Cards */}
-      <div className="flex justify-between items-start gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {statCards.map((card, index) => (
           <StatCard
             key={index}
@@ -130,12 +112,10 @@ const BusinessIntelligence: React.FC<BiComponentProps> = ({
           title="Volume and Sales"
           collectionStats={collectionStats}
         />
-        <TrafficByWebsite websites={websiteData} />
       </div>
 
-      {/* Row 3: Rating Summary Chart */}
       <div className="flex justify-start items-start">
-        <Ratings {...data} />
+        <Ratings {...ratingData} />
       </div>
     </div>
   )

@@ -10,11 +10,45 @@ import {
 } from '../ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 
+// Types
+interface BaseStat {
+  label: string
+  value: string
+}
+
+interface RiskStat extends BaseStat {
+  backgroundColor: string
+}
+
+export interface GameStats {
+  inGamePrice: BaseStat
+  rewardRate: BaseStat
+  entryFee: BaseStat
+  riskRate: RiskStat
+}
+
+interface GameInfo {
+  title: string
+  titleColor: string
+  heading: string
+  description: string
+  rating: number
+}
+
+interface GameOfDayProps {
+  images: string[]
+  gameInfo: GameInfo
+  gameStats: GameStats
+}
+
 interface GameOfDayProps {
   images: string[]
 }
-
-export const GameOfDay: React.FC<GameOfDayProps> = ({ images }) => {
+export const GameOfDay: React.FC<GameOfDayProps> = ({
+  images,
+  gameInfo,
+  gameStats,
+}) => {
   const [api, setApi] = useState<CarouselApi>()
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -46,26 +80,21 @@ export const GameOfDay: React.FC<GameOfDayProps> = ({ images }) => {
 
   return (
     <div className="w-full h-screen bg-black text-white p-8">
-      <h1 className="text-xl font-bold mb-6">GAME OF THE DAY</h1>
+      <h1 className="text-xl font-bold mb-6">{gameInfo.heading}</h1>
 
       <div className="flex mb-8">
         <div className="w-1/2 pr-8">
-          <h2 className="text-6xl font-bold text-[#c5ff00] mb-4">
-            ULTIMATE
-            <br />
-            CHAMPIONS
+          <h2
+            className="text-6xl font-bold mb-4"
+            style={{ color: gameInfo.titleColor }}>
+            {gameInfo.title}
           </h2>
 
           <h3 className="text-xl font-bold mb-2">ABOUT THE GAME</h3>
-          <p className="mb-4">
-            Axie Infinity is a virtual world filled with cute, formidable
-            creatures known as Axies. Axies can be battled, bred, collected, and
-            even used to earn resources & collectibles that can be traded on an
-            open marketplace.
-          </p>
+          <p className="mb-4">{gameInfo.description}</p>
 
           <div className="flex mb-4">
-            {[1, 2, 3, 4].map(star => (
+            {[...Array(gameInfo.rating)].map((_, star) => (
               <svg
                 key={star}
                 className="w-6 h-6 text-yellow-400 mr-1"
@@ -74,33 +103,37 @@ export const GameOfDay: React.FC<GameOfDayProps> = ({ images }) => {
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             ))}
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="currentColor"
-              viewBox="0 0 20 20">
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
+            {[...Array(5 - gameInfo.rating)].map((_, star) => (
+              <svg
+                key={`empty-${star}`}
+                className="w-6 h-6 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
           </div>
 
           <div className="flex justify-between mb-6">
-            <div>
-              <p className="text-sm">In-game Price</p>
-              <p className="text-lg">$10 USD</p>
-            </div>
-            <div>
-              <p className="text-sm">Reward Rate</p>
-              <p className="text-lg">16 DAYS ESTIMATED</p>
-            </div>
-            <div>
-              <p className="text-sm">Cost of entry</p>
-              <p className="text-lg">FREE</p>
-            </div>
-            <div>
-              <p className="text-sm">Risk Rate</p>
-              <div className="w-12 h-12 rounded-full bg-[#0093ff] flex items-center justify-center">
-                <span className="text-sm font-bold">9%</span>
+            {(
+              Object.entries(gameStats) as [
+                keyof GameStats,
+                BaseStat | RiskStat,
+              ][]
+            ).map(([key, stat]) => (
+              <div key={key}>
+                <p className="text-sm">{stat.label}</p>
+                {key === 'riskRate' ?
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                    style={{
+                      backgroundColor: (stat as RiskStat).backgroundColor,
+                    }}>
+                    <span className="text-sm font-bold">{stat.value}</span>
+                  </div>
+                : <p className="text-lg">{stat.value}</p>}
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
@@ -137,7 +170,9 @@ export const GameOfDay: React.FC<GameOfDayProps> = ({ images }) => {
             key={index}
             onClick={() => onGameClick(index)}
             className={`flex-shrink-0 w-48 h-32 rounded-lg overflow-hidden ${
-              index === currentIndex ? 'ring-2 ring-[#c5ff00]' : ''
+              index === currentIndex ?
+                `ring-2 ring-[${gameInfo.titleColor}]`
+              : ''
             }`}>
             <Image
               src={image}

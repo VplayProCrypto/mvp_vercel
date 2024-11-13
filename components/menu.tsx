@@ -1,5 +1,4 @@
-// components/Menu.tsx
-import React from 'react';
+import React from 'react'
 
 const Menu: React.FC = () => {
   return (
@@ -7,7 +6,7 @@ const Menu: React.FC = () => {
       <div className="w-6 h-0.5 bg-white mb-1.5"></div>
       <div className="w-6 h-0.5 bg-white mt-1.5"></div>
     </button>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

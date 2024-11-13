@@ -41,10 +41,7 @@ type Props = {
     name: string
     value: number
   }[]
-  platformRatings: {
-    platform: string
-    value: number
-  }[]
+
   totalRating: number
   totalRatingsCount: number
 }
@@ -107,29 +104,37 @@ export function MetricsSection({ metrics }: MetricsSectionProps) {
 }
 
 const distributionChartConfig = {
-  publicSale: {
-    label: 'Public Sale',
+  ecosystemFund: {
+    label: 'Ecosystem Fund',
     color: '#FF5733',
+  },
+  treasury: {
+    label: 'Treasury',
+    color: '#33FF57',
+  },
+  investors: {
+    label: 'Investors',
+    color: '#3357FF',
   },
   team: {
     label: 'Team',
-    color: '#33FF57',
+    color: '#FF33F5',
   },
   advisors: {
     label: 'Advisors',
-    color: '#3357FF',
-  },
-  playToEarn: {
-    label: 'Play to Earn',
-    color: '#FF33F5',
-  },
-  stakingRewards: {
-    label: 'Staking Rewards',
     color: '#33FFF5',
   },
-  ecosystemFund: {
-    label: 'Ecosystem Fund',
+  binanceLaunchpool: {
+    label: 'Binance Launchpool',
     color: '#F5FF33',
+  },
+  alphaRewards: {
+    label: 'Alpha Rewards',
+    color: '#FF9933',
+  },
+  liquidity: {
+    label: 'Liquidity',
+    color: '#9933FF',
   },
 } satisfies ChartConfig
 // MetricsSection.tsx
@@ -213,102 +218,12 @@ export function TokenDistributionSection({
   )
 }
 
-type PlatformRatingsSectionProps = {
-  platformRatings: {
-    platform: string
-    value: number
-  }[]
-  totalRating: number
-  totalRatingsCount: number
-}
-
-export function PlatformRatingsSection({
-  platformRatings,
-  totalRating,
-  totalRatingsCount,
-}: PlatformRatingsSectionProps) {
-  const formattedData = platformRatings.map(item => ({
-    ...item,
-    color:
-      platformChartConfig[
-        item.platform.toLowerCase() as keyof typeof platformChartConfig
-      ].color,
-    label:
-      platformChartConfig[
-        item.platform.toLowerCase() as keyof typeof platformChartConfig
-      ].label,
-  }))
-
-  return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <h3 className="text-sm font-medium">Rating Summary</h3>
-          <span>★ {totalRating}</span>
-          <span className="text-muted-foreground">
-            — {totalRatingsCount} Ratings
-          </span>
-        </div>
-      </CardHeader>
-      <CardContent className="h-[300px] flex items-center justify-center">
-        <ChartContainer config={platformChartConfig}>
-          <BarChart
-            width={400}
-            height={250}
-            data={formattedData}>
-            <CartesianGrid
-              strokeDasharray="3 3"
-              vertical={false}
-            />
-            <XAxis
-              dataKey="label"
-              tickLine={false}
-              axisLine={false}
-            />
-            <YAxis
-              type="number"
-              tickLine={false}
-              axisLine={false}
-            />
-            <ChartTooltip
-              content={<ChartTooltipContent />}
-              cursor={{ fill: 'transparent' }}
-            />
-            <Bar
-              dataKey="value"
-              radius={[4, 4, 0, 0]}
-              barSize={20}>
-              {formattedData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry.color}
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
-  )
-}
-// Main Ratings component
-export function Ratings({
-  metrics,
-  tokenDistribution,
-  platformRatings,
-  totalRating,
-  totalRatingsCount,
-}: Props) {
+export function Ratings({ metrics, tokenDistribution }: Props) {
   return (
     <Card className="p-6 bg-gray-900 text-white">
       <div className="grid grid-cols-3 gap-8">
         <MetricsSection metrics={metrics} />
         <TokenDistributionSection tokenDistribution={tokenDistribution} />
-        <PlatformRatingsSection
-          platformRatings={platformRatings}
-          totalRating={totalRating}
-          totalRatingsCount={totalRatingsCount}
-        />
       </div>
     </Card>
   )

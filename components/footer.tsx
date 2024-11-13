@@ -6,7 +6,6 @@ const Footer: React.FC = () => {
   return (
     <div className="Footer w-full px-28 pt-28 pb-14 bg-black flex-col justify-center items-center gap-28 inline-flex">
       <div className="Frame427321246 self-stretch justify-between items-start inline-flex">
-        {/* Logo Column */}
         <div className="LogoColumn flex-col justify-start items-center gap-2.5 inline-flex">
           <button className="LogoButton w-40 h-40 rounded-full flex items-center justify-center">
             <Link
@@ -22,7 +21,6 @@ const Footer: React.FC = () => {
           </button>
         </div>
 
-        {/* Explore Column */}
         <div className="ExploreColumn flex-col justify-start items-start gap-5 inline-flex">
           <div className="Explore text-white text-lg font-normal font-['Satoshi Variable'] uppercase leading-normal tracking-wide">
             EXPLORE
@@ -55,7 +53,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Contact Column */}
         <div className="ContactColumn flex-col justify-start items-start gap-5 inline-flex">
           <div className="Contact text-white text-lg font-normal font-['Satoshi Variable'] uppercase leading-normal tracking-wide">
             CONTACT
@@ -78,7 +75,6 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Newsletter Column */}
         <NewsletterSignup />
       </div>
 

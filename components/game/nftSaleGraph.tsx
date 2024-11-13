@@ -1,14 +1,6 @@
 'use client'
 import React from 'react'
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '../ui/card'
 
 import { OpenseaAssetEvent } from '@/types'
 import { convertEthToUsd, convertWeiToEth } from '@/utils/utils'

@@ -1,9 +1,8 @@
-// TrafficBar.tsx
 import * as React from 'react'
 import { Progress } from '@/components/ui/progress'
 
 interface TrafficBarProps {
-  progress: number // 0 to 100
+  progress: number
 }
 
 const TrafficBar = ({ progress }: TrafficBarProps) => (
@@ -13,12 +12,11 @@ const TrafficBar = ({ progress }: TrafficBarProps) => (
   />
 )
 
-// TrafficByWebsite.tsx
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface Website {
   name: string
-  traffic: number // 0 to 100
+  traffic: number
 }
 
 interface TrafficByWebsiteProps {

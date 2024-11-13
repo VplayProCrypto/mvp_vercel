@@ -4,8 +4,8 @@ interface GameDetailsProps {
   gameDetails: {
     costOfEntry: string
     rewardRate: {
-      days: number
-      estimated: boolean
+      rr: string
+      rr_symbol: string
     }
     inGamePrice: string
     riskRate: {
@@ -32,12 +32,13 @@ const GameDetails: React.FC<GameDetailsProps> = ({ gameDetails }) => {
         </div>
         <div className="flex items-center gap-1">
           <span className="text-white/80 text-xl font-normal font-['Satoshi Variable'] leading-7">
-            {gameDetails.rewardRate.days}
+            {gameDetails.rewardRate.rr}
           </span>
           <span className="text-white/80 text-xs font-medium font-['Satoshi Variable'] uppercase leading-3">
-            DAYS
             <br />
-            {gameDetails.rewardRate.estimated ? 'ESTIMATED' : ''}
+            {gameDetails.rewardRate.rr_symbol ?
+              gameDetails.rewardRate.rr_symbol
+            : ''}
           </span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import CategoryCarousel from '@/components/dashboard/categorycarousel'
 import Chatbot from '@/components/dashboard/chatbot'
-import { GameOfDay } from '@/components/dashboard/gameofday'
+import { GameOfDay, GameStats } from '@/components/dashboard/gameofday'
 import HeroCarousel from '@/components/herocarousel'
 import Nodes from '@/components/dashboard/nodes'
 import Footer from '@/components/footer'
@@ -30,6 +30,35 @@ const images = [
   'https://via.placeholder.com/162x96',
   'https://via.placeholder.com/162x96',
 ]
+
+const GAME_INFO = {
+  title: 'ULTIMATE CHAMPIONS',
+  titleColor: '#c5ff00',
+  heading: 'GAME OF THE DAY',
+  description:
+    'Axie Infinity is a virtual world filled with cute, formidable creatures known as Axies. Axies can be battled, bred, collected, and even used to earn resources & collectibles that can be traded on an open marketplace.',
+  rating: 4,
+}
+
+const GAME_STATS: GameStats = {
+  inGamePrice: {
+    label: 'In-game Price',
+    value: '$10 USD',
+  },
+  rewardRate: {
+    label: 'Reward Rate',
+    value: '16 DAYS ESTIMATED',
+  },
+  entryFee: {
+    label: 'Cost of entry',
+    value: 'FREE',
+  },
+  riskRate: {
+    label: 'Risk Rate',
+    value: '9%',
+    backgroundColor: '#0093ff',
+  },
+}
 
 const DashboardPage = async () => {
   const next =
@@ -170,7 +199,11 @@ const DashboardPage = async () => {
       </div>
       <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">
         <div className="w-full flex flex-row min-h-screen">
-          <GameOfDay images={images} />
+          <GameOfDay
+            images={images}
+            gameInfo={GAME_INFO}
+            gameStats={GAME_STATS}
+          />
         </div>
       </div>
       <div className="w-full px-[10%] pt-10 pb-10 py-4 bg-black bg-opacity-70 relative z-10">

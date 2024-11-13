@@ -66,6 +66,8 @@ export const createCollectionDynamicRecord = (
   total_wallets: openseaCollectionStats.total.num_owners,
   ...socialSentiments,
   event_timestamp: new Date(),
+  rr_val: 0,
+  rr_symbol: '',
 })
 
 export const createContractRecord = (
@@ -121,18 +123,14 @@ export const createNFTRecords = (
       contract_address: openseaNftExtended.contract.address,
       token_standard: openseaNftExtended.token_standard,
       name: openseaNftExtended.name ? openseaNftExtended.name : '',
-      description: openseaNftExtended.description
-        ? openseaNftExtended.description
-        : '',
-      image_url: openseaNftExtended.image_url
-        ? openseaNftExtended.image_url
-        : '',
-      metadata_url: openseaNftExtended.metadata_url
-        ? openseaNftExtended.metadata_url
-        : '',
-      opensea_url: openseaNftExtended.opensea_url
-        ? openseaNftExtended.opensea_url
-        : '',
+      description:
+        openseaNftExtended.description ? openseaNftExtended.description : '',
+      image_url:
+        openseaNftExtended.image_url ? openseaNftExtended.image_url : '',
+      metadata_url:
+        openseaNftExtended.metadata_url ? openseaNftExtended.metadata_url : '',
+      opensea_url:
+        openseaNftExtended.opensea_url ? openseaNftExtended.opensea_url : '',
       updated_at: openseaNftExtended.updated_at,
       is_nsfw: openseaNftExtended.is_nsfw,
       is_disabled: openseaNftExtended.is_disabled,
@@ -174,14 +172,17 @@ export const createNFTListingRecords = (
       seller: openseaNftExtended.owner || '',
       price_val: openseaNftExtended.current_price?.value || '0',
       price_currency: openseaNftExtended.current_price?.currency || '',
-      price_decimals: openseaNftExtended.current_price?.decimals
-        ? String(openseaNftExtended.current_price?.decimals)
+      price_decimals:
+        openseaNftExtended.current_price?.decimals ?
+          String(openseaNftExtended.current_price?.decimals)
         : '0',
-      start_date: openseaNftExtended.protocol_data.parameters.startTime
-        ? new Date(openseaNftExtended.protocol_data.parameters.startTime)
+      start_date:
+        openseaNftExtended.protocol_data.parameters.startTime ?
+          new Date(openseaNftExtended.protocol_data.parameters.startTime)
         : new Date(),
-      expiration_date: openseaNftExtended.protocol_data.parameters.endTime
-        ? new Date(openseaNftExtended.protocol_data.parameters.endTime)
+      expiration_date:
+        openseaNftExtended.protocol_data.parameters.endTime ?
+          new Date(openseaNftExtended.protocol_data.parameters.endTime)
         : new Date(),
       event_timestamp: new Date(),
     }
@@ -249,8 +250,9 @@ export const createNFTEventsRecords = (
       price_decimals: String(openseaAssetEvent.payment?.decimals || 0),
       start_date: new Date(openseaAssetEvent.start_date || ''),
       expiration_date: new Date(openseaAssetEvent.expiration_date || ''),
-      event_timestamp: openseaAssetEvent.event_timestamp
-        ? new Date(openseaAssetEvent.event_timestamp)
+      event_timestamp:
+        openseaAssetEvent.event_timestamp ?
+          new Date(openseaAssetEvent.event_timestamp)
         : new Date(),
     }
   })

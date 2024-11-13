@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import Loading from '@/components/loading'
-import Overview from '@/components/game/gameOverview'
 import GameItems from '@/components/game/items'
 
 import { fetchGameData } from '@/utils/fetchGameData'
@@ -13,9 +12,83 @@ import RatingSummary from '@/components/game/ratingSummary'
 import SocialIcon from '@/components/socialicon'
 import UserScore from '@/components/game/userscore'
 import { ReviewList } from '@/components/game/reviewCard'
-import Bi from '@/components/game/businessintelligence'
-import { OpenseaCollectionStats } from '@/types'
 import { GameCard, GameCardProps } from '@/components/gamecard'
+import BusinessIntelligence from '@/components/game/businessintelligence'
+
+//This is temporary
+const mappy = new Map<string, Array<string>>()
+mappy.set('pixels-farm', [
+  '/images/pixels0.avif',
+  '/images/pixels1.avif',
+  '/images/pixels3.png',
+])
+
+const games: GameCardProps[] = [
+  {
+    banner: 'https://via.placeholder.com/226x282',
+    name: 'Gods Unchained',
+    rewardRate: '90',
+    categories: ['PLAY TO EARN', 'SCI-FI'],
+    inGamePrice: '$ 100.00 USD',
+    entryCost: 'FREE',
+    riskRate: {
+      text: 'Low',
+      percentage: 30,
+    },
+  },
+  {
+    banner: 'https://via.placeholder.com/226x282',
+    name: 'Gods Unchained',
+    rewardRate: '90',
+
+    categories: ['PLAY TO EARN', 'SCI-FI'],
+    inGamePrice: '$ 100.00 USD',
+    entryCost: 'FREE',
+    riskRate: {
+      text: 'Low',
+      percentage: 30,
+    },
+  },
+  {
+    banner: 'https://via.placeholder.com/226x282',
+    name: 'Gods Unchained',
+    rewardRate: '90',
+
+    categories: ['PLAY TO EARN', 'SCI-FI'],
+    inGamePrice: '$ 100.00 USD',
+    entryCost: 'FREE',
+    riskRate: {
+      text: 'Low',
+      percentage: 30,
+    },
+  },
+  {
+    banner: 'https://via.placeholder.com/226x282',
+    name: 'Gods Unchained',
+    rewardRate: '90',
+
+    categories: ['PLAY TO EARN', 'SCI-FI'],
+    inGamePrice: '$ 100.00 USD',
+    entryCost: 'FREE',
+    riskRate: {
+      text: 'Low',
+      percentage: 30,
+    },
+  },
+  {
+    banner: 'https://via.placeholder.com/226x282',
+    name: 'Gods Unchained',
+    rewardRate: '90',
+
+    categories: ['PLAY TO EARN', 'SCI-FI'],
+    inGamePrice: '$ 100.00 USD',
+    entryCost: 'FREE',
+    riskRate: {
+      text: 'Low',
+      percentage: 30,
+    },
+  },
+]
 
 const Page: NextPage<{
   params: { name: string }
@@ -27,117 +100,34 @@ const Page: NextPage<{
     listings,
     collectionStats,
     collectionSaleEvents,
+    vplaymetrics,
+    tokenDistribution,
+    ratingSummary,
+    ratingDistribution,
+    ratings,
   } = await fetchGameData(gameName)
   const ethPrice = await fetchEthPrice()
 
   if (!collection || !collectionStats || !metadata) {
     return <Loading />
   }
-
-  //This is temporary
-  const mappy = new Map<string, Array<string>>()
-  mappy.set('pixels-farm', [
-    collection.banner_image_url,
-    '/images/pixels0.avif',
-    '/images/pixels1.avif',
-    '/images/pixels3.png',
-  ])
-
-  const barData = [
-    { rating: 5, count: 60 },
-    { rating: 4, count: 43 },
-    { rating: 3, count: 11 },
-    { rating: 2, count: 43 },
-    { rating: 1, count: 3 },
-  ]
-
-  const reviews = [
-    {
-      name: 'Erick',
-      date: '10/20/2024',
-      rating: 4,
-      review:
-        "I've been playing Axie Infinity for a few months, and it's pretty awesome! ...",
-      helpfulCount: 30,
-      profileImage: 'https://via.placeholder.com/56x56',
-      stats: {
-        nftsOwned: 12,
-        userScore: 5,
-        hoursPlayed: 140,
-        playingAge: '4M',
-        usdValue: '2K',
-        gamesOwned: 3,
-        rewardRate: 45,
-      },
+  console.log(vplaymetrics)
+  console.log(tokenDistribution)
+  console.log(ratingSummary)
+  console.log(ratingDistribution)
+  console.log(ratings)
+  const ratingData = {
+    metrics: {
+      playToEarnRate: vplaymetrics.play_to_earn_rate,
+      freeToPlayRate: vplaymetrics.free_to_play_rate,
+      tokenomicsStability: vplaymetrics.tokenomics_stability,
+      rewardStreams: vplaymetrics.reward_streams,
     },
-    // ... more reviews
-  ]
-  const games: GameCardProps[] = [
-    {
-      banner: 'https://via.placeholder.com/226x282',
-      name: 'Gods Unchained',
-      rewardRate: '90',
-      categories: ['PLAY TO EARN', 'SCI-FI'],
-      inGamePrice: '$ 100.00 USD',
-      entryCost: 'FREE',
-      riskRate: {
-        text: 'Low',
-        percentage: 30,
-      },
-    },
-    {
-      banner: 'https://via.placeholder.com/226x282',
-      name: 'Gods Unchained',
-      rewardRate: '90',
+    tokenDistribution,
 
-      categories: ['PLAY TO EARN', 'SCI-FI'],
-      inGamePrice: '$ 100.00 USD',
-      entryCost: 'FREE',
-      riskRate: {
-        text: 'Low',
-        percentage: 30,
-      },
-    },
-    {
-      banner: 'https://via.placeholder.com/226x282',
-      name: 'Gods Unchained',
-      rewardRate: '90',
-
-      categories: ['PLAY TO EARN', 'SCI-FI'],
-      inGamePrice: '$ 100.00 USD',
-      entryCost: 'FREE',
-      riskRate: {
-        text: 'Low',
-        percentage: 30,
-      },
-    },
-    {
-      banner: 'https://via.placeholder.com/226x282',
-      name: 'Gods Unchained',
-      rewardRate: '90',
-
-      categories: ['PLAY TO EARN', 'SCI-FI'],
-      inGamePrice: '$ 100.00 USD',
-      entryCost: 'FREE',
-      riskRate: {
-        text: 'Low',
-        percentage: 30,
-      },
-    },
-    {
-      banner: 'https://via.placeholder.com/226x282',
-      name: 'Gods Unchained',
-      rewardRate: '90',
-
-      categories: ['PLAY TO EARN', 'SCI-FI'],
-      inGamePrice: '$ 100.00 USD',
-      entryCost: 'FREE',
-      riskRate: {
-        text: 'Low',
-        percentage: 30,
-      },
-    },
-  ]
+    totalRating: vplaymetrics.total_rating,
+    totalRatingsCount: vplaymetrics.total_ratings_count,
+  }
   const statCardsData = [
     {
       title: 'TOTAL OWNERS',
@@ -167,56 +157,78 @@ const Page: NextPage<{
       change: collectionStats.total.floor_price_symbol,
       isPositive: false,
     },
+    {
+      title: 'TOTAL VOLUME',
+      value: Number(parseFloat(collectionStats.total.volume))
+        .toFixed(2)
+        .toString(),
+      change: `${Number(parseFloat(collectionStats.intervals[2].volume_change)).toFixed(2).toString()}% month`,
+    },
+    {
+      title: 'TOTAL SALES',
+      value: Number(parseFloat(collectionStats.total.sales))
+        .toFixed(2)
+        .toString(),
+      bgColor: 'bg-[#e3f5ff]',
+      change: `${Number(parseFloat(collectionStats.intervals[2].sales_diff)).toFixed(2).toString()}% month`,
+    },
+    {
+      title: 'AVERAGE PRICE LAST 30 DAYS',
+      value: Number(parseFloat(collectionStats.intervals[2].average_price))
+        .toFixed(2)
+        .toString(),
+      change: 'ETH',
+    },
   ]
-
-  const chartCardsData: any[] = [
-    { title: 'Active Users' },
-    { title: 'Traffic by Website' },
-    { title: 'Rating Summary' },
-  ]
-
   return (
     <main className="mt-5 bg-black">
       <title>{collection.name}</title>
       <Navbar />
       <div className="mr-5 ml-5">
         <HeroCarousel
-          images={['1', '2', '3', '4']}
+          images={['1', '2', '3']}
+          starRating={vplaymetrics.rating}
+          categories={vplaymetrics.esrb_description.split(',')}
           gameTitle={collection.name}
           gameLogoUrl={collection.image_url}
           tagline={collection.name}
-          starRating={4}
-          categories={['STRATEGY', 'FREE TO PLAY', '#7']}
           description={collection.description}
           gameDetails={{
-            costOfEntry: 'FREE',
-            rewardRate: { days: 16, estimated: true },
-            inGamePrice: '$ 190 USD',
-            riskRate: { text: 'LOW RISK', percentage: 9 },
+            costOfEntry:
+              Number(parseFloat(collectionStats.total.floor_price))
+                .toFixed(2)
+                .toString()
+                .toString() + '  ETH',
+            rewardRate: {
+              rr: Number(parseFloat(metadata.rr_val)).toFixed(2).toString(),
+              rr_symbol: metadata.rr_symbol,
+            },
+            inGamePrice:
+              Number(parseFloat(collectionStats.intervals[2].average_price))
+                .toFixed(2)
+                .toString() + '  ETH',
+            riskRate: { text: 'LOW RISK', percentage: vplaymetrics.risk_rate },
           }}
           games={mappy.get(collection.collection)}
           buttonURL={collection.project_url}
-          buttonText="PLAY NOW"
         />
       </div>
       <div className="max-w-7xl w-full mx-auto">
         <GameRatings
-          vplayScore="H"
-          socialScore={78}
-          riskRate={9}
-          riskLevel="LOW RISK"
-          userScore={4.1}
-          userRatingsCount={103}
-          esrbRating="T"
-          esrbDescription="Fantasy Violence, In-Game Transactions."
+          vplayScore={vplaymetrics.vplay_score}
+          socialScore={vplaymetrics.social_score}
+          riskRate={vplaymetrics.risk_rate}
+          riskLevel={vplaymetrics.risk_level}
+          userScore={vplaymetrics.user_score}
+          userRatingsCount={vplaymetrics.user_ratings_count}
+          esrbRating={vplaymetrics.esrb_rating}
+          esrbDescription={vplaymetrics.esrb_description}
+          hasControllerSupport={vplaymetrics.has_controller_support}
+          hasGlobalServers={vplaymetrics.has_global_servers}
+          multiplayerEnabled={vplaymetrics.is_multiplayer}
+          singlePlayerEnabled={vplaymetrics.is_single_player}
+          genres={vplaymetrics.esrb_description.split(',')}
           gameplayImageSrc={mappy.get(collection.collection)[1]}
-          playabilityTags={[
-            <span key="1">Multiplayer Enabled</span>,
-            <span key="2">Controller Support</span>,
-            <span key="3">One Player Experience</span>,
-            <span key="4">Global Servers</span>,
-          ]}
-          genres={['STRATEGY', 'FREE TO PLAY']}
           socialMediaIcons={[
             {
               platform: 'discord',
@@ -248,24 +260,25 @@ const Page: NextPage<{
           ]}
         />
         <RatingSummary
-          easeOfPlay={50}
-          funRating={5}
-          nftRarity={4}
-          transparencyRating={3}
-          sessionLength={3}
-          rewardRate={70}
           collectionSaleEvents={collectionSaleEvents}
           ethPrice={ethPrice}
-        />{' '}
-        <UserScore
-          score={4.5}
-          ratings={103}
-          barData={barData}
+          easeOfPlay={ratingSummary.ease_of_play}
+          funRating={ratingSummary.fun_rating}
+          nftRarity={ratingSummary.nft_rarity}
+          transparencyRating={ratingSummary.transparency_rating}
+          sessionLength={ratingSummary.session_length}
+          rewardRate={ratingSummary.reward_rate}
         />
-        <ReviewList reviews={reviews} />
-        <Bi
+        <UserScore
+          score={vplaymetrics.user_score}
+          ratings={vplaymetrics.user_ratings_count}
+          barData={ratingDistribution}
+        />
+        <ReviewList reviews={ratings} />
+        <BusinessIntelligence
           statCards={statCardsData}
           collectionStats={collectionStats}
+          ratingData={ratingData}
         />
         <GameItems
           listings={listings}
@@ -289,9 +302,3 @@ const Page: NextPage<{
 }
 
 export default Page
-/**
- *       <GameItems
-        currentPage={1}
-        listings={listings}
-      />
- */

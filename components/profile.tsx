@@ -1,4 +1,3 @@
-// components/Profile.tsx
 import React from 'react'
 
 interface ProfileProps {

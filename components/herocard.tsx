@@ -1,12 +1,11 @@
 import React from 'react'
 import { Card, CardContent } from './ui/card'
-import { CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel'
 import Image from 'next/image'
 import GameDetails from './dashboard/gamedetails'
 import Link from 'next/link'
 interface GameDetails {
   costOfEntry: string
-  rewardRate: { days: number; estimated: boolean }
+  rewardRate: { rr: string; rr_symbol: string }
   inGamePrice: string
   riskRate: { text: string; percentage: number }
 }
@@ -109,7 +108,7 @@ const HeroCard: React.FC<HeroCardProps> = ({
                 <button
                   key={index}
                   onClick={() => {
-                    console.log(`Button clicked: ${index}`) // Add this line for debugging
+                    //console.log(`Button clicked: ${index}`)
                     onGameClick(index)
                   }}
                   className={`w-24 h-16 relative overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-white ${

@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface BarData {
   rating: number
   count: number

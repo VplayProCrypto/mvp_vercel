@@ -1,6 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
-import background from "../public/images/rewards.png"; // Adjust the import path to where your image is located
+import Image from 'next/image'
+import Link from 'next/link'
+import background from '../public/images/rewards.png'
 
 const CallToAction = () => {
   return (
@@ -22,7 +22,9 @@ const CallToAction = () => {
           <p className="mb-5 text-lg text-gray-300">
             Be an early member and contribute to our journey!
           </p>
-          <Link href="/accessvplay" passHref>
+          <Link
+            href="/accessvplay"
+            passHref>
             <button className="px-6 py-3 text-lg text-blue-700 bg-white rounded-md shadow-lg hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
               Join Us
             </button>
@@ -30,7 +32,7 @@ const CallToAction = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CallToAction;
+export default CallToAction

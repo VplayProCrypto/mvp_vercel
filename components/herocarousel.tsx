@@ -11,7 +11,7 @@ import HeroCard from './herocard'
 
 interface GameDetails {
   costOfEntry: string
-  rewardRate: { days: number; estimated: boolean }
+  rewardRate: { rr: string; rr_symbol: string }
   inGamePrice: string
   riskRate: { text: string; percentage: number }
 }

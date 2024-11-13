@@ -1,16 +1,16 @@
-import React from 'react';
-import Image, { StaticImageData } from 'next/image';
+import React from 'react'
+import Image, { StaticImageData } from 'next/image'
 
 interface ImageTextCardProps {
-  imageUrl: StaticImageData;
-  altText: string;
-  text: string;
+  imageUrl: StaticImageData
+  altText: string
+  text: string
 }
 
 export const ImageTextCard: React.FC<ImageTextCardProps> = ({
   imageUrl,
   altText,
-  text
+  text,
 }) => {
   return (
     <div className="flex items-center justify-center bg-white shadow-lg rounded-lg overflow-hidden">
@@ -18,7 +18,6 @@ export const ImageTextCard: React.FC<ImageTextCardProps> = ({
         <p className="text-black text-lg">{text}</p>
       </div>
       <div className="flex-1">
-        {/* The Image component can handle GIFs as well */}
         <Image
           src={imageUrl}
           alt={altText}
@@ -28,5 +27,5 @@ export const ImageTextCard: React.FC<ImageTextCardProps> = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}

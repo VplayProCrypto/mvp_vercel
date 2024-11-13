@@ -1,18 +1,7 @@
 'use client'
 
 import { OpenseaCollectionStats } from '@/types'
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from 'recharts'
+import { XAxis, CartesianGrid, BarChart, Bar } from 'recharts'
 import {
   ChartConfig,
   ChartContainer,
