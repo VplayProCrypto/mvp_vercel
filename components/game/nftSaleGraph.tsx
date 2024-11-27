@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts'
-
 import { OpenseaAssetEvent } from '@/types'
 import { convertEthToUsd, convertWeiToEth } from '@/utils/utils'
 import {
@@ -47,7 +46,7 @@ const NftSaleGraph: React.FC<NftSaleGraphProps> = ({
           top: 5,
           right: 30,
           left: 30,
-          bottom: 20, // reduced bottom margin since we removed labels
+          bottom: 20,
         }}>
         <CartesianGrid
           strokeDasharray="3 3"
@@ -57,7 +56,7 @@ const NftSaleGraph: React.FC<NftSaleGraphProps> = ({
         />
         <XAxis
           dataKey="timestamp"
-          hide={true} // hides the x-axis completely
+          hide={true}
         />
         <YAxis
           dataKey="price"

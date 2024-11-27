@@ -109,13 +109,15 @@ const BusinessIntelligence: React.FC<BiComponentProps> = ({
         ))}
       </div>
 
-      <div className="flex space-x-10 justify-start items-start">
+      <div className="flex flex-col space-y-4 lg:flex-row lg:space-x-10 lg:space-y-0 justify-start items-start">
         <VolumeSalesChart
           key="volume-sales-chart"
           title="Volume and Sales"
           collectionStats={collectionStats}
         />
-        <div>
+        <div className="w-full lg:w-[600px]">
+          {' '}
+          {/* Updated wrapper */}
           <p className="text-sm mb-2 text-white">Sale Price in $USD</p>
           <NftSaleGraph
             collectionSaleEvents={collectionSaleEvents}

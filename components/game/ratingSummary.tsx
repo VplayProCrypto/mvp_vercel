@@ -1,6 +1,5 @@
 import { OpenseaAssetEvent } from '@/types'
 import React from 'react'
-import NftSaleGraph from './nftSaleGraph'
 import RatingCircle from './ratingCircle'
 
 interface RatingSummaryProps {
