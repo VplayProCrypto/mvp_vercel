@@ -1,26 +1,32 @@
+import { getOpenseaBestOfferForNft } from './apis/opensea'
+import { env } from 'process'
+import type { OpenseaCollection } from '../types/opensea/collection'
+import type {
+  OpenseaContract,
+  OpenseaPaymentToken,
+  OpenseaFee,
+} from '../types/opensea/blockchain'
+import type {
+  OpenseaNftListings,
+  OpenseaNftExtended,
+} from '../types/opensea/nft'
+import type {
+  OpenseaCollectionStats,
+  OpenseaAssetEvent,
+} from '../types/opensea/stats'
 import type {
   Collection,
   CollectionDynamic,
   Contract,
   Fee,
-  NFT,
-  NFTDynamic,
-  NFTEvent,
-  NFTListing,
-  NFTOffer,
-  OpenseaAssetEvent,
-  OpenseaCollection,
-  OpenseaCollectionStats,
-  OpenseaContract,
-  OpenseaFee,
-  OpenseaNftExtended,
-  OpenseaNftListings,
-  OpenseaPaymentToken,
   PaymentToken,
   TokenPrice,
-} from '@types'
-import { getOpenseaBestOfferForNft } from 'apis/opensea'
-import { env } from 'bun'
+  NFT,
+  NFTDynamic,
+  NFTListing,
+  NFTOffer,
+  NFTEvent,
+} from '../types/vplayTypes'
 
 export const createCollectionRecord = (
   openseaCollection: OpenseaCollection

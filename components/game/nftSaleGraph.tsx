@@ -40,8 +40,8 @@ const NftSaleGraph: React.FC<NftSaleGraphProps> = ({
   return (
     <ChartContainer config={chartConfig}>
       <LineChart
-        width={400}
-        height={200}
+        width={600}
+        height={400}
         data={data}
         margin={{
           top: 5,

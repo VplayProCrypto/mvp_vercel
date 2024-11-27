@@ -1,9 +1,7 @@
-import { NextPage } from 'next'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import Loading from '@/components/loading'
 import GameItems from '@/components/game/items'
-
 import { fetchGameData } from '@/utils/fetchGameData'
 import { fetchEthPrice } from '@/utils/fetchETHPrice'
 import HeroCarousel from '@/components/herocarousel'
@@ -12,8 +10,8 @@ import RatingSummary from '@/components/game/ratingSummary'
 import SocialIcon from '@/components/socialicon'
 import UserScore from '@/components/game/userscore'
 import { ReviewList } from '@/components/game/reviewCard'
-import { GameCard, GameCardProps } from '@/components/gamecard'
 import BusinessIntelligence from '@/components/game/businessintelligence'
+import GamesList from '@/components/gamesList'
 
 //This is temporary
 const mappy = new Map<string, Array<string>>()
@@ -22,78 +20,22 @@ mappy.set('pixels-farm', [
   '/images/pixels1.avif',
   '/images/pixels3.png',
 ])
+mappy.set('mavia-land', [
+  '/images/mavia0.jpg',
+  '/images/mavia1.jpg',
+  '/images/mavia2.png',
+])
 
-const games: GameCardProps[] = [
-  {
-    banner: 'https://via.placeholder.com/226x282',
-    name: 'Gods Unchained',
-    rewardRate: '90',
-    categories: ['PLAY TO EARN', 'SCI-FI'],
-    inGamePrice: '$ 100.00 USD',
-    entryCost: 'FREE',
-    riskRate: {
-      text: 'Low',
-      percentage: 30,
-    },
-  },
-  {
-    banner: 'https://via.placeholder.com/226x282',
-    name: 'Gods Unchained',
-    rewardRate: '90',
+type Params = Promise<{
+  name: any
+  slug: string
+}>
 
-    categories: ['PLAY TO EARN', 'SCI-FI'],
-    inGamePrice: '$ 100.00 USD',
-    entryCost: 'FREE',
-    riskRate: {
-      text: 'Low',
-      percentage: 30,
-    },
-  },
-  {
-    banner: 'https://via.placeholder.com/226x282',
-    name: 'Gods Unchained',
-    rewardRate: '90',
+export default async function Page(props: { params: Params }) {
+  const params = await props.params
 
-    categories: ['PLAY TO EARN', 'SCI-FI'],
-    inGamePrice: '$ 100.00 USD',
-    entryCost: 'FREE',
-    riskRate: {
-      text: 'Low',
-      percentage: 30,
-    },
-  },
-  {
-    banner: 'https://via.placeholder.com/226x282',
-    name: 'Gods Unchained',
-    rewardRate: '90',
-
-    categories: ['PLAY TO EARN', 'SCI-FI'],
-    inGamePrice: '$ 100.00 USD',
-    entryCost: 'FREE',
-    riskRate: {
-      text: 'Low',
-      percentage: 30,
-    },
-  },
-  {
-    banner: 'https://via.placeholder.com/226x282',
-    name: 'Gods Unchained',
-    rewardRate: '90',
-
-    categories: ['PLAY TO EARN', 'SCI-FI'],
-    inGamePrice: '$ 100.00 USD',
-    entryCost: 'FREE',
-    riskRate: {
-      text: 'Low',
-      percentage: 30,
-    },
-  },
-]
-
-const Page: NextPage<{
-  params: { name: string }
-}> = async ({ params }) => {
   const gameName = params.name
+
   const {
     metadata,
     collection,
@@ -111,27 +53,87 @@ const Page: NextPage<{
   if (!collection || !collectionStats || !metadata) {
     return <Loading />
   }
-  console.log(vplaymetrics)
-  console.log(tokenDistribution)
-  console.log(ratingSummary)
-  console.log(ratingDistribution)
-  console.log(ratings)
+
+  const otherGameNames = ['mavia-land', 'pixels-farm']
+
+  const otherGamesData = (
+    await Promise.allSettled(otherGameNames.map(name => fetchGameData(name)))
+  )
+    .filter(result => result.status === 'fulfilled')
+    .map(result => {
+      try {
+        const { metadata, collection, collectionStats, vplaymetrics } = (
+          result as PromiseFulfilledResult<any>
+        ).value
+
+        return {
+          link: `/game/${collection.collection}`,
+          banner: collection.image_url as string,
+          name: collection.name as string,
+          rewardRate: metadata.rr_val as string,
+          rewardRateSymbol: metadata.rr_symbol as string,
+          categories: vplaymetrics.esrb_description.split(',') as string[],
+          inGamePrice: `${Number(parseFloat(collectionStats.intervals[2].average_price)).toFixed(2)} ETH`,
+          entryCost: `${Number(parseFloat(collectionStats.total.floor_price)).toFixed(2)} ETH`,
+          riskRate: {
+            text: vplaymetrics.risk_level as string,
+            percentage: Number(vplaymetrics.risk_rate),
+          },
+        }
+      } catch (error: any) {
+        console.error(error)
+        return {
+          link: '',
+          banner: 'https://via.placeholder.com/226x282',
+          name: 'Unknown Game',
+          rewardRate: '0',
+          rewardRateSymbol: 'ETH',
+          categories: ['UNKNOWN'],
+          inGamePrice: '0.00 ETH',
+          entryCost: '0.00 ETH',
+          riskRate: {
+            text: 'Unknown',
+            percentage: 0,
+          },
+        }
+      }
+    })
+    .filter((data): data is NonNullable<typeof data> => data !== undefined)
+  otherGamesData.push({
+    link: `/game/${collection.collection}`,
+    banner: collection.image_url,
+    name: collection.name,
+    rewardRate: metadata.rr_val,
+    rewardRateSymbol: metadata.rr_symbol,
+    categories: vplaymetrics.esrb_description.split(','),
+    inGamePrice: `${Number(parseFloat(collectionStats.intervals[2].average_price)).toFixed(2)} ETH`,
+    entryCost: `${Number(parseFloat(collectionStats.total.floor_price)).toFixed(2)} ETH`,
+    riskRate: {
+      text: vplaymetrics.risk_level,
+      percentage: vplaymetrics.risk_rate,
+    },
+  })
+
   const ratingData = {
     metrics: {
-      playToEarnRate: vplaymetrics.play_to_earn_rate,
-      freeToPlayRate: vplaymetrics.free_to_play_rate,
-      tokenomicsStability: vplaymetrics.tokenomics_stability,
-      rewardStreams: vplaymetrics.reward_streams,
+      playToEarnRate: Number(vplaymetrics.play_to_earn_rate),
+      freeToPlayRate: Number(vplaymetrics.free_to_play_rate),
+      tokenomicsStability: Number(vplaymetrics.tokenomics_stability),
+      rewardStreams: Number(vplaymetrics.reward_streams),
     },
-    tokenDistribution,
 
-    totalRating: vplaymetrics.total_rating,
-    totalRatingsCount: vplaymetrics.total_ratings_count,
+    tokenDistribution:
+      tokenDistribution?.map(item => ({
+        name: String(item.name),
+        value: Number(item.value),
+      })) || [],
+    totalRating: Number(vplaymetrics.total_rating),
+    totalRatingsCount: Number(vplaymetrics.total_ratings_count),
   }
   const statCardsData = [
     {
       title: 'TOTAL OWNERS',
-      value: collectionStats.total.num_owners,
+      value: collectionStats.total.num_owners.toString(),
       change: '',
       isPositive: true,
       bgColor: 'bg-[#e3f5ff]',
@@ -166,11 +168,9 @@ const Page: NextPage<{
     },
     {
       title: 'TOTAL SALES',
-      value: Number(parseFloat(collectionStats.total.sales))
-        .toFixed(2)
-        .toString(),
+      value: collectionStats.total.sales.toFixed(2).toString(),
       bgColor: 'bg-[#e3f5ff]',
-      change: `${Number(parseFloat(collectionStats.intervals[2].sales_diff)).toFixed(2).toString()}% month`,
+      change: `${collectionStats.intervals[2].sales_diff.toFixed(2).toString()}% month`,
     },
     {
       title: 'AVERAGE PRICE LAST 30 DAYS',
@@ -180,6 +180,7 @@ const Page: NextPage<{
       change: 'ETH',
     },
   ]
+
   return (
     <main className="mt-5 bg-black">
       <title>{collection.name}</title>
@@ -209,8 +210,9 @@ const Page: NextPage<{
                 .toString() + '  ETH',
             riskRate: { text: 'LOW RISK', percentage: vplaymetrics.risk_rate },
           }}
-          games={mappy.get(collection.collection)}
+          games={mappy.get(collection.collection) || []}
           buttonURL={collection.project_url}
+          buttonText="Play Now"
         />
       </div>
       <div className="max-w-7xl w-full mx-auto">
@@ -228,7 +230,9 @@ const Page: NextPage<{
           multiplayerEnabled={vplaymetrics.is_multiplayer}
           singlePlayerEnabled={vplaymetrics.is_single_player}
           genres={vplaymetrics.esrb_description.split(',')}
-          gameplayImageSrc={mappy.get(collection.collection)[1]}
+          gameplayImageSrc={
+            mappy.get(collection.collection)?.[2] ?? '/images/logo.png'
+          }
           socialMediaIcons={[
             {
               platform: 'discord',
@@ -252,7 +256,7 @@ const Page: NextPage<{
               platform: 'telegram',
               icon: (
                 <SocialIcon
-                  href={`https://t.me/${collection.telegram_username}`}
+                  href={`https://t.me/${collection.telegram_url}`}
                   src="/images/telegramnegative.png"
                 />
               ),
@@ -272,27 +276,23 @@ const Page: NextPage<{
         <UserScore
           score={vplaymetrics.user_score}
           ratings={vplaymetrics.user_ratings_count}
-          barData={ratingDistribution}
+          barData={ratingDistribution ?? []}
         />
-        <ReviewList reviews={ratings} />
+        <ReviewList reviews={ratings ?? []} />
         <BusinessIntelligence
           statCards={statCardsData}
           collectionStats={collectionStats}
           ratingData={ratingData}
+          collectionSaleEvents={collectionSaleEvents}
+          ethPrice={ethPrice}
         />
         <GameItems
           listings={listings}
           currentPage={1}
         />
-        <h2 className="text-xl font-bold mb-4">OTHER GAMES</h2>
+
         <div className="flex flex-row min-w-screen">
-          {games.map((game, index) => (
-            <div
-              key={index}
-              className="flex justify-center">
-              <GameCard {...game} />
-            </div>
-          ))}
+          <GamesList games={otherGamesData} />
         </div>
       </div>
 
@@ -300,5 +300,3 @@ const Page: NextPage<{
     </main>
   )
 }
-
-export default Page

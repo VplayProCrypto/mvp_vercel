@@ -1,67 +1,65 @@
-"use client";
-import { Suspense } from "react";
-import Head from "next/head";
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import logo from "../../public/images/logo.png";
-import Image from "next/image";
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
+'use client'
+import { Suspense } from 'react'
+import Head from 'next/head'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
+import logo from '../../public/images/logo.png'
+import Image from 'next/image'
+import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 
 interface SubscribeResponse {
-  message?: string;
+  message?: string
 }
 
 export default function AccessVplaypPage() {
-  const [email, setEmail] = useState<string>("");
-  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>('')
+  const [name, setName] = useState<string>('')
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+    setName(e.target.value)
+  }
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     if (email && name) {
       // Example request body, adjust based on your API requirements
       const requestBody = {
         email,
         name,
-      };
+      }
 
-      const response = await fetch("/api/airtable", {
-        method: "POST",
+      const response = await fetch('/api/airtable', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody),
-      });
+      })
 
-      const data: SubscribeResponse = await response.json();
+      const data: SubscribeResponse = await response.json()
 
       if (response.ok) {
-        alert(
-          "Thank you for joining VPLAY! Check your inbox for confirmation."
-        );
+        alert('Thank you for joining VPLAY! Check your inbox for confirmation.')
       } else {
         alert(
           data.message ||
-            "There was an issue with your sign-up. Please try again."
-        );
+            'There was an issue with your sign-up. Please try again.'
+        )
       }
     } else {
-      alert("Please enter both your name and email address.");
+      alert('Please enter both your name and email address.')
     }
-  };
+  }
 
   return (
     <main>
       <title>Join VPLAY Community</title>
 
-      <Navbar user={undefined} gasFee={""} />
+      <Navbar />
       <Suspense fallback={<div>Loading...</div>}>
         <div className="flex flex-col items-center justify-center mt-16 min-h-screen py-2 bg-gradient-to-r from-gray-900 to-stone-800 text-white px-4 lg:px-0">
           <Image
@@ -82,8 +80,7 @@ export default function AccessVplaypPage() {
           </p>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center w-full max-w-lg px-4"
-          >
+            className="flex flex-col items-center w-full max-w-lg px-4">
             <input
               type="text"
               placeholder="Name"
@@ -100,8 +97,7 @@ export default function AccessVplaypPage() {
             />
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg"
-            >
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg">
               Join Us
             </button>
           </form>
@@ -109,5 +105,5 @@ export default function AccessVplaypPage() {
       </Suspense>
       <Footer />
     </main>
-  );
+  )
 }

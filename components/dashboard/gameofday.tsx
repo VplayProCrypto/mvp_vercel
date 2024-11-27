@@ -10,13 +10,14 @@ import {
 } from '../ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
 
+import Link from 'next/link'
 // Types
-interface BaseStat {
+export interface BaseStat {
   label: string
   value: string
 }
 
-interface RiskStat extends BaseStat {
+export interface RiskStat extends BaseStat {
   backgroundColor: string
 }
 
@@ -27,23 +28,21 @@ export interface GameStats {
   riskRate: RiskStat
 }
 
-interface GameInfo {
+export interface GameInfo {
   title: string
   titleColor: string
   heading: string
   description: string
   rating: number
+  link: string
 }
 
-interface GameOfDayProps {
+export interface GameOfDayProps {
   images: string[]
   gameInfo: GameInfo
   gameStats: GameStats
 }
 
-interface GameOfDayProps {
-  images: string[]
-}
 export const GameOfDay: React.FC<GameOfDayProps> = ({
   images,
   gameInfo,
@@ -158,8 +157,9 @@ export const GameOfDay: React.FC<GameOfDayProps> = ({
               ))}
             </CarouselContent>
           </Carousel>
+
           <button className="bg-white text-black font-bold py-2 px-8 rounded-full self-end">
-            EXPLORE
+            <Link href={gameInfo.link}> EXPLORE </Link>
           </button>
         </div>
       </div>

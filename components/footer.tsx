@@ -60,6 +60,13 @@ const Footer: React.FC = () => {
           <div className="NavLinks flex-col justify-start items-start gap-2 flex">
             <button className="text-left w-full">
               <Link
+                href="/careers"
+                className="Partnerships w-60 text-white text-base font-normal font-['Satoshi Variable'] leading-tight tracking-wide hover:underline">
+                Careers
+              </Link>
+            </button>
+            <button className="text-left w-full">
+              <Link
                 href="mailto:support@vplay.pro"
                 className="Partnerships w-60 text-white text-base font-normal font-['Satoshi Variable'] leading-tight tracking-wide hover:underline">
                 Partnerships

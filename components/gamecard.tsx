@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export interface GameCardProps {
   banner: string
@@ -8,10 +9,12 @@ export interface GameCardProps {
   inGamePrice: string
   entryCost: string
   rewardRate: string
+  rewardRateSymbol: string
   riskRate: {
     text: string
     percentage: number
   }
+  link: string
 }
 
 export const GameCard: React.FC<GameCardProps> = ({
@@ -21,19 +24,23 @@ export const GameCard: React.FC<GameCardProps> = ({
   inGamePrice,
   entryCost,
   rewardRate,
+  rewardRateSymbol,
   riskRate,
+  link,
 }) => {
   return (
     <div className="w-60 h-96 px-2 py-7 flex-col justify-center items-center inline-flex">
       <div className="w-56 h-96 rounded-xl shadow flex-col justify-start items-start inline-flex">
         <div className="w-56 h-72 rounded-xl overflow-hidden">
-          <Image
-            src={banner}
-            alt={name}
-            width={224}
-            height={283}
-            className="object-cover w-full h-full"
-          />
+          <Link href={link}>
+            <Image
+              src={banner}
+              alt={name}
+              width={224}
+              height={283}
+              className="object-cover w-full h-full"
+            />
+          </Link>
         </div>
         <div className="self-stretch h-44 px-4 pt-3 pb-3.5 flex-col justify-start items-start gap-3 flex">
           <div className="self-stretch h-14 flex-col justify-start items-start gap-1 flex">
@@ -81,7 +88,7 @@ export const GameCard: React.FC<GameCardProps> = ({
                 </span>
                 <div className="self-stretch h-7 flex-col justify-center items-start flex">
                   <span className="self-stretch text-white text-xs font-light font-['Be Vietnam Pro']">
-                    {rewardRate} DAYS
+                    {rewardRate} {rewardRateSymbol}
                   </span>
                   <span className="self-stretch text-white text-xs font-light font-['Be Vietnam Pro']">
                     ESTIMATED

@@ -1,64 +1,64 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Corrected from 'next/navigation' to 'next/router'
-import Head from "next/head";
+'use client'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation' // Corrected from 'next/navigation' to 'next/router'
+import Head from 'next/head'
 
-import Link from "next/link";
-import { fetchWithRetry } from "../../utils/utils";
-import FormattedText from "./components/formattedtext";
-import Modal from "./components/modal";
-import { JobPosting } from "../../types/vplayTypes";
-import Footer from "@/components/footer";
-import Loading from "@/components/loading";
-import Navbar from "@/components/navbar";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link'
+import { fetchWithRetry } from '../../utils/utils'
+import FormattedText from './components/formattedtext'
+import Modal from './components/modal'
+import { JobPosting } from '../../types/vplayTypes'
+import Footer from '@/components/footer'
+import Loading from '@/components/loading'
+import Navbar from '@/components/navbar'
+import { Button } from '@/components/ui/button'
 
 const CareersPage: React.FC = () => {
-  const [jobPostings, setJobPostings] = useState<JobPosting[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [showForm, setShowForm] = useState<boolean>(false);
-  const [selectedJob, setSelectedJob] = useState<string | null>(null);
-  const [selectedJobName, setSelectedJobName] = useState<string | null>(null);
+  const [jobPostings, setJobPostings] = useState<JobPosting[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [showForm, setShowForm] = useState<boolean>(false)
+  const [selectedJob, setSelectedJob] = useState<string | null>(null)
+  const [selectedJobName, setSelectedJobName] = useState<string | null>(null)
   const [selectedJobOverview, setSelectedJobOverview] = useState<string | null>(
     null
-  );
+  )
   const [selectedJobDescription, setSelectedJobDescription] = useState<
     string | null
-  >(null);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const router = useRouter();
+  >(null)
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchJobPostings = async () => {
-      const url = "/api/airtable";
+      const url = '/api/airtable'
       try {
-        const data = await fetchWithRetry(url);
-        setJobPostings(data.records);
+        const data = await fetchWithRetry(url)
+        setJobPostings(data.records)
       } catch (error) {
-        console.error("Error fetching job postings:", error);
+        console.error('Error fetching job postings:', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-    fetchJobPostings();
-  }, []);
+    }
+    fetchJobPostings()
+  }, [])
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    router.refresh(); // Refresh the page or navigate the user to a confirmation page
-  };
+    setShowModal(false)
+    router.refresh() // Refresh the page or navigate the user to a confirmation page
+  }
 
   const handleApplyNow = (job: JobPosting) => {
-    setSelectedJob(job.fields.record_id as string);
-    setSelectedJobName(job.fields.Name as string);
-    setShowForm(true);
-    setSelectedJobOverview(job.fields.Overview as string);
-    setSelectedJobDescription(job.fields["Job Description"] as string);
-  };
+    setSelectedJob(job.fields.record_id as string)
+    setSelectedJobName(job.fields.Name as string)
+    setShowForm(true)
+    setSelectedJobOverview(job.fields.Overview as string)
+    setSelectedJobDescription(job.fields['Job Description'] as string)
+  }
 
   if (isLoading || isSubmitting) {
-    return <Loading />;
+    return <Loading />
   }
 
   return (
@@ -66,16 +66,17 @@ const CareersPage: React.FC = () => {
       <Head>
         <title>Open Positions - Careers</title>
       </Head>
-      <Navbar user={undefined} gasFee={""} />
+      <Navbar />
       {showModal && (
-        <Modal onClose={handleCloseModal} isOpen={showModal}>
+        <Modal
+          onClose={handleCloseModal}
+          isOpen={showModal}>
           Thank you for applying! We will get back to you soon.
         </Modal>
       )}
 
-      {/* Modal component to show a friendly message */}
       <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg space-y-3 flex flex-col items-center">
-        {showForm && selectedJob && selectedJobName ? (
+        {showForm && selectedJob && selectedJobName ?
           <>
             <div className="bg-gray-900 min-h-screen flex items-center justify-center text-center mt-20 p-5">
               <div>
@@ -97,20 +98,17 @@ const CareersPage: React.FC = () => {
             </Button>
             <button
               className="bg-red-500 text-white text-lg px-4 py-2 rounded hover:bg-red-600 transition duration-200"
-              onClick={() => setShowForm(false)}
-            >
+              onClick={() => setShowForm(false)}>
               Go Back
             </button>
           </>
-        ) : (
-          <>
+        : <>
             <h1 className="text-4xl font-bold mt-20 mb-10">Open Positions</h1>
             <div className="w-full max-w-6xl mx-auto">
-              {jobPostings.map((posting) => (
+              {jobPostings.map(posting => (
                 <div
                   key={posting.id}
-                  className="bg-gray-800 rounded-lg p-6 mb-5 flex justify-between items-center"
-                >
+                  className="bg-gray-800 rounded-lg p-6 mb-5 flex justify-between items-center">
                   <div>
                     <h3 className="text-xl font-semibold">
                       {posting.fields.Name}
@@ -120,18 +118,16 @@ const CareersPage: React.FC = () => {
                     </p>
                     <p
                       className="text-xs
-                     text-gray-300 max-w-3xl"
-                    >
+                     text-gray-300 max-w-3xl">
                       {posting.fields.Overview}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm">{posting.fields.Category}</p>
-                    {posting.fields["Apply Now"] && (
+                    {posting.fields['Apply Now'] && (
                       <button
                         onClick={() => handleApplyNow(posting)}
-                        className="inline-block mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200"
-                      >
+                        className="inline-block mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
                         See Details
                       </button>
                     )}
@@ -140,11 +136,11 @@ const CareersPage: React.FC = () => {
               ))}
             </div>
           </>
-        )}
+        }
       </div>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default CareersPage;
+export default CareersPage

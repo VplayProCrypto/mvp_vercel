@@ -28,6 +28,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { Progress } from '@/components/ui/progress'
+import { useState, useEffect } from 'react'
 
 type MetricKey =
   | 'playToEarnRate'
@@ -41,37 +42,18 @@ type Props = {
     name: string
     value: number
   }[]
-
   totalRating: number
   totalRatingsCount: number
 }
 
-const platformChartConfig = {
-  linux: {
-    label: 'Linux',
-    color: '#FF5733',
-  },
-  mac: {
-    label: 'Mac',
-    color: '#33FF57',
-  },
-  ios: {
-    label: 'iOS',
-    color: '#3357FF',
-  },
-  windows: {
-    label: 'Windows',
-    color: '#FF33F5',
-  },
-  android: {
-    label: 'Android',
-    color: '#33FFF5',
-  },
-  other: {
-    label: 'Other',
-    color: '#F5FF33',
-  },
-} satisfies ChartConfig
+function generateRandomColor(): string {
+  return (
+    '#' +
+    Math.floor(Math.random() * 16777215)
+      .toString(16)
+      .padStart(6, '0')
+  )
+}
 
 type MetricsSectionProps = {
   metrics: Record<MetricKey, number>
@@ -103,42 +85,6 @@ export function MetricsSection({ metrics }: MetricsSectionProps) {
   )
 }
 
-const distributionChartConfig = {
-  ecosystemFund: {
-    label: 'Ecosystem Fund',
-    color: '#FF5733',
-  },
-  treasury: {
-    label: 'Treasury',
-    color: '#33FF57',
-  },
-  investors: {
-    label: 'Investors',
-    color: '#3357FF',
-  },
-  team: {
-    label: 'Team',
-    color: '#FF33F5',
-  },
-  advisors: {
-    label: 'Advisors',
-    color: '#33FFF5',
-  },
-  binanceLaunchpool: {
-    label: 'Binance Launchpool',
-    color: '#F5FF33',
-  },
-  alphaRewards: {
-    label: 'Alpha Rewards',
-    color: '#FF9933',
-  },
-  liquidity: {
-    label: 'Liquidity',
-    color: '#9933FF',
-  },
-} satisfies ChartConfig
-// MetricsSection.tsx
-
 type TokenDistributionProps = {
   tokenDistribution: {
     name: string
@@ -149,11 +95,35 @@ type TokenDistributionProps = {
 export function TokenDistributionSection({
   tokenDistribution,
 }: TokenDistributionProps) {
+  const [colors, setColors] = useState<Record<string, string>>({})
+  const [chartConfig, setChartConfig] = useState<ChartConfig>({})
+
+  useEffect(() => {
+    const newColors: Record<string, string> = {}
+    tokenDistribution.forEach(item => {
+      newColors[item.name] = generateRandomColor()
+    })
+    setColors(newColors)
+
+    const newChartConfig: Record<string, { label: string; color: string }> = {}
+    tokenDistribution.forEach(item => {
+      newChartConfig[item.name] = {
+        label: item.name,
+        color: newColors[item.name],
+      }
+    })
+    setChartConfig(newChartConfig)
+  }, [tokenDistribution])
+
   const totalTokens = tokenDistribution.reduce(
     (acc, curr) => acc + curr.value,
     0
   )
 
+  const formattedData = tokenDistribution.map(item => ({
+    name: item.name,
+    value: Number(item.value),
+  }))
   return (
     <Card className="w-full">
       <CardHeader>
@@ -161,54 +131,47 @@ export function TokenDistributionSection({
         <CardDescription>Token allocation breakdown</CardDescription>
       </CardHeader>
       <CardContent className="h-[300px] flex items-center justify-center">
-        <ChartContainer config={distributionChartConfig}>
-          <PieChart
-            width={500}
-            height={300}>
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Pie
-              data={tokenDistribution}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={80}>
-              {tokenDistribution.map(entry => (
-                <Cell
-                  key={`cell-${entry.name}`}
-                  fill={
-                    distributionChartConfig[
-                      entry.name as keyof typeof distributionChartConfig
-                    ].color
-                  }
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+        <div className="w-full h-full">
+          <ChartContainer config={chartConfig}>
+            <PieChart
+              width={500}
+              height={300}>
+              <Tooltip />
+              <Pie
+                data={formattedData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={80}
+                label>
+                {tokenDistribution.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={colors[entry.name]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        </div>
       </CardContent>
       <CardFooter className="flex-col gap-2">
         <div className="grid grid-cols-2 gap-2 text-xs">
-          {tokenDistribution.map(item => {
-            const config =
-              distributionChartConfig[
-                item.name as keyof typeof distributionChartConfig
-              ]
-            return (
+          {tokenDistribution.map(item => (
+            <div
+              key={item.name}
+              className="flex items-center gap-2">
               <div
-                key={item.name}
-                className="flex items-center gap-2">
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: config.color }}
-                />
-                <span>
-                  {config.label} ({item.value}%)
-                </span>
-              </div>
-            )
-          })}
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: colors[item.name] }}
+              />
+              <span>
+                {item.name} ({item.value}%)
+              </span>
+            </div>
+          ))}
         </div>
         <div className="text-sm text-muted-foreground">
           Total Distribution: {totalTokens}%

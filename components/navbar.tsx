@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
               className="home_button"
               href="/">
               <Image
-                src={'/images/logonew.png'}
+                src={'/images/logo.png'}
                 alt="image"
                 width={100}
                 height={100}

@@ -30,10 +30,11 @@ const NftCard: React.FC<NftCardProps> = ({ nft }) => {
           <div className="flex justify-center">
             <Image
               src={nft.image_url}
-              width="200"
-              height="100"
+              width={200} // Changed from string to number
+              height={100}
               alt={'No Image :('}
               className="rounded-md"
+              sizes="200px"
             />
           </div>
         : <CardTitle className="text-sm overflow-hidden text-center">

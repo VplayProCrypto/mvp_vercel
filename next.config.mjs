@@ -7,6 +7,7 @@ const nextConfig = {
       'places.decentraland.org',
       'hang.mypinata.cloud',
       'via.placeholder.com',
+      'nft.mavia.com',
     ],
   },
 }

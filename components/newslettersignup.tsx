@@ -8,7 +8,7 @@ const NewsletterSignup: React.FC = () => {
   //TODO
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Submitting email:', email)
+
     setEmail('')
   }
 

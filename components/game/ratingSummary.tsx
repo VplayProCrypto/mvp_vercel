@@ -66,13 +66,6 @@ const RatingSummary: React.FC<RatingSummaryProps> = ({
           label="REWARD RATE"
           color="#3B82F6"
         />
-        <div>
-          <p className="text-sm mb-2 text-white">Sale Price in $USD</p>
-          <NftSaleGraph
-            collectionSaleEvents={collectionSaleEvents}
-            ethPrice={ethPrice}
-          />
-        </div>
       </div>
     </div>
   )

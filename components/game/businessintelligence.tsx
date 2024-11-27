@@ -1,7 +1,8 @@
-import { OpenseaCollectionStats } from '@/types'
+import { OpenseaAssetEvent, OpenseaCollectionStats } from '@/types'
 import VolumeSalesChart from './volumesaleschart'
 import TrafficByWebsite from './traffic'
 import Ratings from './ratings'
+import NftSaleGraph from './nftSaleGraph'
 
 interface BaseCardProps {
   children: React.ReactNode
@@ -67,7 +68,8 @@ const StatCard: React.FC<StatCardProps> = ({
 interface BiComponentProps {
   statCards: StatCardProps[]
   collectionStats: OpenseaCollectionStats
-
+  collectionSaleEvents: OpenseaAssetEvent[]
+  ethPrice: number | null
   ratingData: {
     metrics: {
       playToEarnRate: number
@@ -88,7 +90,8 @@ interface BiComponentProps {
 const BusinessIntelligence: React.FC<BiComponentProps> = ({
   statCards,
   collectionStats,
-
+  collectionSaleEvents,
+  ethPrice,
   ratingData,
 }) => {
   return (
@@ -112,6 +115,13 @@ const BusinessIntelligence: React.FC<BiComponentProps> = ({
           title="Volume and Sales"
           collectionStats={collectionStats}
         />
+        <div>
+          <p className="text-sm mb-2 text-white">Sale Price in $USD</p>
+          <NftSaleGraph
+            collectionSaleEvents={collectionSaleEvents}
+            ethPrice={ethPrice}
+          />
+        </div>
       </div>
 
       <div className="flex justify-start items-start">

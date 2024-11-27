@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Nodes: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ const Nodes: React.FC = () => {
           Get VPlay Rewards Now
         </p>
         <button className="w-full sm:w-48 h-14 py-2 rounded-full border-2 border-white text-white text-base font-semibold font-['Be Vietnam Pro'] capitalize">
-          PRE-REGISTER
+          <Link href="/accessvplay">PRE-REGISTER</Link>
         </button>
       </div>
       <div className="w-full  mt-8">

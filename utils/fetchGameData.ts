@@ -86,3 +86,25 @@ export async function fetchGameData(gameName: string) {
     }
   }
 }
+
+export async function fetchDashboardGameData(gameName: string) {
+  try {
+    const [collection, collectionStats, metadata, vplaymetrics] =
+      await Promise.all([
+        getOpenseaCollection(gameName),
+        getOpenseaCollectionStats(gameName),
+        getCollectionMetadataByName(gameName),
+        getCollectionVplayMetrics(gameName),
+      ])
+
+    return {
+      collection,
+      collectionStats,
+      metadata,
+      vplaymetrics,
+    }
+  } catch (error) {
+    console.error('Error fetching game data:', error)
+    return null
+  }
+}

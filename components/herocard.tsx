@@ -48,21 +48,25 @@ const HeroCard: React.FC<HeroCardProps> = ({
           <Image
             src={backgroundImage}
             alt="Background"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="100vw" // Since it's a full-width background image
+            className="object-cover"
             quality={100}
           />
           <div className="absolute inset-0 bg-black bg-opacity-50" />{' '}
           {/* Overlay for better text readability */}
           <div className="Title w-full flex-grow px-[10%] py-8% flex justify-between items-end relative z-10">
             <div className="Gametitle flex-grow flex flex-col justify-start items-start gap-4">
-              <img
+              <Image
                 className="Image50 w-64 h-16 object-contain"
                 src={gameLogoUrl}
+                width={64}
+                height={16}
+                sizes="256px" // Since it has a fixed width of w-64 (256px)
                 alt={gameTitle}
               />
               <div className="JoinTheFightForEth w-full max-w-3xl text-2xl md:text-4xl font-medium font-['Be Vietnam Pro'] capitalize leading-loose">
-                {tagline}
+                {gameTitle}
               </div>
               <div className="Stars w-72 flex justify-start items-start gap-0.5">
                 {[...Array(5)].map((_, index) => (
@@ -108,7 +112,6 @@ const HeroCard: React.FC<HeroCardProps> = ({
                 <button
                   key={index}
                   onClick={() => {
-                    //console.log(`Button clicked: ${index}`)
                     onGameClick(index)
                   }}
                   className={`w-24 h-16 relative overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-white ${
@@ -120,9 +123,9 @@ const HeroCard: React.FC<HeroCardProps> = ({
                   <Image
                     src={game}
                     alt={`Game ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                    className={`rounded-lg ${
+                    fill
+                    sizes="(max-width: 768px) 96px, 128px" // Since these are fixed-width thumbnails
+                    className={`rounded-lg object-cover ${
                       index === highlightedGameIndex ? 'z-10' : 'z-0'
                     }`}
                   />

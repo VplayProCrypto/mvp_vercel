@@ -5,50 +5,42 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-} from './ui/carousel'
+} from '../ui/carousel'
 import Autoplay from 'embla-carousel-autoplay'
-import HeroCard from './herocard'
-
-interface GameDetails {
+import HeroCard from '../herocard'
+export interface GameDetails {
   costOfEntry: string
   rewardRate: { rr: string; rr_symbol: string }
   inGamePrice: string
   riskRate: { text: string; percentage: number }
 }
 
-interface HeroCarouselProps {
+export interface Game {
+  id: string
   images: string[]
-  gameTitle: string
+  name: string
   gameLogoUrl: string
   tagline: string
   starRating: number
   categories: string[]
   description: string
   gameDetails: GameDetails
-  games: string[]
-
   buttonURL: string
   buttonText: string
+  banner: string
+  background: string
 }
 
-const HeroCarousel: React.FC<HeroCarouselProps> = ({
-  images,
-  gameTitle,
-  gameLogoUrl,
-  tagline,
-  starRating,
-  categories,
-  description,
-  gameDetails,
-  games,
+interface DashboardCarouselProps {
+  games: Game[]
+}
 
-  buttonURL,
-  buttonText,
-}) => {
+const DashboardCarousel: React.FC<DashboardCarouselProps> = ({ games }) => {
   const plugin = React.useRef(
     Autoplay({ delay: 2000, stopOnInteraction: false })
   )
   const [api, setApi] = React.useState<CarouselApi>()
+
   const onGameClick = React.useCallback(
     (index: number) => {
       api?.scrollTo(index)
@@ -63,22 +55,15 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}>
       <CarouselContent>
-        {images.map((image, index) => (
-          <CarouselItem key={index}>
+        {games.map((game, index) => (
+          <CarouselItem key={game.id}>
             <HeroCard
-              gameTitle={gameTitle}
-              gameLogoUrl={gameLogoUrl}
-              tagline={tagline}
-              starRating={starRating}
-              categories={categories}
-              description={description}
-              gameDetails={gameDetails}
-              games={games}
+              gameTitle={game.name}
               onGameClick={onGameClick}
               highlightedGameIndex={index}
-              backgroundImage={games[index]}
-              buttonURL={buttonURL}
-              buttonText={buttonText}
+              games={games.map(g => g.background)}
+              backgroundImage={game.background}
+              {...game}
             />
           </CarouselItem>
         ))}
@@ -87,4 +72,4 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({
   )
 }
 
-export default HeroCarousel
+export default DashboardCarousel

@@ -125,7 +125,7 @@ const Intro: React.FC<IntroProps> = ({
               alt="Gameplay"
               width={400}
               height={300}
-              objectFit="cover"
+              className="object-cover"
             />
           </div>
         </div>

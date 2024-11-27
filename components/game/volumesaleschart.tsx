@@ -39,8 +39,6 @@ export function VolumeSalesChart({
   collectionStats,
 }: VolumeSalesChartProps) {
   const chartData = collectionStats.intervals.map((interval, index) => {
-    console.log(interval)
-    console.log(index)
     const periods = ['Last 24H', 'Last 7 days', 'Last 30 days']
     const volume = parseFloat(interval.volume)
     return {
@@ -49,7 +47,7 @@ export function VolumeSalesChart({
       sales: interval.sales,
     }
   })
-  console.log(chartData)
+
   return (
     <Card>
       <CardHeader>

@@ -1,11 +1,10 @@
+import type {
+  OpenseaCollection,
+  OpenseaCollections,
+} from '../../types/opensea/collection'
 import { BASE_URL } from '../../utils/consts'
 import { fetchApi } from '../../utils/utils'
 import type {
-  OpenseaAssetEvent,
-  OpenseaCollection,
-  OpenseaCollectionStats,
-  OpenseaCollections,
-  OpenseaEvents,
   OpenseaListing,
   OpenseaListings,
   OpenseaNftExtended,
@@ -14,7 +13,13 @@ import type {
   OpenseaNfts,
   OpenseaOffer,
   OpenseaOffers,
-} from '@types'
+} from '../../types/opensea/nft'
+import type {
+  OpenseaCollectionStats,
+  OpenseaAssetEvent,
+  OpenseaEvents,
+} from '../../types/opensea/stats'
+
 export const getOpenseaCollection = (
   collectionName: string
 ): Promise<OpenseaCollection> =>
@@ -132,7 +137,7 @@ export const calculateOpenseaUniqueAddresses = async (
       if (event.to_address) uniqueAddresses.add(event.to_address)
     }
   })
-  console.log(assetEvents.length)
+
   return uniqueAddresses.size
 }
 
