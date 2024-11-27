@@ -1,6 +1,13 @@
 import { Pool } from 'pg'
 import { env } from 'process'
 
+console.log('Database connection variables:', {
+  host: env.NEW_TIMESCALE_HOST,
+  port: env.NEW_TIMESCALE_PORT,
+  user: env.NEW_TIMESCALE_USER,
+  database: env.NEW_TIMESCALE_DATABASE,
+})
+
 export const pool = new Pool({
   host: env.NEW_TIMESCALE_HOST || 'localhost',
   port: Number(env.NEW_TIMESCALE_PORT) || 5432,
