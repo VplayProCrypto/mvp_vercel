@@ -4,6 +4,13 @@ import { env } from 'process'
 
 import { join } from 'path'
 
+console.log(
+  'env.AWS_TIMESCALE_HOST: ' + env.AWS_TIMESCALE_HOST,
+  'env.AWS_TIMESCALE_PORT: ' + env.AWS_TIMESCALE_PORT,
+  'env.AWS_TIMESCALE_USER: ' + env.AWS_TIMESCALE_USER,
+  'env.AWS_TIMESCALE_DATABASE: ' + env.AWS_TIMESCALE_DATABASE
+)
+
 export const pool = new Pool({
   host: env.AWS_TIMESCALE_HOST || 'localhost',
   port: Number(env.AWS_TIMESCALE_PORT) || 5432,
