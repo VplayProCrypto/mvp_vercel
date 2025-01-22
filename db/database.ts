@@ -5,6 +5,8 @@ import { env } from 'process'
 import { join } from 'path'
 
 console.log(
+  'env.oldtimescaleport ' + process.env.NEXT_PUBLIC_NEW_TIMESCALE_PORT,
+  'env.oldtimescale ' + process.env.NEW_TIMESCALE_USER,
   'env.AWS_TIMESCALE_HOST: ' + process.env.AWS_TIMESCALE_HOST,
   'env.AWS_TIMESCALE_PORT: ' + process.env.AWS_TIMESCALE_PORT,
   'env.AWS_TIMESCALE_USER: ' + process.env.AWS_TIMESCALE_USER,
